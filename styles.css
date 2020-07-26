@@ -1,0 +1,41 @@
+.red_die_img {
+    width: 50px;
+    visibility: hidden;
+}
+
+.orange_die_img {
+    width: 50px;
+    visibility: hidden;
+}
+
+.yellow_die_img {
+    width: 50px;
+    visibility: hidden;
+}
+
+
+.green_die_img {
+    width: 50px;
+    visibility: hidden;
+}
+
+
+.blue_die_img {
+    width: 50px;
+    visibility: hidden;
+}
+
+
+.black_die_img {
+    width: 50px;
+    visibility: hidden;
+}
+
+
+.cup {
+    width: 85px;
+}
+
+#roll_button {
+    visibility: hidden;
+}
