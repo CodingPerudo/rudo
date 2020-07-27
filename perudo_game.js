@@ -114,6 +114,8 @@ function startGame(){
     }
     document.getElementById("start_button").style.visibility = 'hidden';
     document.getElementById("roll_button").style.visibility = 'visible';
+    document.getElementById("display_button").style.visibility = 'visible';
+    document.getElementById("reroll_button").style.visibility = 'visible';
     //TODO: send dice info to server
 }
 
