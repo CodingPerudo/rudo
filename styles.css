@@ -2,34 +2,40 @@
 .red_die_img {
     width: 50px;
     visibility: hidden;
+    padding-bottom: 25px;
 }
 
 .orange_die_img {
     width: 50px;
     visibility: hidden;
+    padding-bottom: 25px;
 }
 
 .yellow_die_img {
     width: 50px;
     visibility: hidden;
+    padding-bottom: 25px;
 }
 
 
 .green_die_img {
     width: 50px;
     visibility: hidden;
+    padding-bottom: 25px;
 }
 
 
 .blue_die_img {
     width: 50px;
     visibility: hidden;
+    padding-bottom: 25px;
 }
 
 
 .black_die_img {
     width: 50px;
     visibility: hidden;
+    padding-bottom: 25px;
 }
 
 /* ______________________________other stuff______________________________ */
@@ -39,6 +45,14 @@
 
 #roll_button {
     visibility: hidden;
+    border:none;
+    background-color:transparent;
+    outline:none;
+    background-image: url(blue_button.png);
+    background-size: cover;
+    color: white;
+    background-repeat: no-repeat;
+    padding: 10px;
 }
 
 #start_button {
@@ -47,18 +61,35 @@
     outline:none;
     visibility: hidden;
     background-image: url(pink_button.png);
-    background-size: fill;
+    background-size: cover;
     color: white;
-    padding: 20px;
+    background-repeat: no-repeat;
+    padding: 10px;
 
 }
 
 #display_button {
     visibility: hidden;
+    border:none;
+    background-color:transparent;
+    outline:none;
+    background-image: url(green_button.png);
+    background-size: cover;
+    color: white;
+    background-repeat: no-repeat;
+    padding: 10px;
 }
 
 #reroll_button {
     visibility: hidden;
+    border:none;
+    background-color:transparent;
+    outline:none;
+    background-image: url(pink_button.png);
+    background-size: cover;
+    color: white;
+    background-repeat: no-repeat;
+    padding: 10px;
 }
 
 #buttons {
@@ -88,5 +119,5 @@
         /* background-image: linear-gradient(red, yellow); */
         /* background-attachment: fixed; */
         background-image: url("wood.jpg");
-        background-size: cover;
+        background-size: contain;
   }
