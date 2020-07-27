@@ -1,3 +1,7 @@
+/**
+ * Testing commit
+ */
+
 /** 
  * To get data for each color of cups I used this system:
  * 
