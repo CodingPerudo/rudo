@@ -1,3 +1,4 @@
+/* ___________________________the dice images__________________________ */
 .red_die_img {
     width: 50px;
     visibility: hidden;
@@ -31,11 +32,15 @@
     visibility: hidden;
 }
 
-
+/* ______________________________other stuff______________________________ */
 .cup {
     width: 85px;
 }
 
 #roll_button {
+    visibility: hidden;
+}
+
+#start_button {
     visibility: hidden;
 }
