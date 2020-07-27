@@ -23,7 +23,7 @@ app = Flask(__name__)
         #only available to a few people 
     #paste in example get and example post
 
-#michelle is the best
+#michelle is not the best
     #display dice and reroll dice 
 
 #peter
