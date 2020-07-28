@@ -43,53 +43,36 @@
     width: 85px;
 }
 
-#roll_button {
+.button {
     visibility: hidden;
     border:none;
     background-color:transparent;
     outline:none;
-    background-image: url(resources/blue_button.png);
     background-size: cover;
     color: white;
     background-repeat: no-repeat;
     padding: 10px;
+}
+
+#roll_button {
+    background-image: url(resources/blue_button.png);
 }
 
 #start_button {
-    border:none;
-    background-color:transparent;
-    outline:none;
-    visibility: hidden;
     background-image: url(resources/pink_button.png);
-    background-size: cover;
-    color: white;
-    background-repeat: no-repeat;
-    padding: 10px;
-
 }
 
 #display_button {
-    visibility: hidden;
-    border:none;
-    background-color:transparent;
-    outline:none;
     background-image: url(resources/green_button.png);
-    background-size: cover;
-    color: white;
-    background-repeat: no-repeat;
-    padding: 10px;
 }
 
 #reroll_button {
-    visibility: hidden;
-    border:none;
-    background-color:transparent;
-    outline:none;
     background-image: url(resources/pink_button.png);
-    background-size: cover;
-    color: white;
-    background-repeat: no-repeat;
-    padding: 10px;
+}
+
+#dudo_button {
+    background-image: url(resources/blue_button.png);
+    visibility: visible;
 }
 
 #buttons {
@@ -99,29 +82,8 @@
 #dudoMessage {
     color: white;
 }
-/* .button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-  } */
-  
 
-  body {
-      /* background-color: rgb(219, 232, 255); */
-      /* background-color: rgb(219, 215, 250); */
-      /* background-image: linear-gradient(to bottom right, rgb(219, 232, 255) ,rgb(219, 215, 250)); */
-      /* background-image: linear-gradient(  hsl(247, 83%, 88%), hsl(204, 56%, 61%)); */
-      /* background-repeat:no-repeat;
-        background-size:100% 100%; */
-        /* background-image: linear-gradient(red, yellow); */
-        /* background-attachment: fixed; */
-        background-image: url("resources/wood.jpg");
-        background-size: contain;
-  }
+body {
+    background-image: url("resources/wood.jpg");
+    background-size: contain;
+}

@@ -64,13 +64,65 @@ var dice_objects = [red_dice_objects, orange_dice_objects, yellow_dice_objects, 
 //your own dice numbers
 var dice_numbers = [0,0,0,0,0]
 //which dice you've selected
-var dice_clicked = [0,0,0,0,0]
+var selected_dice = [0,0,0,0,0]
 
 //which dice you've displayed to other players
 var displayed_dice = [0,0,0,0,0]
 
 //which color of cup/dice you've chosen
 var chosen_color = null;
+
+function updateGameInterval(){
+    // setInterval(function(){alert("hello")}, 2000);
+    setInterval(updateDisplayedDice, 500);
+}
+
+function updateDisplayedDice(){
+    console.log("updating all dice...");
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200){
+            var parsed = JSON.parse(this.responseText);
+            var red_dice = parsed.data.red.dice;
+            var red_disp = parsed.data.red.disp;
+
+            var orange_dice = parsed.data.orange.dice;
+            var orange_disp = parsed.data.orange.disp;
+
+            var yellow_dice = parsed.data.yellow.dice;
+            var yellow_disp = parsed.data.yellow.disp;
+
+            var green_dice = parsed.data.green.dice;
+            var green_disp = parsed.data.green.disp;
+
+            var blue_dice = parsed.data.blue.dice;
+            var blue_disp = parsed.data.blue.disp;
+
+            var black_dice = parsed.data.black.dice;
+            var black_disp = parsed.data.black.disp;
+
+            var dice = [red_dice, orange_dice, yellow_dice, green_dice, blue_dice, black_dice];
+            var disp = [red_disp, orange_disp, yellow_disp, green_disp, blue_disp, black_disp];
+            
+            console.log("DICE: " + String(dice))
+            console.log("DISP: " + String(disp))
+            for (var color = 0; color < 6; color++){
+                for (var dice_num = 0; dice_num < 5; dice_num++){
+                    if (disp[color][dice_num] === 1){
+                        // console.log("DISPLAYING!")
+                        if(color != chosen_color){
+                            document.getElementById(dice_objects[color][dice_num]).src = dice_img[color][dice[color][dice_num]-1];
+                        } 
+                        // console.log("My nums now: " + String(dice_numbers))
+                    }
+                }
+            }
+
+        }
+    };
+    request.open('GET', "/getDisplayed/", true);
+    request.send();
+}
 
 //displays your dice to yourself
 function rollDice(){
@@ -80,17 +132,28 @@ function rollDice(){
         document.getElementById(dice_objects[chosen_color][i]).src= dice_img[chosen_color][dice_numbers[i]-1];
     }
     document.getElementById("roll_button").style.visibility = 'hidden';
+    //send dice nums to server
+    post_dice_nums();
 
+
+}
+
+function post_dice_nums(){
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postNums/"; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ "color": chosen_color, "dice_nums": dice_numbers });
+    xhr.send(data);
 }
 
 //when you click on one of your own dice
 function clicked_die(num){
-    if(dice_clicked[num-1] == 0){  //if the die has not been selected
+    if(selected_dice[num-1] == 0){  //if the die has not been selected
         document.getElementById(dice_objects[chosen_color][num-1]).src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
-        dice_clicked[num-1] = 1;
+        selected_dice[num-1] = 1;
     } else {  //if the die is already selected
         document.getElementById(dice_objects[chosen_color][num-1]).src =dice_img[chosen_color][dice_numbers[num-1]-1];
-        dice_clicked[num-1] = 0;
+        selected_dice[num-1] = 0;
     }  
 }
 
@@ -107,6 +170,7 @@ function clicked_cup(num){
 
 //begins game. Shows all dice as peaches ;)
 function startGame(){
+
     for (var j = 0; j < 6; j++){
         for (var i = 0; i < 5; i++){
             document.getElementById(dice_objects[j][i]).style.visibility = 'visible';
@@ -116,12 +180,27 @@ function startGame(){
     document.getElementById("roll_button").style.visibility = 'visible';
     document.getElementById("display_button").style.visibility = 'visible';
     document.getElementById("reroll_button").style.visibility = 'visible';
+    document.getElementById("dudo_button").style.visibility = 'visible';
+
     //TODO: send dice info to server
 }
 
 
 function displayDice(){
-    //TODO: display selected dice to other players
+    for (var i = 0; i < 5; i++){
+        displayed_dice[i] = selected_dice[i];
+    }
+    //send displayed array to server
+    console.log("Posting: " + String(displayed_dice))
+    post_displayed_dice();
+}
+
+function post_displayed_dice(){
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postDisplayed/"; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ "color": chosen_color, "displayed": displayed_dice });
+    xhr.send(data);
 }
 
 function rerollDice(){
