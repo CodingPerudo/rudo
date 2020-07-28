@@ -48,7 +48,7 @@
     border:none;
     background-color:transparent;
     outline:none;
-    background-image: url(blue_button.png);
+    background-image: url(resources/blue_button.png);
     background-size: cover;
     color: white;
     background-repeat: no-repeat;
@@ -60,7 +60,7 @@
     background-color:transparent;
     outline:none;
     visibility: hidden;
-    background-image: url(pink_button.png);
+    background-image: url(resources/pink_button.png);
     background-size: cover;
     color: white;
     background-repeat: no-repeat;
@@ -73,7 +73,7 @@
     border:none;
     background-color:transparent;
     outline:none;
-    background-image: url(green_button.png);
+    background-image: url(resources/green_button.png);
     background-size: cover;
     color: white;
     background-repeat: no-repeat;
@@ -85,7 +85,7 @@
     border:none;
     background-color:transparent;
     outline:none;
-    background-image: url(pink_button.png);
+    background-image: url(resources/pink_button.png);
     background-size: cover;
     color: white;
     background-repeat: no-repeat;
@@ -96,6 +96,9 @@
     margin-top: 30px;
 }
 
+#dudoMessage {
+    color: white;
+}
 /* .button {
     background-color: #4CAF50;
     border: none;
@@ -119,6 +122,6 @@
         background-size:100% 100%; */
         /* background-image: linear-gradient(red, yellow); */
         /* background-attachment: fixed; */
-        background-image: url("wood.jpg");
+        background-image: url("resources/wood.jpg");
         background-size: contain;
   }

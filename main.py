@@ -1,5 +1,7 @@
 import json
 from flask import Flask, request
+# from flask import render_template
+
 app = Flask(__name__)
 
 #make a server code to login to the game (have multiple sessions)
@@ -70,7 +72,17 @@ playerInfo= {
 
 }
 
+@app.route('/')
+def enter():
+    return app.send_static_file('index.html')
+
+@app.route('/dudo', methods=['GET'])
+def dudo():
+    cup = request.args.get('cup')
+    text = "the dudo was done by cup " + str(cup)
+    return text
+    # return render_template("index.html", message=text)
 
 #___________________________________Run the server_________________________________________
 if __name__ == "__main__":
-  app.run(host='10.0.1.7', port=5000, debug=True)
+  app.run(host='0.0.0.0', port=5000, debug=True)

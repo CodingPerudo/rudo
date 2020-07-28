@@ -1,3 +1,5 @@
-# ignore project files
 *.xml
 *.iml
+
+venv/*
+*.pyc
