@@ -1,6 +1,6 @@
 import json
 from flask import Flask, request
-from flask import render_template
+# from flask import render_template
 
 app = Flask(__name__)
 
@@ -79,8 +79,9 @@ def enter():
 @app.route('/dudo', methods=['GET'])
 def dudo():
     cup = request.args.get('cup')
-    print(cup)
-    return cup
+    text = "the dudo was done by cup " + str(cup)
+    return text
+    # return render_template("index.html", message=text)
 
 #___________________________________Run the server_________________________________________
 if __name__ == "__main__":

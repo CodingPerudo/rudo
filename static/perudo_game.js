@@ -133,9 +133,9 @@ function dudo() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            console.log('success ' + this.responseText)
+            document.getElementById('dudoMessage').innerHTML = 'success ' + this.responseText;
         } else {
-            console.log('fail ' + this.responseText);
+            document.getElementById('dudoMessage').innerHTML = 'fail ' + this.responseText;
         }
     };
 
