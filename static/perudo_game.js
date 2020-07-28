@@ -77,6 +77,14 @@ function updateGameInterval(){
     setInterval(updateDisplayedDice, 500);
 }
 
+
+function insertCup(cup_to_move) {
+    var content = document.getElementById(cup_to_move);
+    var parent = content.parentNode;
+    parent.insertBefore(content, parent.firstChild);
+}
+
+
 //GET all the dice on the table and display them
 function updateDisplayedDice(){
     console.log("updating all dice...");
