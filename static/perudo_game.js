@@ -72,11 +72,12 @@ var displayed_dice = [0,0,0,0,0]
 //which color of cup/dice you've chosen
 var chosen_color = null;
 
+//update all the dice on the table
 function updateGameInterval(){
-    // setInterval(function(){alert("hello")}, 2000);
     setInterval(updateDisplayedDice, 500);
 }
 
+//GET all the dice on the table and display them
 function updateDisplayedDice(){
     console.log("updating all dice...");
     var request = new XMLHttpRequest();
@@ -138,6 +139,7 @@ function rollDice(){
 
 }
 
+//post all of your own dice nums to the server
 function post_dice_nums(){
     let xhr = new XMLHttpRequest();
     let url = "http://0.0.0.0:5000/postNums/"; 
@@ -185,7 +187,7 @@ function startGame(){
     //TODO: send dice info to server
 }
 
-
+//send selected dice to the server
 function displayDice(){
     for (var i = 0; i < 5; i++){
         displayed_dice[i] = selected_dice[i];
@@ -195,6 +197,7 @@ function displayDice(){
     post_displayed_dice();
 }
 
+//POST selected dice to the server
 function post_displayed_dice(){
     let xhr = new XMLHttpRequest();
     let url = "http://0.0.0.0:5000/postDisplayed/"; 
