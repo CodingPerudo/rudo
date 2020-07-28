@@ -27,7 +27,7 @@ var red_dice_img = ["static/resources/red_dice/red_1.png", "static/resources/red
 var red_dice_img_dark = ["static/resources/red_dice/red_1dark.png", "static/resources/red_dice/red_2dark.png", "static/resources/red_dice/red_3dark.png", "static/resources/red_dice/red_4dark.png", "static/resources/red_dice/red_5dark.png", "static/resources/red_dice/red_6dark.png"]
 
 //orange dice images
-var orange_dice_img = ["static/resources/orange_dice/orange_1.png", "static/resources/orange_dice/orange_2.png", "static/resources/range_dice/orange_3.png", "static/resources/orange_dice/orange_4.png", "static/resources/orange_dice/orange_5.png", "static/resources/orange_dice/orange_6.png"]
+var orange_dice_img = ["static/resources/orange_dice/orange_1.png", "static/resources/orange_dice/orange_2.png", "static/resources/orange_dice/orange_3.png", "static/resources/orange_dice/orange_4.png", "static/resources/orange_dice/orange_5.png", "static/resources/orange_dice/orange_6.png"]
 var orange_dice_img_dark = ["static/resources/orange_dice/orange_1dark.png", "static/resources/orange_dice/orange_2dark.png", "static/resources/orange_dice/orange_3dark.png", "static/resources/orange_dice/orange_4dark.png", "static/resources/orange_dice/orange_5dark.png", "static/resources/orange_dice/orange_6dark.png"]
 
 //yellow dice images
