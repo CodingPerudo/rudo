@@ -72,6 +72,9 @@ var displayed_dice = [0,0,0,0,0]
 //which color of cup/dice you've chosen
 var chosen_color = null;
 
+//all dice that are hidden from you!
+var hidden_dice = [0,0,0,0,0]
+
 //update all the dice on the table
 function updateGameInterval(){
     setInterval(updateDisplayedDice, 500);
@@ -158,10 +161,10 @@ function post_dice_nums(){
 
 //when you click on one of your own dice
 function clicked_die(num){
-    if(selected_dice[num-1] == 0){  //if the die has not been selected
+    if(selected_dice[num-1] == 0 && hidden_dice[num-1] == 0){  //if the die has not been selected
         document.getElementById(dice_objects[chosen_color][num-1]).src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
         selected_dice[num-1] = 1;
-    } else {  //if the die is already selected
+    } else if (hidden_dice[num-1] == 0) {  //if the die is already selected
         document.getElementById(dice_objects[chosen_color][num-1]).src =dice_img[chosen_color][dice_numbers[num-1]-1];
         selected_dice[num-1] = 0;
     }  
@@ -210,13 +213,39 @@ function post_displayed_dice(){
     let xhr = new XMLHttpRequest();
     let url = "http://0.0.0.0:5000/postDisplayed/"; 
     xhr.open("POST", url, true);
-    var data = JSON.stringify({ "color": chosen_color, "displayed": displayed_dice });
+    var data = JSON.stringify(
+        {   "color": chosen_color, 
+            "displayed": displayed_dice }
+        );
     xhr.send(data);
 }
 
 function rerollDice(){
-    //TODO: display all dice not selected
     //TOOD: reroll and hide all dice selected
+    for (var i = 0; i < 5; i++){
+        if (selected_dice[i] == 1){
+            hidden_dice[i] = 1;
+            dice_numbers[i] = Math.ceil(Math.random()*6);
+            document.getElementById(dice_objects[chosen_color][i]).src= "/static/resources/peach.png";
+        }
+    }
+    post_dice_nums();
+    //TODO: display all dice not selected
+    //make displayed dice array opposite
+    console.log("old: " + String(selected_dice))
+    for (var j = 0; j < 5; j++){
+        if (selected_dice[j] == 0) {
+            selected_dice[j] = 1;
+        } else {
+            selected_dice[j] = 0;
+        }
+    }
+    console.log("new: " + String(selected_dice))
+    //display dice
+    displayDice();
+    
+
+
 }
 
 function dudo() {
