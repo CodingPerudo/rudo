@@ -49,7 +49,8 @@ playerInfo= {
         "displayed_dice": [0,0,0,0,0],
         "rank": -1,
         "gameStart": False,
-        "pos" : 0
+        "pos" : 0,
+        "username": ""
         # store next player
         #maybe make the displayed/dice nums = -1 when they lose a die
     },
@@ -58,35 +59,40 @@ playerInfo= {
         "displayed_dice": [0,0,0,0,0],
         "rank": -1,
         "gameStart": False,
-        "pos" : 1
+        "pos" : 1,
+        "username": ""
     },
     "yellow": {
         "dice_nums": [0,0,0,0,0],
         "displayed_dice": [0,0,0,0,0],
         "rank": -1,
         "gameStart": False,
-        "pos" : 2
+        "pos" : 2,
+        "username": ""
     },
     "green": {
         "dice_nums": [0,0,0,0,0],
         "displayed_dice": [0,0,0,0,0],
         "rank": -1,
         "gameStart": False,
-        "pos" : 3
+        "pos" : 3,
+        "username": ""
     },
     "blue": {
         "dice_nums": [0,0,0,0,0],
         "displayed_dice": [0,0,0,0,0],
         "rank": -1,
         "gameStart": False,
-        "pos" : 4
+        "pos" : 4,
+        "username": ""
     },
     "black": {
         "dice_nums": [0,0,0,0,0],
         "displayed_dice": [0,0,0,0,0],
         "rank": -1,
         "gameStart": False,
-        "pos" : 5
+        "pos" : 5,
+        "username": ""
     }
 }
 
@@ -200,6 +206,14 @@ def postPos():
       #for each die, make it's pos = the html pos
 
       #prior to clicking start game, you can see the host, and cannot click the host. 
+
+@app.route("/postUsername/", methods = ["POST"])
+def postUsername():
+    body = json.loads(request.data)
+    cup_color = body["color"]
+    playerInfo[cup_color]["username"] = body["username"]
+    return json.dumps({"success": True, "data": body}), 201
+
 #___________________________________Run the server_________________________________________
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -87,3 +87,7 @@ body {
     background-image: url("resources/wood.jpg");
     background-size: contain;
 }
+
+#redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername{
+    color: white; 
+}
