@@ -15,7 +15,7 @@
  * This number is stored in "chosen_color" and is referenced in 2D arrays to get the selected color of dice
  * 
 */
-
+var colors = ["red", "orange", "yellow", "green", "blue", "black"]
 
 //cup images and html objects
 var cups = ["red_cup", "orange_cup", "yellow_cup", "green_cup", "blue_cup", "black_cup"]
@@ -72,20 +72,86 @@ var displayed_dice = [0,0,0,0,0]
 //which color of cup/dice you've chosen
 var chosen_color = null;
 
+var game_started = false;
+
 //update all the dice on the table
 function updateGameInterval(){
     setInterval(updateDisplayedDice, 500);
+    setInterval(getPos, 500);
+    setInterval(postPos, 500);
+    setInterval(updateCupPos, 500);
 }
 
 
+//the divs will hold their ranks
 function insertCup(cup_to_move) {
     var content = document.getElementById(cup_to_move);
     var parent = content.parentNode;
-    parent.insertBefore(content, parent.firstChild);
+    var highestRank = -1
+    getPos();
+    colors.forEach(color => {if (document.getElementById(color + "Rank").value > highestRank) {
+        highestRank = document.getElementById(color + "Rank").value
+    }})
+    if (highestRank = -1){
+        parent.insertBefore(content, parent.childNodes[1])
+    }
+    else {
+    parent.insertBefore(content, parent.childNodes[highestRank+1])
+    }
 }
 
+function updateCupPos(){//call it ever 500 ms, in update function
+    //if the cup has a rank, set its position to its rank, 
+    var parent= document.getElementById("red_player").parentNode; //use any cup to get it's parent
+    let toMove = []
+    colors.forEach(color => {if (document.getElementById(color + "Pos").value != document.getElementById(color + "Rank").value && document.getElementById(color + "Rank").value != -1){
+        toMove.push(color)
+    }})
+    toMove.forEach(color => parent.insertBefore(document.getElementById(color + "_player"), parent.childNodes[document.getElementById(color + "Rank").value]))
+}
 
-//GET all the dice on the table and display them
+function getPos(){
+    console.log("updating pos");
+    var rankRequest = new XMLHttpRequest();
+    console.log("made new REQUEST")
+    rankRequest.onreadystatechange = function() {
+    if (rankRequest.readyState == 4 && rankRequest.status == 200){
+        var parsed = JSON.parse(this.responseText);
+        document.getElementById("redPos").value = parsed.data.red.pos
+        document.getElementById("orangePos").value = parsed.data.orange.pos
+        document.getElementById("yellowPos").value = parsed.data.yellow.pos
+        document.getElementById("greenPos").value = parsed.data.green.pos
+        document.getElementById("bluePos").value = parsed.data.blue.pos
+        document.getElementById("blackPos").value = parsed.data.black.pos
+
+        document.getElementById("redRank").value = parsed.data.red.rank
+        document.getElementById("orangeRank").value = parsed.data.orange.rank
+        document.getElementById("yellowRank").value = parsed.data.yellow.rank
+        document.getElementById("greenRank").value = parsed.data.green.rank
+        document.getElementById("blueRank").value = parsed.data.blue.rank
+        document.getElementById("blackRank").value = parsed.data.black.rank
+
+        colors.forEach(color =>console.log(color + "RANK =" + document.getElementById(color + "Rank").value))
+    }
+};rankRequest.open('GET', "/getPos/", true);
+    rankRequest.send();
+    
+}
+
+function postPos() {
+    let postPosXhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postPos/";
+    postPosXhr.open("POST", url, true);
+    var data = JSON.stringify({"redPos": document.getElementById("redPos").value,
+                             "orangePos": document.getElementById("orangePos").value,
+                             "yellowPos": document.getElementById("yellowPos").value,
+                             "greenPos": document.getElementById("greenPos").value,
+                             "bluePos": document.getElementById("bluePos").value,
+                             "blackPos": document.getElementById("blackPos").value
+})
+              postPosXhr.send(data)               
+}
+
 function updateDisplayedDice(){
     console.log("updating all dice...");
     var request = new XMLHttpRequest();
@@ -112,17 +178,13 @@ function updateDisplayedDice(){
 
             var dice = [red_dice, orange_dice, yellow_dice, green_dice, blue_dice, black_dice];
             var disp = [red_disp, orange_disp, yellow_disp, green_disp, blue_disp, black_disp];
-            
-            console.log("DICE: " + String(dice))
-            console.log("DISP: " + String(disp))
+
             for (var color = 0; color < 6; color++){
                 for (var dice_num = 0; dice_num < 5; dice_num++){
                     if (disp[color][dice_num] === 1){
-                        // console.log("DISPLAYING!")
                         if(color != chosen_color){
                             document.getElementById(dice_objects[color][dice_num]).src = dice_img[color][dice[color][dice_num]-1];
                         } 
-                        // console.log("My nums now: " + String(dice_numbers))
                     }
                 }
             }
@@ -180,6 +242,7 @@ function clicked_cup(num){
 
 //begins game. Shows all dice as peaches ;)
 function startGame(){
+    serverGameStart();
 
     for (var j = 0; j < 6; j++){
         for (var i = 0; i < 5; i++){
@@ -193,6 +256,14 @@ function startGame(){
     document.getElementById("dudo_button").style.visibility = 'visible';
 
     //TODO: send dice info to server
+}
+
+function serverGameStart(){ //push information to the server
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/gameStart/"; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ "color": chosen_color});
+    xhr.send(data);
 }
 
 //send selected dice to the server
