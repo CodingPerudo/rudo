@@ -76,29 +76,78 @@ var game_started = false;
 //all dice that are hidden from you!
 var hidden_dice = [0,0,0,0,0]
 
+//animal names to simulate usernames
+var animals = ["dolphin", "penguin", "otter", "lion", "bear", "monkey", "salmon", "horse", "turtle", "hare", "giraffe", "emu"]
+var userPicked = false; //this will turn true when the user picks a color and clicks start game
+
 //update all the dice on the table
 function updateGameInterval(){
     setInterval(updateDisplayedDice, 500);
     setInterval(getPos, 500);
     setInterval(postPos, 500);
     setInterval(updateCupPos, 500);
+    setInterval(getUsernames, 500);
+}
+
+function makeUsername(cup_color){//figure out when to call this
+    console.log("make Username:::::")
+    var newUsername = prompt("Enter " + cup_color + " username") //make usernameSlot in html
+    if (newUsername == ""){//only use this if the user input is ""
+        var randIndex = Math.floor(Math.random()*animals.length);
+        newUsername = animals[randIndex]; 
+        document.getElementById(cup_color+"username").innerText = newUsername
+        animals.splice(randIndex); //pop username from animals, each username only used once
+    }
+    document.getElementById("usernameBox").innerHTML = newUsername //make usernameBox in html
+    postUsername(cup_color); 
+}
+
+function postUsername(cup_color){
+    let postUsernameXhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postUsername/";
+    postUsernameXhr.open("POST", url, true);
+    var colorUsername = cup_color+"username"
+    var data = JSON.stringify({"color": cup_color, 
+    "username": document.getElementById(colorUsername).innerText
+})
+              postUsernameXhr.send(data)       
+
+}
+
+function getUsernames(){//call this periodically
+    var usernameRequest = new XMLHttpRequest();
+    usernameRequest.onreadystatechange = function() {
+    if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
+        var parsed = JSON.parse(this.responseText);
+        document.getElementById("redUsername").innerText = parsed.data.red.username
+        document.getElementById("orangeUsername").innerText = parsed.data.orange.username
+        document.getElementById("yellowUsername").innerText = parsed.data.yellow.username
+        document.getElementById("greenUsername").innerText = parsed.data.green.username
+        document.getElementById("blueUsername").innerText = parsed.data.blue.username
+        document.getElementById("blackUsername").innerText = parsed.data.black.username
+    }
+};usernameRequest.open('GET', "/getPos/", true);
+    usernameRequest.send();
+    
 }
 
 
 //the divs will hold their ranks
 function insertCup(cup_to_move) {
-    var content = document.getElementById(cup_to_move);
-    var parent = content.parentNode;
-    var highestRank = -1
-    getPos();
-    colors.forEach(color => {if (document.getElementById(color + "Rank").value > highestRank) {
-        highestRank = document.getElementById(color + "Rank").value
-    }})
-    if (highestRank = -1){
-        parent.insertBefore(content, parent.childNodes[1])
-    }
-    else {
-    parent.insertBefore(content, parent.childNodes[highestRank+1])
+    if (document.getElementById(colors[chosen_color]+"Rank").value == "-1" && userPicked == false){//if the clicked cup does not have a rank, then proceed
+        var content = document.getElementById(cup_to_move);
+        var parent = content.parentNode;
+        var highestRank = -1
+        getPos();
+        colors.forEach(color => {if (document.getElementById(color + "Rank").value > highestRank) {
+            highestRank = document.getElementById(color + "Rank").value
+        }})
+        if (highestRank = -1){
+            parent.insertBefore(content, parent.childNodes[1])
+        }
+        else {
+        parent.insertBefore(content, parent.childNodes[highestRank+1])
+        }
     }
 }
 
@@ -233,13 +282,15 @@ function clicked_die(num){
 
 //when you click on a colored cup
 function clicked_cup(num){
-    console.log("chosen: " + chosen_color)
-    if (chosen_color != null && chosen_color != num){ //if you select a new color
-        document.getElementById(cups[chosen_color]).src= cup_colors[chosen_color];
+    if (document.getElementById(colors[num]+"Rank").value == "-1" && userPicked == false){//if the clicked cup does not have a rank, then proceed
+        console.log("chosen: " + chosen_color)
+        if (chosen_color != null && chosen_color != num){ //if you select a new color
+            document.getElementById(cups[chosen_color]).src= cup_colors[chosen_color];
+        }
+        chosen_color = num;
+        document.getElementById(cups[chosen_color]).src= cup_color_dark[chosen_color];
+        document.getElementById("start_button").style.visibility = 'visible';
     }
-    chosen_color = num;
-    document.getElementById(cups[chosen_color]).src= cup_color_dark[chosen_color];
-    document.getElementById("start_button").style.visibility = 'visible';
 }
 
 //begins game. Shows all dice as peaches ;)
@@ -256,6 +307,7 @@ function startGame(){
     document.getElementById("display_button").style.visibility = 'visible';
     document.getElementById("reroll_button").style.visibility = 'visible';
     document.getElementById("dudo_button").style.visibility = 'visible';
+    userPicked = true; 
 
     //TODO: send dice info to server
 }

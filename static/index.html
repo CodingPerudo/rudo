@@ -8,6 +8,7 @@
 <body onload="updateGameInterval();">
     <div id="wrapper">
         <div id="red_player"> <input type="hidden" id="redRank" value="-1"> <input type="hidden" id="redPos" value="0">
+            <p id="redUsername"> panda</p>
             <img class=cup id="red_cup" src="/static/resources/cups/red_cup.png" onclick="clicked_cup(0); insertCup('red_player');">
             <img class=red_die_img id="red_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=red_die_img id="red_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
@@ -17,6 +18,7 @@
         </div>
 
         <div id="orange_player"> <input type="hidden" id="orangeRank" value="-1"> <input type="hidden" id="orangePos" value="1">
+            <p id="orangeUsername"> </p>
             <img class=cup id="orange_cup" src="/static/resources/cups/orange_cup.png" onclick="clicked_cup(1); insertCup('orange_player');">
             <img class=orange_die_img id="orange_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=orange_die_img id="orange_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
@@ -26,6 +28,7 @@
         </div>
 
         <div id="yellow_player"> <input type="hidden" id="yellowRank" value="-1"> <input type="hidden" id="yellowPos" value="2">
+            <p id="yellowUsername"> HELLO</p>
             <img class=cup id="yellow_cup" src="/static/resources/cups/yellow_cup.png" onclick="clicked_cup(2); insertCup('yellow_player');">
             <img class=yellow_die_img id="yellow_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=yellow_die_img id="yellow_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
@@ -35,6 +38,7 @@
         </div>
 
         <div id="green_player"> <input type="hidden" id="greenRank" value="-1"> <input type="hidden" id="greenPos" value="3">
+            <p id="greenUsername"> </p>
             <img class=cup id="green_cup" src="/static/resources/cups/green_cup.png" onclick="clicked_cup(3); insertCup('green_player');">
             <img class=green_die_img id="green_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=green_die_img id="green_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
@@ -44,6 +48,7 @@
         </div>
 
         <div id="blue_player"> <input type="hidden" id="blueRank" value="-1"> <input type="hidden" id="bluePos" value="4">
+            <p id="blueUsername"> </p>
             <img class=cup id="blue_cup" src="/static/resources/cups/blue_cup.png" onclick="clicked_cup(4); insertCup('blue_player');">
             <img class=blue_die_img id="blue_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=blue_die_img id="blue_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
@@ -53,6 +58,7 @@
         </div>
 
         <div id="black_player"> <input type="hidden" id="blackRank" value="-1"> <input type="hidden" id="blackPos" value="5">
+            <p id="blackUsername"> </p>
             <img class=cup id="black_cup" src="/static/resources/cups/black_cup.png" onclick="clicked_cup(5); insertCup('black_player');">
             <img class=black_die_img id="black_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=black_die_img id="black_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
@@ -71,7 +77,7 @@
         <p id='dudoMessage'></p>
     </div>
 
-    <button id="order_button" onclick ="insertCup('yellow_player');" type="button">Test update 13:48</button>
+    <button id="blueUsernameButton" onclick ="makeUsername('blue');" type="button">Enter Blue Username</button>
 
     <script src="/static/perudo_game.js"></script>
 
