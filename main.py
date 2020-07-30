@@ -88,9 +88,6 @@ playerInfo= {
         "gameStart": False,
         "pos" : 5
     }
-
-    #current bet
-
 }
 
 #___________________________________GET Requests_________________________________________
