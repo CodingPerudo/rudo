@@ -38,7 +38,7 @@
     padding-bottom: 25px;
 }
 
-/* ______________________________other stuff______________________________ */
+/* ______________________________Buttons______________________________ */
 .cup {
     width: 85px;
 }
@@ -79,11 +79,14 @@
     margin-top: 30px;
 }
 
+/* ______________________________Other stuff______________________________ */
+
 #dudoMessage {
     color: white;
 }
 
 body {
+    padding-top: 20px;
     background-image: url("resources/wood.jpg");
     background-size: contain;
 }
@@ -94,3 +97,25 @@ body {
     text-shadow: 1px black;
     font-size: Large;
 }
+
+.player_pic {
+    width: 50px;
+}
+
+.user_info {
+    float: left;
+    position: relative;
+}
+
+.player_div {
+    padding-bottom: 20px;
+
+}
+
+#redUsername {
+    padding-top: 60px;
+}
+
+#redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername {
+    position: absolute;
+} 

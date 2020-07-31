@@ -7,64 +7,94 @@
 
 <body onload="updateGameInterval();">
     <div id="wrapper">
-        <div id="red_player"> <input type="hidden" id="redRank" value="-1"> <input type="hidden" id="redPos" value="0">
+        <div class= "player_div" id="red_player"> <input type="hidden" id="redRank" value="-1"> <input type="hidden" id="redPos" value="0">
+            <div class= "user_info" id= "red_user_info">
+                <p id="redUsername"> </p>
+                <img class=player_pic id="red_user_pic" src="/static/red_user.png" >
+            </div>
+            
             <img class=cup id="red_cup" src="/static/resources/cups/red_cup.png" onclick="clicked_cup(0); insertCup('red_player');">
             <img class=red_die_img id="red_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=red_die_img id="red_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
             <img class=red_die_img id="red_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(3);">
             <img class=red_die_img id="red_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(4);">
             <img class=red_die_img id="red_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(5);">
-            <p id="redUsername"> </p>
+            
         </div>
 
-        <div id="orange_player"> <input type="hidden" id="orangeRank" value="-1"> <input type="hidden" id="orangePos" value="1">
+        <div class= "player_div" id="orange_player"> <input type="hidden" id="orangeRank" value="-1"> <input type="hidden" id="orangePos" value="1">
+            <div class= "user_info" id= "orange_user_info">
+                <img class=player_pic id="orange_user_pic" src="/static/orange_user.png" >
+                <p id="orangeUsername"> </p>
+            </div>
+            
             <img class=cup id="orange_cup" src="/static/resources/cups/orange_cup.png" onclick="clicked_cup(1); insertCup('orange_player');">
             <img class=orange_die_img id="orange_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=orange_die_img id="orange_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
             <img class=orange_die_img id="orange_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(3);">
             <img class=orange_die_img id="orange_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(4);">
             <img class=orange_die_img id="orange_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(5);">
-            <p id="orangeUsername"> </p>
+    
         </div>
 
-        <div id="yellow_player"> <input type="hidden" id="yellowRank" value="-1"> <input type="hidden" id="yellowPos" value="2">
+        <div class= "player_div" id="yellow_player"> <input type="hidden" id="yellowRank" value="-1"> <input type="hidden" id="yellowPos" value="2">
+            <div class= "user_info" id= "yellow_user_info">
+                <img class=player_pic id="yellow_user_pic" src="/static/yellow_user.png" >
+                <p id="yellowUsername"> </p>
+            </div>
+
             <img class=cup id="yellow_cup" src="/static/resources/cups/yellow_cup.png" onclick="clicked_cup(2); insertCup('yellow_player');">
             <img class=yellow_die_img id="yellow_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=yellow_die_img id="yellow_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
             <img class=yellow_die_img id="yellow_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(3);">
             <img class=yellow_die_img id="yellow_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(4);">
             <img class=yellow_die_img id="yellow_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(5);">
-            <p id="yellowUsername"> </p>
+        
         </div>
 
-        <div id="green_player"> <input type="hidden" id="greenRank" value="-1"> <input type="hidden" id="greenPos" value="3">
+        <div class= "player_div" id="green_player"> <input type="hidden" id="greenRank" value="-1"> <input type="hidden" id="greenPos" value="3">
+            <div class= "user_info" id= "green_user_info">
+                <img class=player_pic id="green_user_pic" src="/static/green_user.png" >
+                <p id="greenUsername"> </p>
+            </div>
+            
             <img class=cup id="green_cup" src="/static/resources/cups/green_cup.png" onclick="clicked_cup(3); insertCup('green_player');">
             <img class=green_die_img id="green_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=green_die_img id="green_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
             <img class=green_die_img id="green_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(3);">
             <img class=green_die_img id="green_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(4);">
             <img class=green_die_img id="green_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(5);">
-            <p id="greenUsername"> </p>
+
         </div>
 
-        <div id="blue_player"> <input type="hidden" id="blueRank" value="-1"> <input type="hidden" id="bluePos" value="4">
+        <div class= "player_div" id="blue_player"> <input type="hidden" id="blueRank" value="-1"> <input type="hidden" id="bluePos" value="4">
+            <div class= "user_info" id= "blue_user_info">
+                <img class=player_pic id="blue_user_pic" src="/static/blue_user.png" >
+                <p id="blueUsername"> </p>
+            </div>
+            
             <img class=cup id="blue_cup" src="/static/resources/cups/blue_cup.png" onclick="clicked_cup(4); insertCup('blue_player');">
             <img class=blue_die_img id="blue_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=blue_die_img id="blue_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
             <img class=blue_die_img id="blue_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(3);">
             <img class=blue_die_img id="blue_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(4);">
             <img class=blue_die_img id="blue_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(5);">
-            <p id="blueUsername"> </p>
+   
         </div>
 
-        <div id="black_player"> <input type="hidden" id="blackRank" value="-1"> <input type="hidden" id="blackPos" value="5">
+        <div class= "player_div" id="black_player"> <input type="hidden" id="blackRank" value="-1"> <input type="hidden" id="blackPos" value="5">
+            <div class= "user_info" id= "black_user_info">
+                <img class=player_pic id="black_user_pic" src="/static/black_user.png" >
+                <p id="blackUsername"> </p>
+            </div>
+            
             <img class=cup id="black_cup" src="/static/resources/cups/black_cup.png" onclick="clicked_cup(5); insertCup('black_player');">
             <img class=black_die_img id="black_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
             <img class=black_die_img id="black_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2);">
             <img class=black_die_img id="black_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(3);">
             <img class=black_die_img id="black_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(4);">
             <img class=black_die_img id="black_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(5);">
-            <p id="blackUsername"> </p>
+ 
         </div>
     </div>
 
