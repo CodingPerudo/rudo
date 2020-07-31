@@ -90,4 +90,7 @@ body {
 
 #redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername{
     color: white; 
+    text-indent: 2%;
+    text-shadow: 1px black;
+    font-size: Large;
 }

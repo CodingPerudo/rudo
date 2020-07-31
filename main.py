@@ -29,9 +29,8 @@ app = Flask(__name__)
     #display dice and reroll dice 
 
 #peter
-    #make cups go in order 
-        #all cups are blank 
-        #assign color
+    #make cups go in order (DONE)
+    #make usernames (in progress)
     #probability counter
     #obvious whos turn it is 
         #opacity background highlights current player
