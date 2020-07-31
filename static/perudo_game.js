@@ -77,7 +77,7 @@ var game_started = false;
 var hidden_dice = [0,0,0,0,0]
 
 //animal names to simulate usernames
-var animals = ["dolphin", "penguin", "otter", "lion", "bear", "monkey", "salmon", "horse", "turtle", "hare", "giraffe", "emu"]
+var animals = ["Dolphin", "Penguin", "Otter", "Lion", "Bear", "Monkey", "Salmon", "Horse", "Turtle", "Hare", "Giraffe", "Emu"]
 var userPicked = false; //this will turn true when the user picks a color and clicks start game
 
 //update all the dice on the table
@@ -90,15 +90,14 @@ function updateGameInterval(){
 }
 
 function makeUsername(cup_color){//figure out when to call this
-    console.log("make Username:::::")
-    var newUsername = prompt("Enter " + cup_color + " username") //make usernameSlot in html
+    var newUsername = prompt("Enter " + cup_color + " Username") //make usernameSlot in html
     if (newUsername == ""){//only use this if the user input is ""
         var randIndex = Math.floor(Math.random()*animals.length);
-        newUsername = animals[randIndex]; 
-        document.getElementById(cup_color+"username").innerText = newUsername
-        animals.splice(randIndex); //pop username from animals, each username only used once
+        newUsername = cup_color + animals[randIndex]; 
+        document.getElementById(cup_color+"Username").innerHTML = newUsername
+        animals.splice(randIndex, 1); //pop username from animals, each username only used once
     }
-    document.getElementById("usernameBox").innerHTML = newUsername //make usernameBox in html
+    document.getElementById(cup_color + "Username").innerHTML = newUsername //make usernameBox in html
     postUsername(cup_color); 
 }
 
@@ -106,7 +105,7 @@ function postUsername(cup_color){
     let postUsernameXhr = new XMLHttpRequest();
     let url = "http://0.0.0.0:5000/postUsername/";
     postUsernameXhr.open("POST", url, true);
-    var colorUsername = cup_color+"username"
+    var colorUsername = cup_color+"Username"
     var data = JSON.stringify({"color": cup_color, 
     "username": document.getElementById(colorUsername).innerText
 })
@@ -162,9 +161,7 @@ function updateCupPos(){//call it ever 500 ms, in update function
 }
 
 function getPos(){
-    console.log("updating pos");
     var rankRequest = new XMLHttpRequest();
-    console.log("made new REQUEST")
     rankRequest.onreadystatechange = function() {
     if (rankRequest.readyState == 4 && rankRequest.status == 200){
         var parsed = JSON.parse(this.responseText);
@@ -181,8 +178,6 @@ function getPos(){
         document.getElementById("greenRank").value = parsed.data.green.rank
         document.getElementById("blueRank").value = parsed.data.blue.rank
         document.getElementById("blackRank").value = parsed.data.black.rank
-
-        colors.forEach(color =>console.log(color + "RANK =" + document.getElementById(color + "Rank").value))
     }
 };rankRequest.open('GET', "/getPos/", true);
     rankRequest.send();
@@ -204,7 +199,6 @@ function postPos() {
 }
 
 function updateDisplayedDice(){
-    console.log("updating all dice...");
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200){
@@ -283,7 +277,6 @@ function clicked_die(num){
 //when you click on a colored cup
 function clicked_cup(num){
     if (document.getElementById(colors[num]+"Rank").value == "-1" && userPicked == false){//if the clicked cup does not have a rank, then proceed
-        console.log("chosen: " + chosen_color)
         if (chosen_color != null && chosen_color != num){ //if you select a new color
             document.getElementById(cups[chosen_color]).src= cup_colors[chosen_color];
         }
@@ -296,7 +289,6 @@ function clicked_cup(num){
 //begins game. Shows all dice as peaches ;)
 function startGame(){
     serverGameStart();
-
     for (var j = 0; j < 6; j++){
         for (var i = 0; i < 5; i++){
             document.getElementById(dice_objects[j][i]).style.visibility = 'visible';
@@ -308,7 +300,8 @@ function startGame(){
     document.getElementById("reroll_button").style.visibility = 'visible';
     document.getElementById("dudo_button").style.visibility = 'visible';
     userPicked = true; 
-
+    console.log("making username for " + chosen_color)
+    makeUsername(colors[chosen_color])
     //TODO: send dice info to server
 }
 
@@ -326,7 +319,6 @@ function displayDice(){
         displayed_dice[i] = selected_dice[i];
     }
     //send displayed array to server
-    console.log("Posting: " + String(displayed_dice))
     post_displayed_dice();
 }
 
@@ -354,7 +346,6 @@ function rerollDice(){
     post_dice_nums();
     //TODO: display all dice not selected
     //make displayed dice array opposite
-    console.log("old: " + String(selected_dice))
     for (var j = 0; j < 5; j++){
         if (selected_dice[j] == 0) {
             selected_dice[j] = 1;
@@ -362,7 +353,6 @@ function rerollDice(){
             selected_dice[j] = 0;
         }
     }
-    console.log("new: " + String(selected_dice))
     //display dice
     displayDice();
     
