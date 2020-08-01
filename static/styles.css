@@ -43,6 +43,15 @@
     width: 85px;
 }
 
+#wrapper {
+    float: left;
+    position: relative;
+}
+
+#buttons {
+    padding-left: 10px;
+}
+
 .button {
     visibility: hidden;
     border:none;
@@ -72,7 +81,7 @@
 
 #dudo_button {
     background-image: url(resources/blue_button.png);
-    visibility: visible;
+    visibility: hidden;
 }
 
 #buttons {
@@ -80,6 +89,8 @@
 }
 
 /* ______________________________Other stuff______________________________ */
+
+
 
 #dudoMessage {
     color: white;
@@ -112,10 +123,10 @@ body {
 
 }
 
-#redUsername {
+/* #redUsername {
     padding-top: 60px;
 }
 
 #redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername {
     position: absolute;
-} 
+}  */

@@ -6,12 +6,13 @@
 </head>
 
 <body onload="updateGameInterval();">
+    
     <div id="wrapper">
         <div class= "player_div" id="red_player"> <input type="hidden" id="redRank" value="-1"> <input type="hidden" id="redPos" value="0">
-            <!-- <div class= "user_info" id= "red_user_info"> -->
+            <div class= "user_info" id= "red_user_info">
                 <p id="redUsername"> </p>
-                <!-- <img class=player_pic id="red_user_pic" src="/static/red_user.png" >
-            </div> -->
+                <img class=player_pic id="red_user_pic" src="/static/red_user.png" >
+            </div>
             
             <img class=cup id="red_cup" src="/static/resources/cups/red_cup.png" onclick="clicked_cup(0); insertCup('red_player');">
             <img class=red_die_img id="red_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1);">
