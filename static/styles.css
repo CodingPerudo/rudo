@@ -123,10 +123,10 @@ body {
 
 }
 
-/* #redUsername {
+#redUsername {
     padding-top: 60px;
 }
 
 #redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername {
     position: absolute;
-}  */
+} 
