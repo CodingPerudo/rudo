@@ -66,22 +66,40 @@
 #roll_button {
     background-image: url(resources/blue_button.png);
 }
+#roll_button:hover{
+    background-image: url(resources/blue_pressed.png);
+}
 
 #start_button {
     background-image: url(resources/pink_button.png);
+}
+
+#start_button:hover{
+    background-image: url(resources/pink_pressed.png);
 }
 
 #display_button {
     background-image: url(resources/green_button.png);
 }
 
+#display_button:hover {
+    background-image: url(resources/green_pressed.png);
+}
+
 #reroll_button {
     background-image: url(resources/pink_button.png);
+}
+#reroll_button:hover{
+    background-image: url(resources/pink_pressed.png);
 }
 
 #dudo_button {
     background-image: url(resources/blue_button.png);
     visibility: hidden;
+}
+
+#dudo_button:hover{
+    background-image: url(resources/blue_pressed.png);
 }
 
 #buttons {

@@ -418,3 +418,4 @@ function getDoubt(){
     };request.open('GET', "/getDoubt/", true);
     request.send();
 }
+
