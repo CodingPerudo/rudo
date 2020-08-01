@@ -73,8 +73,9 @@ var displayed_dice = [0,0,0,0,0]
 var chosen_color = null;
 
 var game_started = false;
+var someone_doubted = false;
 //all dice that are hidden from you!
-var hidden_dice = [0,0,0,0,0]
+var hidden_dice = [1,1,1,1,1]
 
 //animal names to simulate usernames
 var animals = ["Dolphin", "Penguin", "Otter", "Lion", "Bear", "Monkey", "Salmon", "Horse", "Turtle", "Hare", "Giraffe", "Emu"]
@@ -87,6 +88,7 @@ function updateGameInterval(){
     setInterval(postPos, 500);
     setInterval(updateCupPos, 500);
     setInterval(getUsernames, 500);
+    setInterval(checkDudo,500);
 }
 
 function makeUsername(cup_color){//figure out when to call this
@@ -163,23 +165,23 @@ function updateCupPos(){//call it ever 500 ms, in update function
 function getPos(){
     var rankRequest = new XMLHttpRequest();
     rankRequest.onreadystatechange = function() {
-    if (rankRequest.readyState == 4 && rankRequest.status == 200){
-        var parsed = JSON.parse(this.responseText);
-        document.getElementById("redPos").value = parsed.data.red.pos
-        document.getElementById("orangePos").value = parsed.data.orange.pos
-        document.getElementById("yellowPos").value = parsed.data.yellow.pos
-        document.getElementById("greenPos").value = parsed.data.green.pos
-        document.getElementById("bluePos").value = parsed.data.blue.pos
-        document.getElementById("blackPos").value = parsed.data.black.pos
+        if (rankRequest.readyState == 4 && rankRequest.status == 200){
+            var parsed = JSON.parse(this.responseText);
+            document.getElementById("redPos").value = parsed.data.red.pos
+            document.getElementById("orangePos").value = parsed.data.orange.pos
+            document.getElementById("yellowPos").value = parsed.data.yellow.pos
+            document.getElementById("greenPos").value = parsed.data.green.pos
+            document.getElementById("bluePos").value = parsed.data.blue.pos
+            document.getElementById("blackPos").value = parsed.data.black.pos
 
-        document.getElementById("redRank").value = parsed.data.red.rank
-        document.getElementById("orangeRank").value = parsed.data.orange.rank
-        document.getElementById("yellowRank").value = parsed.data.yellow.rank
-        document.getElementById("greenRank").value = parsed.data.green.rank
-        document.getElementById("blueRank").value = parsed.data.blue.rank
-        document.getElementById("blackRank").value = parsed.data.black.rank
-    }
-};rankRequest.open('GET', "/getPos/", true);
+            document.getElementById("redRank").value = parsed.data.red.rank
+            document.getElementById("orangeRank").value = parsed.data.orange.rank
+            document.getElementById("yellowRank").value = parsed.data.yellow.rank
+            document.getElementById("greenRank").value = parsed.data.green.rank
+            document.getElementById("blueRank").value = parsed.data.blue.rank
+            document.getElementById("blackRank").value = parsed.data.black.rank
+        }
+    };rankRequest.open('GET', "/getPos/", true);
     rankRequest.send();
     
 }
@@ -245,6 +247,7 @@ function rollDice(){
 
     for(var i = 0; i < 5; i++){
         dice_numbers[i] = Math.ceil(Math.random()*6);
+        hidden_dice[i] = 0;
         document.getElementById(dice_objects[chosen_color][i]).src= dice_img[chosen_color][dice_numbers[i]-1];
     }
     document.getElementById("roll_button").style.visibility = 'hidden';
@@ -264,14 +267,16 @@ function post_dice_nums(){
 }
 
 //when you click on one of your own dice
-function clicked_die(num){
-    if(selected_dice[num-1] == 0 && hidden_dice[num-1] == 0){  //if the die has not been selected
-        document.getElementById(dice_objects[chosen_color][num-1]).src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
-        selected_dice[num-1] = 1;
-    } else if (hidden_dice[num-1] == 0) {  //if the die is already selected
-        document.getElementById(dice_objects[chosen_color][num-1]).src =dice_img[chosen_color][dice_numbers[num-1]-1];
-        selected_dice[num-1] = 0;
-    }  
+function clicked_die(color, num){
+    if(color == chosen_color){
+        if(selected_dice[num-1] == 0 && hidden_dice[num-1] == 0){  //if the die has not been selected
+            document.getElementById(dice_objects[chosen_color][num-1]).src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
+            selected_dice[num-1] = 1;
+        } else if (hidden_dice[num-1] == 0) {  //if the die is already selected
+            document.getElementById(dice_objects[chosen_color][num-1]).src =dice_img[chosen_color][dice_numbers[num-1]-1];
+            selected_dice[num-1] = 0;
+        } 
+    } 
 }
 
 //when you click on a colored cup
@@ -300,7 +305,7 @@ function startGame(){
     document.getElementById("reroll_button").style.visibility = 'visible';
     document.getElementById("dudo_button").style.visibility = 'visible';
     userPicked = true; 
-    console.log("making username for " + chosen_color)
+    // console.log("making username for " + chosen_color)
     makeUsername(colors[chosen_color])
     //TODO: send dice info to server
 }
@@ -361,6 +366,7 @@ function rerollDice(){
 }
 
 function dudo() {
+    /*
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -372,4 +378,43 @@ function dudo() {
 
     xhttp.open("GET", "/dudo?cup=" + chosen_color, true);
     xhttp.send();
+    */
+
+    //set doubt in server to true
+    console.log("DOUBTING");
+    postDoubt();
+
+
+}
+
+function postDoubt(){
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postDoubt/"; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify(
+        {   "color": chosen_color }
+        );
+    xhr.send(data);
+}
+
+function checkDudo(){
+    //check if doubt is true
+    getDoubt();
+    //display ALL dice if true
+    if (someone_doubted){
+        //TODO: DISPLAY EVERYONES DICE
+        selected_dice = [1,1,1,1,1];
+        displayDice();
+    }
+}
+
+function getDoubt(){
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200){
+            var parsed = JSON.parse(this.responseText);
+            someone_doubted = parsed.data;
+        }
+    };request.open('GET', "/getDoubt/", true);
+    request.send();
 }

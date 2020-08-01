@@ -41,6 +41,7 @@ app = Flask(__name__)
 #___________________________________Information on all players_________________________________________
 colors = ["red","orange","yellow","green","blue","black"]
 playerCount = 0
+doubt = False
 #which player started the game, they are the host, need gamestarted variable and a host variable t-f
 playerInfo= {
     "red": {
@@ -157,6 +158,10 @@ def getDisplayedDice():
 
     return json.dumps({"success": True, "data": data}), 200
 
+@app.route("/getDoubt/", methods=["GET"]) 
+def getDoubt():
+    return json.dumps({"success": True, "data": doubt}), 200
+
 #___________________________________POST Requests_________________________________________
 
 #POST the numbers of the player's dice to the server
@@ -186,7 +191,7 @@ def gameStart():
         playerInfo[key]["gameStart"] = True
     color_player = body["color"]
     playerInfo[colors[color_player]]["rank"] = playerCount
-    print("color of player =" + str(color_player) + "rank = " + str(playerInfo[colors[color_player]]["rank"]))
+    # print("color of player =" + str(color_player) + "rank = " + str(playerInfo[colors[color_player]]["rank"]))
     playerCount +=1
     return json.dumps({"success": True, "data": body}), 201
 
@@ -194,7 +199,7 @@ def gameStart():
 @app.route("/postPos/", methods = ["POST"])
 def postPos():
     body = json.loads(request.data)
-    print(str(body))
+    # print(str(body))
     playerInfo["red"]["pos"] = body["redPos"]
     playerInfo["orange"]["pos"] = body["orangePos"]
     playerInfo["yellow"]["pos"] = body["yellowPos"]
@@ -212,6 +217,14 @@ def postUsername():
     cup_color = body["color"]
     playerInfo[cup_color]["username"] = body["username"]
     return json.dumps({"success": True, "data": body}), 201
+
+
+@app.route("/postDoubt/", methods = ["POST"])
+def postDoubt():
+    global doubt
+    doubt = True
+    print("doubt: " + str(doubt))
+    return json.dumps({"success": True}), 201
 
 #___________________________________Run the server_________________________________________
 if __name__ == "__main__":
