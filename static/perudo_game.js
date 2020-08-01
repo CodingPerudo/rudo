@@ -373,3 +373,4 @@ function dudo() {
     xhttp.open("GET", "/dudo?cup=" + chosen_color, true);
     xhttp.send();
 }
+
