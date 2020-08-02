@@ -81,14 +81,42 @@ var hidden_dice = [1,1,1,1,1]
 var animals = ["Dolphin", "Penguin", "Otter", "Lion", "Bear", "Monkey", "Salmon", "Horse", "Turtle", "Hare", "Giraffe", "Emu"]
 var userPicked = false; //this will turn true when the user picks a color and clicks start game
 
+
+document.getElementById("red_cup").onmouseenter = function() {mouseEnter(0)};
+document.getElementById("orange_cup").onmouseenter = function() {mouseEnter(1)};
+document.getElementById("yellow_cup").onmouseenter = function() {mouseEnter(2)};
+document.getElementById("green_cup").onmouseenter = function() {mouseEnter(3)};
+document.getElementById("blue_cup").onmouseenter = function() {mouseEnter(4)};
+document.getElementById("black_cup").onmouseenter = function() {mouseEnter(5)};
+
+document.getElementById("red_cup").onmouseleave = function() {mouseLeave(0)};
+document.getElementById("orange_cup").onmouseleave = function() {mouseLeave(1)};
+document.getElementById("yellow_cup").onmouseleave = function() {mouseLeave(2)};
+document.getElementById("green_cup").onmouseleave = function() {mouseLeave(3)};
+document.getElementById("blue_cup").onmouseleave = function() {mouseLeave(4)};
+document.getElementById("black_cup").onmouseleave = function() {mouseLeave(5)};
+
+function mouseEnter(num){
+    document.getElementById(cups[num]).src = cup_color_dark[num];
+}
+
+function mouseLeave(num){
+    document.getElementById(cups[num]).src = cup_colors[num];
+}
+
+
 //update all the dice on the table
 function updateGameInterval(){
-    setInterval(updateDisplayedDice, 500);
-    setInterval(getPos, 500);
-    setInterval(postPos, 500);
-    setInterval(updateCupPos, 500);
-    setInterval(getUsernames, 500);
-    setInterval(checkDudo,500);
+    setInterval(updateGame, 500);
+}
+
+function updateGame(){
+    updateDisplayedDice();
+    getPos();
+    postPos();
+    updateCupPos();
+    getUsernames();
+    checkDudo();
 }
 
 function makeUsername(cup_color){//figure out when to call this
