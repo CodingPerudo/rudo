@@ -48,9 +48,6 @@
     position: relative;
 }
 
-#buttons {
-    padding-left: 10px;
-}
 
 .button {
     visibility: hidden;
@@ -60,7 +57,11 @@
     background-size: cover;
     color: white;
     background-repeat: no-repeat;
-    padding: 10px;
+    padding: 20px;
+    width: 150px;
+    margin-left: 100px;
+    margin-top: 10px;
+    font-size: 17px;
 }
 
 #roll_button {
@@ -102,10 +103,6 @@
     background-image: url(resources/blue_pressed.png);
 }
 
-#buttons {
-    margin-top: 30px;
-}
-
 /* ______________________________Other stuff______________________________ */
 
 
@@ -124,7 +121,7 @@ body {
     color: white; 
     text-indent: 2%;
     text-shadow: 1px black;
-    font-size: Large;
+    font-size: 20px;
 }
 
 .player_pic {

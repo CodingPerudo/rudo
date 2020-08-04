@@ -278,7 +278,10 @@ function rollDice(){
         hidden_dice[i] = 0;
         document.getElementById(dice_objects[chosen_color][i]).src= dice_img[chosen_color][dice_numbers[i]-1];
     }
-    document.getElementById("roll_button").style.visibility = 'hidden';
+    document.getElementById("roll_button").remove();
+    document.getElementById("display_button").style.visibility = 'visible';
+    document.getElementById("reroll_button").style.visibility = 'visible';
+    document.getElementById("dudo_button").style.visibility = 'visible';
     //send dice nums to server
     post_dice_nums();
 
@@ -327,11 +330,8 @@ function startGame(){
             document.getElementById(dice_objects[j][i]).style.visibility = 'visible';
         }
     }
-    document.getElementById("start_button").style.visibility = 'hidden';
+    document.getElementById("start_button").remove();
     document.getElementById("roll_button").style.visibility = 'visible';
-    document.getElementById("display_button").style.visibility = 'visible';
-    document.getElementById("reroll_button").style.visibility = 'visible';
-    document.getElementById("dudo_button").style.visibility = 'visible';
     userPicked = true; 
     // console.log("making username for " + chosen_color)
     makeUsername(colors[chosen_color])
