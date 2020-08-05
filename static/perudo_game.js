@@ -80,6 +80,9 @@ var hidden_dice = [0,0,0,0,0]
 var animals = ["Dolphin", "Penguin", "Otter", "Lion", "Bear", "Monkey", "Salmon", "Horse", "Turtle", "Hare", "Giraffe", "Emu"]
 var userPicked = false; //this will turn true when the user picks a color and clicks start game
 
+var currentBet = 0;
+var TurnToBet = 0;
+
 //update all the dice on the table
 function updateGameInterval(){
     setInterval(updateDisplayedDice, 500);
@@ -133,19 +136,26 @@ function getUsernames(){//call this periodically
 
 //the divs will hold their ranks
 function insertCup(cup_to_move) {
+    console.log("INSERT CUP ENGAGED")
+    console.log("colors[chosen_color] + Rank =" + colors[chosen_color]+"Rank")
+    getPos();
     if (document.getElementById(colors[chosen_color]+"Rank").value == "-1" && userPicked == false){//if the clicked cup does not have a rank, then proceed
         var content = document.getElementById(cup_to_move);
         var parent = content.parentNode;
-        var highestRank = -1
-        getPos();
+        var highestRank = parseInt(-1)
+        // getPos();
+        colors.forEach(color => console.log(color + "rank =" + document.getElementById(color + "Rank").value))
         colors.forEach(color => {if (document.getElementById(color + "Rank").value > highestRank) {
             highestRank = document.getElementById(color + "Rank").value
         }})
-        if (highestRank = -1){
-            parent.insertBefore(content, parent.childNodes[1])
+        console.log("HIGHEST RANK = " + String(highestRank))
+        if (highestRank == -1){
+            console.log("ENTERED IF")
+            parent.insertBefore(content, parent.childNodes[0])
         }
         else {
-        parent.insertBefore(content, parent.childNodes[highestRank+1])
+        console.log("highestrank + 1 = " + String(parseInt(highestRank + 1)))
+        parent.insertBefore(content, parent.childNodes[parseInt(highestRank + 1)])
         }
     }
 }

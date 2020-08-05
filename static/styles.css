@@ -75,6 +75,11 @@
     visibility: visible;
 }
 
+#bet_button {
+    visibility: visible;
+    background-color: red; 
+}
+
 #buttons {
     margin-top: 30px;
 }
@@ -89,6 +94,13 @@ body {
 }
 
 #redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername{
+    color: white; 
+    text-indent: 2%;
+    text-shadow: 1px black;
+    font-size: Large;
+}
+
+#numDiceText, #diceFaceText {
     color: white; 
     text-indent: 2%;
     text-shadow: 1px black;
