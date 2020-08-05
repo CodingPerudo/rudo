@@ -187,7 +187,7 @@ def getDoubt():
 @app.route('/gamePage', methods=['POST'])
 def enter():
     print('----------------from server: ' + request.args.get('id'))
-    return app.send_static_file('index.html')
+    return app.send_static_file('index.html'), 200
 
 #POST the numbers of the player's dice to the server
 @app.route("/postNums/", methods = ["POST"])

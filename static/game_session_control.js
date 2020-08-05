@@ -1,12 +1,24 @@
-//TODO new method for stuff in success of loadGame
+function displayGamePage() {
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+      if (this.readyState === 4 && this.status === 200) {
+        document.open();
+        document.write(this.responseText);
+        document.close();
+      } else {
+          document.getElementById('join_fail').innerHTML = this.responseText;
+      }
+  };
+
+  xhttp.open("POST", "/gamePage?id=" + session_id, true);
+  xhttp.send();
+}
 
 function loadGame(session_id) {
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
-        let xhttp2 = new XMLHttpRequest();
-        xhttp2.open("POST", "/gamePage?id=" + session_id, true);
-        xhttp2.send();
+        displayGamePage();
       } else {
           document.getElementById('join_fail').innerHTML = this.responseText;
       }
@@ -37,7 +49,6 @@ function joinGame() {
 }
 
 function enableButtons() {
-  console.log("in enable");
   document.getElementById("new_game").style.visibility = 'visible';
   document.getElementById("join_game").style.visibility = 'visible';
 }
