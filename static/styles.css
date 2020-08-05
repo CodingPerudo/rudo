@@ -48,6 +48,13 @@
     position: relative;
 }
 
+.text {
+    padding: 20px;
+    width: 75px;
+    margin-left: 100px;
+    margin-top: 10px;
+    font-size: 17px;
+}
 
 .button {
     visibility: hidden;
@@ -103,11 +110,28 @@
     background-image: url(resources/blue_pressed.png);
 }
 
+#new_game {
+    background-image: url(resources/green_button.png);
+}
+
+#new_game:hover {
+    background-image: url(resources/green_pressed.png);
+}
+
+#join_game {
+    background-image: url(resources/pink_button.png);
+}
+
+#join_game:hover {
+    background-image: url(resources/pink_pressed.png);
+}
+
+
 /* ______________________________Other stuff______________________________ */
 
 
 
-#dudoMessage {
+#join_fail {
     color: white;
 }
 

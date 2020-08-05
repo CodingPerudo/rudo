@@ -1,5 +1,7 @@
 import json
 from flask import Flask, request
+import string
+import random
 # from flask import render_template
 
 app = Flask(__name__)
@@ -96,10 +98,29 @@ playerInfo= {
     }
 }
 
+possible_chars = string.ascii_uppercase + string.digits
+SESSION_ID_LEN = 4
+all_session_ids = []
+
+session_cookies = {} # dictionary where key is session, value is list of cookies associated with that session
+
+def update_session_cookies():
+    pass
+
+
 #___________________________________GET Requests_________________________________________
 @app.route('/')
-def enter():
-    return app.send_static_file('index.html')
+def home_page():
+    return app.send_static_file('home.html')
+
+@app.route('/getNewSession', methods=['GET'])
+def generate_session_id():
+    session_id = ''.join(random.choice(possible_chars) for i in range(SESSION_ID_LEN)) 
+    while session_id in all_session_ids:
+        session_id = ''.join(random.choice(possible_chars) for i in range(SESSION_ID_LEN))
+    
+    all_session_ids.append(session_id)
+    return session_id, 200
 
 @app.route('/dudo', methods=['GET'])
 def dudo():
@@ -163,6 +184,10 @@ def getDoubt():
     return json.dumps({"success": True, "data": doubt}), 200
 
 #___________________________________POST Requests_________________________________________
+@app.route('/gamePage', methods=['POST'])
+def enter():
+    print('----------------from server: ' + request.args.get('id'))
+    return app.send_static_file('index.html')
 
 #POST the numbers of the player's dice to the server
 @app.route("/postNums/", methods = ["POST"])
@@ -225,6 +250,17 @@ def postDoubt():
     doubt = True
     print("doubt: " + str(doubt))
     return json.dumps({"success": True}), 201
+
+@app.route("/joinGame", methods=["POST"])
+def join_game():
+    session_id = request.args.get('id').upper()
+    if session_id in all_session_ids:
+         update_session_cookies()
+         print(session_id)
+         return session_id, 200
+    else:
+        return "That game ID does not exist.", 404
+
 
 #___________________________________Run the server_________________________________________
 if __name__ == "__main__":
