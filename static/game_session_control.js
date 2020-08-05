@@ -1,10 +1,11 @@
-function displayGamePage() {
+function displayGamePage(session_id) {
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
         document.open();
         document.write(this.responseText);
         document.close();
+        document.getElementById("game_id_display").innerHTML = "Game ID: " + session_id;
       } else {
           document.getElementById('join_fail').innerHTML = this.responseText;
       }
@@ -18,7 +19,7 @@ function loadGame(session_id) {
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
-        displayGamePage();
+        displayGamePage(session_id);
       } else {
           document.getElementById('join_fail').innerHTML = this.responseText;
       }

@@ -43,6 +43,10 @@
     width: 85px;
 }
 
+#game_id_display {
+    color: white;
+}
+
 #wrapper {
     float: left;
     position: relative;
