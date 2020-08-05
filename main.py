@@ -16,7 +16,8 @@ app = Flask(__name__)
 #we have to get rid of dice
     #losing -> gray 
 
-
+#shift everything to the middle of the screen more
+#because it looks ew rn and imma forget to do it if i dont write it down
 
 #militsa 
     #dudo button
