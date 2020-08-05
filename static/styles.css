@@ -54,11 +54,11 @@
     border:none;
     background-color:transparent;
     outline:none;
-    background-size: cover;
+    background-size: 100% 100%;
     color: white;
     background-repeat: no-repeat;
-    padding: 20px;
-    width: 150px;
+    width: 200px;
+    height: 50px;
     margin-left: 100px;
     margin-top: 10px;
     font-size: 17px;
@@ -80,11 +80,11 @@
 }
 
 #display_button {
-    background-image: url(resources/green_button.png);
+    background-image: url(resources/blue_button.png);
 }
 
 #display_button:hover {
-    background-image: url(resources/green_pressed.png);
+    background-image: url(resources/blue_pressed.png);
 }
 
 #reroll_button {
@@ -95,12 +95,12 @@
 }
 
 #dudo_button {
-    background-image: url(resources/blue_button.png);
+    background-image: url(resources/green_button.png);
     visibility: hidden;
 }
 
 #dudo_button:hover{
-    background-image: url(resources/blue_pressed.png);
+    background-image: url(resources/green_pressed.png);
 }
 
 /* ______________________________Other stuff______________________________ */

@@ -38,6 +38,15 @@ app = Flask(__name__)
         #input boxes with only increasing steps unless converting to ones (With a conversion button)
 
 
+#display who bet last and thier bet
+#make the person's turn have a crown 
+#LOSE and WIN 
+#make game sessions
+    #get rid of players who aren't playing 
+    #play again button (keep track of data from sessions)
+
+
+
 #___________________________________Information on all players_________________________________________
 colors = ["red","orange","yellow","green","blue","black"]
 playerCount = 0
@@ -103,6 +112,7 @@ def enter():
 
 @app.route('/dudo', methods=['GET'])
 def dudo():
+    raise TypeError
     cup = request.args.get('cup')
     text = "the dudo was done by cup " + str(cup)
     return text
@@ -225,6 +235,8 @@ def postDoubt():
     doubt = True
     print("doubt: " + str(doubt))
     return json.dumps({"success": True}), 201
+
+
 
 #___________________________________Run the server_________________________________________
 if __name__ == "__main__":
