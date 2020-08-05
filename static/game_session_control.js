@@ -1,4 +1,4 @@
-
+//TODO new method for stuff in success of loadGame
 
 function loadGame(session_id) {
   let xhttp = new XMLHttpRequest();
