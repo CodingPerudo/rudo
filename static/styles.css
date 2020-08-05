@@ -55,21 +55,82 @@
     margin-top: 10px;
     font-size: 17px;
 }
+#buttons {
+    position: fixed;
+    margin-left: 450px;
+}
+
+#count_div {
+    float: left;
+    position: relative;
+    color: white;
+    font-size: 20px;
+}
+
+#face_div {
+    float: right;
+    color: white;
+    font-size: 20px;
+}
+
+#count_up_button, #face_up_button {
+    background-image: url("resources/arrow_up.png");
+    margin-top: 0px;
+}
+
+#count_down_button, #face_down_button {
+    background-image: url("resources/arrow_down.png");
+}
+
+.bet_label {
+    margin-bottom: 10px;
+
+}
+
+#face_text {
+    padding-left: 15px;
+}
+
+#count_text {
+    padding-left: 10px;
+}
+
+.bet_button {
+    /* visibility: hidden; */
+    border:none;
+    background-color:transparent;
+    outline:none;
+    background-size: 100% 100%;
+    width: 70px;
+    height: 50px;
+    background-repeat: no-repeat;
+    margin-bottom: 0px;
+}
+
+#count_number, #face_number {
+    font-size: 50px;
+    margin: 0px;
+    padding-left: 22px;
+}
+
+
 
 .button {
     visibility: hidden;
     border:none;
     background-color:transparent;
     outline:none;
-    background-size: cover;
+    background-size: 100% 100%;
     color: white;
     background-repeat: no-repeat;
-    padding: 20px;
-    width: 150px;
-    margin-left: 100px;
+    width: 200px;
+    height: 50px;
+    /* margin-left: 100px; */
     margin-top: 10px;
     font-size: 17px;
 }
+
+
 
 #roll_button {
     background-image: url(resources/blue_button.png);
@@ -87,11 +148,11 @@
 }
 
 #display_button {
-    background-image: url(resources/green_button.png);
+    background-image: url(resources/blue_button.png);
 }
 
 #display_button:hover {
-    background-image: url(resources/green_pressed.png);
+    background-image: url(resources/blue_pressed.png);
 }
 
 #reroll_button {
@@ -102,12 +163,27 @@
 }
 
 #dudo_button {
-    background-image: url(resources/blue_button.png);
+    background-image: url(resources/green_button.png);
     visibility: hidden;
 }
 
 #dudo_button:hover{
+    background-image: url(resources/green_pressed.png);
+}
+
+#betting_div{
+    visibility: hidden;
+}
+
+#place_bet_button {
+    visibility: hidden;
+    background-image: url(resources/blue_button.png);
+    margin-top: 15px;
+}
+
+#place_bet_button:hover {
     background-image: url(resources/blue_pressed.png);
+    /* margin-top: 15px; */
 }
 
 #new_game {
@@ -142,7 +218,7 @@ body {
 }
 
 #redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername{
-    color: white; 
+    color: white;
     text-indent: 2%;
     text-shadow: 1px black;
     font-size: 20px;
@@ -168,4 +244,4 @@ body {
 
 #redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername {
     position: absolute;
-} 
+}

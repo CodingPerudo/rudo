@@ -82,6 +82,11 @@ var animals = ["Dolphin", "Penguin", "Otter", "Lion", "Bear", "Monkey", "Salmon"
 var userPicked = false; //this will turn true when the user picks a color and clicks start game
 
 
+//Betting variables
+var count_bet = 1;
+var face_bet = 2;
+
+
 document.getElementById("red_cup").onmouseenter = function() {mouseEnter(0)};
 document.getElementById("orange_cup").onmouseenter = function() {mouseEnter(1)};
 document.getElementById("yellow_cup").onmouseenter = function() {mouseEnter(2)};
@@ -103,6 +108,44 @@ function mouseEnter(num){
 function mouseLeave(num){
     document.getElementById(cups[num]).src = cup_colors[num];
 }
+
+
+document.getElementById("count_up_button").onmouseenter = function() {countUpEnter()};
+document.getElementById("count_up_button").onmouseleave = function() {countUpLeave()};
+document.getElementById("count_down_button").onmouseenter = function() {countDownEnter()};
+document.getElementById("count_down_button").onmouseleave = function() {countDownLeave()};
+
+document.getElementById("face_up_button").onmouseenter = function() {faceUpEnter()};
+document.getElementById("face_up_button").onmouseleave = function() {faceUpLeave()};
+document.getElementById("face_down_button").onmouseenter = function() {faceDownEnter()};
+document.getElementById("face_down_button").onmouseleave = function() {faceDownLeave()};
+
+function countUpEnter(){
+    document.getElementById("count_up_button").src ="static/resources/arrow_up_dark.png";
+}
+function countUpLeave(){
+    document.getElementById("count_up_button").src ="static/resources/arrow_up.png";
+}
+function countDownEnter(){
+    document.getElementById("count_down_button").src ="static/resources/arrow_down_dark.png";
+}
+function countDownLeave(){
+    document.getElementById("count_down_button").src ="static/resources/arrow_down.png";
+}
+
+function faceUpEnter(){
+    document.getElementById("face_up_button").src ="static/resources/arrow_up_dark.png";
+}
+function faceUpLeave(){
+    document.getElementById("face_up_button").src ="static/resources/arrow_up.png";
+}
+function faceDownEnter(){
+    document.getElementById("face_down_button").src ="static/resources/arrow_down_dark.png";
+}
+function faceDownLeave(){
+    document.getElementById("face_down_button").src ="static/resources/arrow_down.png";
+}
+
 
 
 //update all the dice on the table
@@ -282,6 +325,8 @@ function rollDice(){
     document.getElementById("display_button").style.visibility = 'visible';
     document.getElementById("reroll_button").style.visibility = 'visible';
     document.getElementById("dudo_button").style.visibility = 'visible';
+    document.getElementById("betting_div").style.visibility = 'visible';
+    document.getElementById("place_bet_button").style.visibility = 'visible';
     //send dice nums to server
     post_dice_nums();
 
@@ -447,3 +492,22 @@ function getDoubt(){
     request.send();
 }
 
+function count_up(){
+    document.getElementById("count_number").innerHTML = String(count_bet + 1);
+    count_bet = count_bet + 1;
+}
+
+function count_down(){
+    document.getElementById("count_number").innerHTML = String(count_bet - 1);
+    count_bet = count_bet - 1;
+}
+
+function face_up(){
+    document.getElementById("face_number").innerHTML = String(face_bet + 1);
+   face_bet = face_bet + 1;
+}
+
+function face_down(){
+    document.getElementById("face_number").innerHTML = String(face_bet - 1);
+    face_bet = face_bet -1;
+}

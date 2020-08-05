@@ -115,6 +115,24 @@
         <div id= "dudo_div">
             <button class="button" id="dudo_button" onclick="dudo();" type="button">Dudo</button>
         </div>
+        <div id= "betting_div">
+            <!-- <button class="button" id="dudo_button" onclick="dudo();" type="button">Dudo</button> -->
+            <div id= "count_div">
+                <p class= "bet_label" id= "count_text">Count</p>
+                <img class= "bet_button" id="count_up_button" src = "static/resources/arrow_up.png" onclick="count_up();"></img>
+                <p id= "count_number">1</p>
+                <img class= "bet_button" id="count_down_button" src = "static/resources/arrow_down.png" onclick="count_down();"></img>
+            </div>
+            <div id= "face_div">
+                <p class= "bet_label" id= "face_text">Face</p>
+                <img class= "bet_button" id="face_up_button" src = "static/resources/arrow_up.png" onclick="face_up();"></img>
+                <p id= "face_number">2</p>
+                <img class= "bet_button" id="face_down_button" src = "static/resources/arrow_down.png" onclick="face_down();"></img>
+            </div>
+        </div>
+        <div id= "place_bet_div">
+            <button class="button" id="place_bet_button" type="button">Place Bet</button>
+        </div>
         <p id='dudoMessage'></p>
     </div>
 

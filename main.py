@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 #make a server code to login to the game (have multiple sessions)
 #entering a name/ username per cup
- 
+
 
 #USING DIFF SERVER PYTHON STUFF
 
@@ -16,28 +16,38 @@ app = Flask(__name__)
 #cheeky round!
     #disable increasing face num
 #we have to get rid of dice
-    #losing -> gray 
+    #losing -> gray
 
+#shift everything to the middle of the screen more
+#because it looks ew rn and imma forget to do it if i dont write it down
 
-
-#militsa 
+#militsa
     #dudo button
-        #says who clicked it 
+        #says who clicked it
     #exacto button
-        #only available to a few people 
+        #only available to a few people
     #paste in example get and example post
 
 #michelle is not the best
-    #display dice and reroll dice 
+    #display dice and reroll dice
 
 #peter
     #make cups go in order (DONE)
     #make usernames (in progress)
     #probability counter
-    #obvious whos turn it is 
+    #obvious whos turn it is
         #opacity background highlights current player
     #we need a way to make a bet
         #input boxes with only increasing steps unless converting to ones (With a conversion button)
+
+
+#display who bet last and thier bet
+#make the person's turn have a crown
+#LOSE and WIN
+#make game sessions
+    #get rid of players who aren't playing
+    #play again button (keep track of data from sessions)
+
 
 
 #___________________________________Information on all players_________________________________________
@@ -115,15 +125,16 @@ def home_page():
 
 @app.route('/getNewSession', methods=['GET'])
 def generate_session_id():
-    session_id = ''.join(random.choice(possible_chars) for i in range(SESSION_ID_LEN)) 
+    session_id = ''.join(random.choice(possible_chars) for i in range(SESSION_ID_LEN))
     while session_id in all_session_ids:
         session_id = ''.join(random.choice(possible_chars) for i in range(SESSION_ID_LEN))
-    
+
     all_session_ids.append(session_id)
     return session_id, 200
 
 @app.route('/dudo', methods=['GET'])
 def dudo():
+    raise TypeError
     cup = request.args.get('cup')
     text = "the dudo was done by cup " + str(cup)
     return text
@@ -135,15 +146,15 @@ def getInfo():
     return json.dumps({"success": True, "allInfo": playerInfo}), 200
 
 #GET and return player positions
-@app.route("/getPos/", methods=["GET"]) 
+@app.route("/getPos/", methods=["GET"])
 def getPos():
     return json.dumps({"success": True, "data": playerInfo}), 200
 
 #GET and return player's dice and displayed dice
-@app.route("/getDisplayed/", methods=["GET"]) 
+@app.route("/getDisplayed/", methods=["GET"])
 def getDisplayedDice():
     data = {
-        "red": 
+        "red":
         {
             "dice": playerInfo["red"]["dice_nums"],
             "disp": playerInfo["red"]["displayed_dice"]
@@ -152,34 +163,34 @@ def getDisplayedDice():
         "orange":
         {
             "dice": playerInfo["orange"][ "dice_nums"],
-            "disp": playerInfo["orange"]["displayed_dice"] 
+            "disp": playerInfo["orange"]["displayed_dice"]
         },
         "yellow":
         {
             "dice": playerInfo["yellow"][ "dice_nums"],
-            "disp": playerInfo["yellow"]["displayed_dice"] 
+            "disp": playerInfo["yellow"]["displayed_dice"]
         },
         "green":
         {
             "dice": playerInfo["green"][ "dice_nums"],
-            "disp": playerInfo["green"]["displayed_dice"] 
+            "disp": playerInfo["green"]["displayed_dice"]
         },
         "blue":
         {
             "dice": playerInfo["blue"][ "dice_nums"],
-            "disp": playerInfo["blue"]["displayed_dice"] 
+            "disp": playerInfo["blue"]["displayed_dice"]
         },
         "black":
         {
             "dice": playerInfo["black"][ "dice_nums"],
-            "disp": playerInfo["black"]["displayed_dice"] 
+            "disp": playerInfo["black"]["displayed_dice"]
         }
-        
+
     }
 
     return json.dumps({"success": True, "data": data}), 200
 
-@app.route("/getDoubt/", methods=["GET"]) 
+@app.route("/getDoubt/", methods=["GET"])
 def getDoubt():
     return json.dumps({"success": True, "data": doubt}), 200
 
@@ -198,7 +209,7 @@ def postNums():
     playerInfo[colors[color_player]]["dice_nums"] = dice_nums
     return json.dumps({"success": True, "data": body}), 201
 
-#POST the dice which are displayed 
+#POST the dice which are displayed
 @app.route("/postDisplayed/", methods = ["POST"])
 def postDisplayed():
     body = json.loads(request.data)
@@ -207,7 +218,7 @@ def postDisplayed():
     playerInfo[colors[color_player]]["displayed_dice"] = displayed
     return json.dumps({"success": True, "data": body}), 201
 
-#POST the dice which are displayed 
+#POST the dice which are displayed
 @app.route("/gameStart/", methods = ["POST"])
 def gameStart():
     body = json.loads(request.data)
@@ -234,7 +245,7 @@ def postPos():
     return json.dumps({"success": True, "data": body}), 201
       #for each die, make it's pos = the html pos
 
-      #prior to clicking start game, you can see the host, and cannot click the host. 
+      #prior to clicking start game, you can see the host, and cannot click the host.
 
 @app.route("/postUsername/", methods = ["POST"])
 def postUsername():
