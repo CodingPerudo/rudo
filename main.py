@@ -54,6 +54,9 @@ app = Flask(__name__)
 colors = ["red","orange","yellow","green","blue","black"]
 playerCount = 0
 doubt = False
+last_bet = [0,0]
+turnOrder = []
+current_turn_idx = 0
 #which player started the game, they are the host, need gamestarted variable and a host variable t-f
 playerInfo= {
     "red": {
@@ -158,7 +161,6 @@ def getDisplayedDice():
         {
             "dice": playerInfo["red"]["dice_nums"],
             "disp": playerInfo["red"]["displayed_dice"]
-
         },
         "orange":
         {
@@ -193,6 +195,15 @@ def getDisplayedDice():
 @app.route("/getDoubt/", methods=["GET"])
 def getDoubt():
     return json.dumps({"success": True, "data": doubt}), 200
+
+@app.route("/getTurnOrder/", methods=["GET"])
+def getTurnOrder():
+    return json.dumps({"success": True, "data": turnOrder}), 200
+
+#returns the index of the color whos turn it currently is
+@app.route("/getCurrentTurnColor/", methods=["GET"])
+def getCurrentTurnColor():
+    return json.dumps({"success": True, "current_turn_color": turnOrder[current_turn_idx]}), 200
 
 #___________________________________POST Requests_________________________________________
 @app.route('/gamePage', methods=['POST'])
@@ -271,6 +282,23 @@ def join_game():
          return session_id, 200
     else:
         return "That game ID does not exist.", 404
+
+@app.route("/postTurnOrder/", methods = ["POST"])
+def postTurnOrder():
+    global turnOrder
+    body = json.loads(request.data)
+    turnOrder = body["turn_order"]
+    return json.dumps({"success": True}), 201
+
+@app.route("/postNextTurn/", methods = ["POST"])
+def postNextTurn():
+    global current_turn_idx
+    if (current_turn_idx < len(turnOrder)):
+        current_turn_idx += 1
+    else:
+        current_turn_idx = 0
+    return json.dumps({"success": True}), 201
+
 
 
 #___________________________________Run the server_________________________________________

@@ -61,7 +61,7 @@
 }
 #buttons {
     position: fixed;
-    margin-left: 450px;
+    margin-left: 500px;
 }
 
 #count_div {
@@ -143,11 +143,11 @@
     background-image: url(resources/blue_pressed.png);
 }
 
-#start_button {
+#enter_round_button {
     background-image: url(resources/pink_button.png);
 }
 
-#start_button:hover{
+#enter_round_button:hover{
     background-image: url(resources/pink_pressed.png);
 }
 
@@ -222,7 +222,7 @@ body {
 }
 
 #redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername{
-    color: white;
+    color: rgb(255, 255, 255);
     text-indent: 2%;
     text-shadow: 1px black;
     font-size: 20px;
@@ -239,6 +239,7 @@ body {
 
 .player_div {
     padding-bottom: 20px;
+    margin-left: 0px;
 
 }
 
@@ -248,4 +249,5 @@ body {
 
 #redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername {
     position: absolute;
+    margin-top: 10px;
 }

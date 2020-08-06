@@ -86,14 +86,21 @@ var userPicked = false; //this will turn true when the user picks a color and cl
 var count_bet = 1;
 var face_bet = 2;
 
+//Dealing with the player's turns 
+var players_rank = [-1,-1,-1,-1,-1,-1]
+var players_turn_order = []
+var session_started_bool = false
+var current_turn_color = -1;
 
+//deadling with the hover effect of the UI pieces
+//entering cup objects
 document.getElementById("red_cup").onmouseenter = function() {mouseEnter(0)};
 document.getElementById("orange_cup").onmouseenter = function() {mouseEnter(1)};
 document.getElementById("yellow_cup").onmouseenter = function() {mouseEnter(2)};
 document.getElementById("green_cup").onmouseenter = function() {mouseEnter(3)};
 document.getElementById("blue_cup").onmouseenter = function() {mouseEnter(4)};
 document.getElementById("black_cup").onmouseenter = function() {mouseEnter(5)};
-
+//leaving cup objects with mouse
 document.getElementById("red_cup").onmouseleave = function() {mouseLeave(0)};
 document.getElementById("orange_cup").onmouseleave = function() {mouseLeave(1)};
 document.getElementById("yellow_cup").onmouseleave = function() {mouseLeave(2)};
@@ -101,15 +108,15 @@ document.getElementById("green_cup").onmouseleave = function() {mouseLeave(3)};
 document.getElementById("blue_cup").onmouseleave = function() {mouseLeave(4)};
 document.getElementById("black_cup").onmouseleave = function() {mouseLeave(5)};
 
+//entering and leaving cup objects 
 function mouseEnter(num){
     document.getElementById(cups[num]).src = cup_color_dark[num];
 }
-
 function mouseLeave(num){
     document.getElementById(cups[num]).src = cup_colors[num];
 }
 
-
+//dealing with hovering actions of buttons on UI (the counter for the bet)
 document.getElementById("count_up_button").onmouseenter = function() {countUpEnter()};
 document.getElementById("count_up_button").onmouseleave = function() {countUpLeave()};
 document.getElementById("count_down_button").onmouseenter = function() {countDownEnter()};
@@ -148,20 +155,108 @@ function faceDownLeave(){
 
 
 
-//update all the dice on the table
+//update game
 function updateGameInterval(){
     setInterval(updateGame, 500);
 }
 
+//update all aspects of game
 function updateGame(){
-    updateDisplayedDice();
+    if(game_started){
+        updateDisplayedDice();
+        checkDudo();
+        if(session_started_bool){
+            orderPlayers();
+            session_started_bool = false
+        }
+        // checkCurrentTurn(); 
+    }
     getPos();
     postPos();
     updateCupPos();
     getUsernames();
-    checkDudo();
 }
 
+function checkCurrentTurn(){
+    //get current turn color
+    if(players_turn_order != []){
+        getCurrentTurn();
+    } 
+    //current_turn_color
+    //display crown at that person
+
+
+}
+
+//get the color of the player whos turn it currently is
+function getCurrentTurn(){
+    var usernameRequest = new XMLHttpRequest();
+    usernameRequest.onreadystatechange = function() {
+        if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
+            var parsed = JSON.parse(this.responseText);
+            current_turn_color = parsed.current_turn_color;
+        }
+    };
+    usernameRequest.open('GET', "/getCurrentTurnColor/", true);
+    usernameRequest.send();
+}
+
+//organize the player's turns
+function orderPlayers(){
+    for (var turn= 0; turn < 6; turn++){
+        for(var idx= 0; idx < 6; idx++){
+            if(players_rank[idx]==turn){
+                players_turn_order.push(idx);
+            }
+        }
+    }
+    postTurnOrder();
+}
+
+//put turn order into the server
+function postTurnOrder(){
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postTurnOrder/"; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ "turn_order": players_turn_order });
+    xhr.send(data);
+}
+
+//start a session
+function start_session(){
+    session_started_bool = true
+    var usernameRequest = new XMLHttpRequest();
+    usernameRequest.onreadystatechange = function() {
+        if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
+            var parsed = JSON.parse(this.responseText);
+            var usernames = ["","","","","",""]
+            usernames[0] = parsed.allInfo.red.username;
+            usernames[1] = parsed.allInfo.orange.username;
+            usernames[2] = parsed.allInfo.yellow.username;
+            usernames[3] = parsed.allInfo.green.username;
+            usernames[4] = parsed.allInfo.blue.username;
+            usernames[5] = parsed.allInfo.black.username;
+            for (var i = 0; i < 6; i++){
+                //delete colors without username
+                if (usernames[i] == ""){
+                    document.getElementById(String(colors[i])+"_player").style.visibility= 'hidden';
+                    for (var j = 0; j < 5; j++){
+                        document.getElementById(String(colors[i])+"_die"+String(j+1)+"_img").style.visibility= 'hidden';
+                    }
+                } else { //store players in array
+                    //get rank 
+                    var rank = parsed.allInfo[colors[i]].rank;
+                    //store colors based on rank and turn
+                    players_rank[i] = rank;  
+                }
+            }
+        }
+    };
+    usernameRequest.open('GET', "/info/", true);
+    usernameRequest.send();
+}
+
+//creates a username for each div when you click a cup and enter a string
 function makeUsername(cup_color){//figure out when to call this
     var newUsername = prompt("Enter " + cup_color + " Username") //make usernameSlot in html
     if (newUsername == ""){//only use this if the user input is ""
@@ -174,6 +269,7 @@ function makeUsername(cup_color){//figure out when to call this
     postUsername(cup_color); 
 }
 
+//put username into server
 function postUsername(cup_color){
     let postUsernameXhr = new XMLHttpRequest();
     let url = "http://0.0.0.0:5000/postUsername/";
@@ -186,19 +282,21 @@ function postUsername(cup_color){
 
 }
 
+//update the displayed usernames
 function getUsernames(){//call this periodically
     var usernameRequest = new XMLHttpRequest();
     usernameRequest.onreadystatechange = function() {
-    if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
-        var parsed = JSON.parse(this.responseText);
-        document.getElementById("redUsername").innerText = parsed.data.red.username
-        document.getElementById("orangeUsername").innerText = parsed.data.orange.username
-        document.getElementById("yellowUsername").innerText = parsed.data.yellow.username
-        document.getElementById("greenUsername").innerText = parsed.data.green.username
-        document.getElementById("blueUsername").innerText = parsed.data.blue.username
-        document.getElementById("blackUsername").innerText = parsed.data.black.username
-    }
-};usernameRequest.open('GET', "/getPos/", true);
+        if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
+            var parsed = JSON.parse(this.responseText);
+            document.getElementById("redUsername").innerText = parsed.data.red.username
+            document.getElementById("orangeUsername").innerText = parsed.data.orange.username
+            document.getElementById("yellowUsername").innerText = parsed.data.yellow.username
+            document.getElementById("greenUsername").innerText = parsed.data.green.username
+            document.getElementById("blueUsername").innerText = parsed.data.blue.username
+            document.getElementById("blackUsername").innerText = parsed.data.black.username
+        }
+    };
+    usernameRequest.open('GET', "/getPos/", true);
     usernameRequest.send();
     
 }
@@ -233,6 +331,7 @@ function updateCupPos(){//call it ever 500 ms, in update function
     toMove.forEach(color => parent.insertBefore(document.getElementById(color + "_player"), parent.childNodes[document.getElementById(color + "Rank").value]))
 }
 
+//get position of all the cup divs
 function getPos(){
     var rankRequest = new XMLHttpRequest();
     rankRequest.onreadystatechange = function() {
@@ -257,6 +356,7 @@ function getPos(){
     
 }
 
+//put cup div positions into the server
 function postPos() {
     let postPosXhr = new XMLHttpRequest();
     let url = "http://0.0.0.0:5000/postPos/";
@@ -271,6 +371,7 @@ function postPos() {
               postPosXhr.send(data)               
 }
 
+//update displayed dice for each player
 function updateDisplayedDice(){
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -330,6 +431,25 @@ function rollDice(){
     //send dice nums to server
     post_dice_nums();
 
+    document.getElementById(colors[chosen_color]+"_die1_img").onmouseenter = function() {dieEnter(1)};
+    document.getElementById(colors[chosen_color]+"_die2_img").onmouseenter = function() {dieEnter(2)};
+    document.getElementById(colors[chosen_color]+"_die3_img").onmouseenter = function() {dieEnter(3)};
+    document.getElementById(colors[chosen_color]+"_die4_img").onmouseenter = function() {dieEnter(4)};
+    document.getElementById(colors[chosen_color]+"_die5_img").onmouseenter = function() {dieEnter(5)};
+    function dieEnter(num){
+        document.getElementById(colors[chosen_color]+"_die"+String(num)+"_img").src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
+    }
+    document.getElementById(colors[chosen_color]+"_die1_img").onmouseleave = function() {dieLeave(1)};
+    document.getElementById(colors[chosen_color]+"_die2_img").onmouseleave = function() {dieLeave(2)};
+    document.getElementById(colors[chosen_color]+"_die3_img").onmouseleave = function() {dieLeave(3)};
+    document.getElementById(colors[chosen_color]+"_die4_img").onmouseleave = function() {dieLeave(4)};
+    document.getElementById(colors[chosen_color]+"_die5_img").onmouseleave = function() {dieLeave(5)};
+    function dieLeave(num){
+        if (selected_dice[num-1]==0){
+            document.getElementById(colors[chosen_color]+"_die"+String(num)+"_img").src = dice_img[chosen_color][dice_numbers[num-1]-1];
+        }
+    }
+
 
 }
 
@@ -363,26 +483,32 @@ function clicked_cup(num){
         }
         chosen_color = num;
         document.getElementById(cups[chosen_color]).src= cup_color_dark[chosen_color];
-        document.getElementById("start_button").style.visibility = 'visible';
+        document.getElementById("enter_round_button").style.visibility = 'visible';
     }
 }
 
 //begins game. Shows all dice as peaches ;)
-function startGame(){
+function enterRound(){
+    game_started = true;
     serverGameStart();
     for (var j = 0; j < 6; j++){
         for (var i = 0; i < 5; i++){
             document.getElementById(dice_objects[j][i]).style.visibility = 'visible';
         }
     }
-    document.getElementById("start_button").remove();
+
+    
+
+    document.getElementById("enter_round_button").remove();
     document.getElementById("roll_button").style.visibility = 'visible';
     userPicked = true; 
-    // console.log("making username for " + chosen_color)
     makeUsername(colors[chosen_color])
-    //TODO: send dice info to server
+    document.getElementById(String(colors[chosen_color])+"_user_pic").src = "/static/"+String(colors[chosen_color])+"_user_crown.png";
+    document.getElementById(String(colors[chosen_color])+"Username").style.marginTop = "5px"
+    
 }
 
+//tell server that the game has started
 function serverGameStart(){ //push information to the server
     let xhr = new XMLHttpRequest();
     let url = "http://0.0.0.0:5000/gameStart/"; 
@@ -412,8 +538,9 @@ function post_displayed_dice(){
     xhr.send(data);
 }
 
+//when the player selects dice to reroll, we automatically display all other dice to other players, 
+//reroll the selected dice, and then hide those rerolled dice
 function rerollDice(){
-    //TOOD: reroll and hide all dice selected
     for (var i = 0; i < 5; i++){
         if (selected_dice[i] == 1){
             hidden_dice[i] = 1;
@@ -422,7 +549,6 @@ function rerollDice(){
         }
     }
     post_dice_nums();
-    //TODO: display all dice not selected
     //make displayed dice array opposite
     for (var j = 0; j < 5; j++){
         if (selected_dice[j] == 0) {
@@ -438,6 +564,7 @@ function rerollDice(){
 
 }
 
+//when someone wants to doubt
 function dudo() {
     /*
     let xhttp = new XMLHttpRequest();
@@ -460,6 +587,7 @@ function dudo() {
 
 }
 
+//tell the server that someone doubted
 function postDoubt(){
     let xhr = new XMLHttpRequest();
     let url = "http://0.0.0.0:5000/postDoubt/"; 
@@ -470,17 +598,18 @@ function postDoubt(){
     xhr.send(data);
 }
 
+//see if anyone has doubted!
 function checkDudo(){
     //check if doubt is true
     getDoubt();
     //display ALL dice if true
     if (someone_doubted){
-        //TODO: DISPLAY EVERYONES DICE
         selected_dice = [1,1,1,1,1];
         displayDice();
     }
 }
 
+//see if anyone has doubted
 function getDoubt(){
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -492,22 +621,33 @@ function getDoubt(){
     request.send();
 }
 
+//increase the count number
 function count_up(){
     document.getElementById("count_number").innerHTML = String(count_bet + 1);
     count_bet = count_bet + 1;
+    
 }
 
+//decrease the count number
 function count_down(){
-    document.getElementById("count_number").innerHTML = String(count_bet - 1);
-    count_bet = count_bet - 1;
+    if (count_bet > 1){
+        document.getElementById("count_number").innerHTML = String(count_bet - 1);
+        count_bet = count_bet - 1;
+    }
 }
 
+//increase the face number
 function face_up(){
-    document.getElementById("face_number").innerHTML = String(face_bet + 1);
-   face_bet = face_bet + 1;
+    if (face_bet <= 5){
+        document.getElementById("face_number").innerHTML = String(face_bet + 1);
+        face_bet = face_bet + 1;
+    }
 }
 
+//decrease the face number
 function face_down(){
-    document.getElementById("face_number").innerHTML = String(face_bet - 1);
-    face_bet = face_bet -1;
+    if (face_bet > 1){
+        document.getElementById("face_number").innerHTML = String(face_bet - 1);
+        face_bet = face_bet -1;
+    }
 }
