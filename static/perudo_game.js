@@ -154,6 +154,7 @@ function faceDownLeave(){
 }
 
 
+
 //update game
 function updateGameInterval(){
     setInterval(updateGame, 500);
@@ -168,7 +169,7 @@ function updateGame(){
             orderPlayers();
             session_started_bool = false
         }
-        checkCurrentTurn(); 
+        // checkCurrentTurn(); 
     }
     getPos();
     postPos();
@@ -430,6 +431,25 @@ function rollDice(){
     //send dice nums to server
     post_dice_nums();
 
+    document.getElementById(colors[chosen_color]+"_die1_img").onmouseenter = function() {dieEnter(1)};
+    document.getElementById(colors[chosen_color]+"_die2_img").onmouseenter = function() {dieEnter(2)};
+    document.getElementById(colors[chosen_color]+"_die3_img").onmouseenter = function() {dieEnter(3)};
+    document.getElementById(colors[chosen_color]+"_die4_img").onmouseenter = function() {dieEnter(4)};
+    document.getElementById(colors[chosen_color]+"_die5_img").onmouseenter = function() {dieEnter(5)};
+    function dieEnter(num){
+        document.getElementById(colors[chosen_color]+"_die"+String(num)+"_img").src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
+    }
+    document.getElementById(colors[chosen_color]+"_die1_img").onmouseleave = function() {dieLeave(1)};
+    document.getElementById(colors[chosen_color]+"_die2_img").onmouseleave = function() {dieLeave(2)};
+    document.getElementById(colors[chosen_color]+"_die3_img").onmouseleave = function() {dieLeave(3)};
+    document.getElementById(colors[chosen_color]+"_die4_img").onmouseleave = function() {dieLeave(4)};
+    document.getElementById(colors[chosen_color]+"_die5_img").onmouseleave = function() {dieLeave(5)};
+    function dieLeave(num){
+        if (selected_dice[num-1]==0){
+            document.getElementById(colors[chosen_color]+"_die"+String(num)+"_img").src = dice_img[chosen_color][dice_numbers[num-1]-1];
+        }
+    }
+
 
 }
 
@@ -476,6 +496,9 @@ function enterRound(){
             document.getElementById(dice_objects[j][i]).style.visibility = 'visible';
         }
     }
+
+    
+
     document.getElementById("enter_round_button").remove();
     document.getElementById("roll_button").style.visibility = 'visible';
     userPicked = true; 
