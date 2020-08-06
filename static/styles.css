@@ -50,7 +50,7 @@
 
 #buttons {
     position: fixed;
-    margin-left: 650px;
+    margin-left: 500px;
 }
 
 #count_div {
@@ -211,7 +211,7 @@ body {
 
 .player_div {
     padding-bottom: 20px;
-    margin-left: 150px;
+    margin-left: 0px;
 
 }
 
