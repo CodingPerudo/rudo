@@ -101,7 +101,7 @@
 
     <div id="buttons">
         <div id= "start_div">
-            <button class="button" id="start_button" onclick="startGame();" type="button">Start Game!</button>
+            <button class="button" id="enter_round_button" onclick="enterRound();" type="button">Enter Round!</button>
         </div>
         <div id= "roll_div">
             <button class="button" id="roll_button" onclick="rollDice();" type="button">Roll Dice</button>
@@ -116,7 +116,6 @@
             <button class="button" id="dudo_button" onclick="dudo();" type="button">Dudo</button>
         </div>
         <div id= "betting_div">
-            <!-- <button class="button" id="dudo_button" onclick="dudo();" type="button">Dudo</button> -->
             <div id= "count_div">
                 <p class= "bet_label" id= "count_text">Count</p>
                 <img class= "bet_button" id="count_up_button" src = "static/resources/arrow_up.png" onclick="count_up();"></img>
@@ -133,6 +132,12 @@
         <div id= "place_bet_div">
             <button class="button" id="place_bet_button" type="button">Place Bet</button>
         </div>
+
+
+        <div id= "start_session_div">
+            <button class="button2" id="start_session_button" onclick="start_session();" type="button">start session</button>
+        </div>
+
         <p id='dudoMessage'></p>
     </div>
 
