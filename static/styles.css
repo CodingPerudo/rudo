@@ -2,40 +2,46 @@
 .red_die_img {
     width: 50px;
     visibility: hidden;
-    padding-bottom: 25px;
+    padding-top: 3px;
+    /* padding-bottom: 25px; */
 }
 
 .orange_die_img {
     width: 50px;
     visibility: hidden;
-    padding-bottom: 25px;
+    padding-top: 3px;
+    /* padding-bottom: 25px; */
 }
 
 .yellow_die_img {
     width: 50px;
     visibility: hidden;
-    padding-bottom: 25px;
+    padding-top: 3px;
+    /* padding-bottom: 25px; */
 }
 
 
 .green_die_img {
     width: 50px;
     visibility: hidden;
-    padding-bottom: 25px;
+    padding-top: 3px;
+    /* padding-bottom: 25px; */
 }
 
 
 .blue_die_img {
     width: 50px;
     visibility: hidden;
-    padding-bottom: 25px;
+    padding-top: 3px;
+    /* padding-bottom: 25px; */
 }
 
 
 .black_die_img {
     width: 50px;
     visibility: hidden;
-    padding-bottom: 25px;
+    padding-top: 3px;
+    /* padding-bottom: 25px; */
 }
 
 /* ______________________________Buttons______________________________ */
@@ -143,17 +149,17 @@
 #display_button {
     background-image: url(resources/blue_button.png);
 }
-
+/* 
 #display_button:hover {
     background-image: url(resources/blue_pressed.png);
-}
+} */
 
 #reroll_button {
     background-image: url(resources/pink_button.png);
 }
-#reroll_button:hover{
+/* #reroll_button:hover{
     background-image: url(resources/pink_pressed.png);
-}
+} */
 
 #dudo_button {
     background-image: url(resources/green_button.png);
@@ -223,3 +229,46 @@ body {
     position: absolute;
     margin-top: 10px;
 } 
+
+
+
+#red_table_div, #orange_table_div, #yellow_table_div, #green_table_div, #blue_table_div, #black_table_div {
+    float: right;
+    margin-left: 10px;
+}
+
+/* ________________________________playing text_______________________________ */
+.playing_text {
+    margin-bottom: 0px;
+    margin-top: 3px;
+    color: white;
+    visibility: hidden;
+}
+
+#red_playing_text {
+    color: rgb(248, 55, 55);
+}
+
+#orange_playing_text {
+    color: rgb(237, 125, 49);
+}
+
+#yellow_playing_text {
+    color: rgb(248, 204, 71);
+}
+
+#green_playing_text {
+    color: rgb(112, 173, 71);
+}
+
+#blue_playing_text {
+    color: rgb(68,114,196);
+}
+
+#black_playing_text {
+    color: rgb(180,180,180);
+}
+
+#start_session_button {
+    margin-top: 100px;
+}
