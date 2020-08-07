@@ -311,6 +311,7 @@ function checkCurrentTurn(){
 
 //get the color of the player whos turn it currently is
 function getCurrentTurn(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     var usernameRequest = new XMLHttpRequest();
     usernameRequest.onreadystatechange = function() {
         if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
@@ -323,7 +324,7 @@ function getCurrentTurn(){
             
         }
     };
-    usernameRequest.open('GET', "/getCurrentTurnColor/", true);
+    usernameRequest.open('GET', "/getCurrentTurnColor?id=" + session_id, true);
     usernameRequest.send();
 }
 
@@ -341,8 +342,9 @@ function orderPlayers(){
 
 //put turn order into the server
 function postTurnOrder(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postTurnOrder/"; 
+    let url = "http://0.0.0.0:5000/postTurnOrder?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "turn_order": players_turn_order });
     xhr.send(data);
@@ -350,6 +352,7 @@ function postTurnOrder(){
 
 //start a session
 function start_session(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     session_started_bool = true
     var usernameRequest = new XMLHttpRequest();
     usernameRequest.onreadystatechange = function() {
@@ -378,7 +381,7 @@ function start_session(){
             }
         }
     };
-    usernameRequest.open('GET', "/info/", true);
+    usernameRequest.open('GET', "/info?id=" + session_id, true);
     usernameRequest.send();
 }
 
@@ -397,8 +400,9 @@ function makeUsername(cup_color){//figure out when to call this
 
 //put username into server
 function postUsername(cup_color){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let postUsernameXhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postUsername/";
+    let url = "http://0.0.0.0:5000/postUsername?id=" + session_id;
     postUsernameXhr.open("POST", url, true);
     var colorUsername = cup_color+"Username"
     var data = JSON.stringify({"color": cup_color, 
@@ -410,6 +414,7 @@ function postUsername(cup_color){
 
 //update the displayed usernames
 function getUsernames(){//call this periodically
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     var usernameRequest = new XMLHttpRequest();
     usernameRequest.onreadystatechange = function() {
         if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
@@ -422,7 +427,7 @@ function getUsernames(){//call this periodically
             document.getElementById("blackUsername").innerText = parsed.data.black.username
         }
     };
-    usernameRequest.open('GET', "/getPos/", true);
+    usernameRequest.open('GET', "/getPos?id=" + session_id, true);
     usernameRequest.send();
     
 }
@@ -459,6 +464,7 @@ function updateCupPos(){//call it ever 500 ms, in update function
 
 //get position of all the cup divs
 function getPos(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     var rankRequest = new XMLHttpRequest();
     rankRequest.onreadystatechange = function() {
         if (rankRequest.readyState == 4 && rankRequest.status == 200){
@@ -477,15 +483,16 @@ function getPos(){
             document.getElementById("blueRank").value = parsed.data.blue.rank
             document.getElementById("blackRank").value = parsed.data.black.rank
         }
-    };rankRequest.open('GET', "/getPos/", true);
+    };rankRequest.open('GET', "/getPos?id=" + session_id, true);
     rankRequest.send();
     
 }
 
 //put cup div positions into the server
 function postPos() {
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let postPosXhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postPos/";
+    let url = "http://0.0.0.0:5000/postPos?id=" + session_id;
     
     var data = JSON.stringify({"redPos": document.getElementById("redPos").value,
                              "orangePos": document.getElementById("orangePos").value,
@@ -500,6 +507,7 @@ function postPos() {
 
 //update displayed dice for each player
 function updateDisplayedDice(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200){
@@ -537,7 +545,7 @@ function updateDisplayedDice(){
 
         }
     };
-    request.open('GET', "/getDisplayed/", true);
+    request.open('GET', "/getDisplayed?id=" + session_id, true);
     request.send();
 }
 
@@ -582,8 +590,9 @@ function rollDice(){
 
 //post all of your own dice nums to the server
 function post_dice_nums(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postNums/"; 
+    let url = "http://0.0.0.0:5000/postNums?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "color": chosen_color, "dice_nums": dice_numbers });
     xhr.send(data);
@@ -637,8 +646,9 @@ function enterRound(){
 
 //tell server that the game has started
 function serverGameStart(){ //push information to the server
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/gameStart/"; 
+    let url = "http://0.0.0.0:5000/gameStart?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "color": chosen_color});
     xhr.send(data);
@@ -655,8 +665,9 @@ function displayDice(){
 
 //POST selected dice to the server
 function post_displayed_dice(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postDisplayed/"; 
+    let url = "http://0.0.0.0:5000/postDisplayed?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify(
         {   "color": chosen_color, 
@@ -694,6 +705,10 @@ function rerollDice(){
 //when someone wants to doubt
 function dudo() {
     /*
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
+
+    // TODO add session id to url below
+
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -716,8 +731,9 @@ function dudo() {
 
 //tell the server that someone doubted
 function postDoubt(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postDoubt/"; 
+    let url = "http://0.0.0.0:5000/postDoubt?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify(
         {   "color": chosen_color }
@@ -738,13 +754,14 @@ function checkDudo(){
 
 //see if anyone has doubted
 function getDoubt(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200){
             var parsed = JSON.parse(this.responseText);
             someone_doubted = parsed.data;
         }
-    };request.open('GET', "/getDoubt/", true);
+    };request.open('GET', "/getDoubt?id=" + session_id, true);
     request.send();
 }
 
@@ -784,8 +801,9 @@ function placeBet(){
 }
 
 function postNextTurn(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postNextTurn/"; 
+    let url = "http://0.0.0.0:5000/postNextTurn?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "color": chosen_color});
     xhr.send(data);
