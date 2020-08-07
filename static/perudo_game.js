@@ -90,7 +90,9 @@ var face_bet = 2;
 var players_rank = [-1,-1,-1,-1,-1,-1]
 var players_turn_order = []
 var session_started_bool = false
+var previous_turn_color = -1;
 var current_turn_color = -1;
+var turn_changed = false;
 
 //deadling with the hover effect of the UI pieces
 //entering cup objects
@@ -153,7 +155,87 @@ function faceDownLeave(){
     document.getElementById("face_down_button").src ="static/resources/arrow_down.png";
 }
 
+//dealing with button hovering (we can't just do hover in CSS because we can onlu hover sometimes)
+document.getElementById("display_button").onmouseenter = function() {displayButtonEnter()};
+document.getElementById("display_button").onmouseleave = function() {displayButtonLeave()};
+function displayButtonEnter(){
+    var button_display = document.getElementById("display_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
+        button_display.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
+        button_display.style.color = "rgb(175,175,175)"
+        button_display.onclick = function(){};
+    } else { //if it is your turn
+        button_display.style.backgroundImage =  "url(/static/resources/blue_pressed.png)";
+        button_display.style.color = "white"
+        button_display.onclick = function(){displayDice();};
+    }
+}
+function displayButtonLeave(){
+    var button_display = document.getElementById("display_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
+        button_display.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
+        button_display.style.color = "rgb(175,175,175)"
+        button_display.onclick = function(){};
+    } else { //if it is your turn
+        button_display.style.backgroundImage =  "url(/static/resources/blue_button.png)";
+        button_display.style.color = "white"
+        button_display.onclick = function(){displayDice();};
+    }
+}
 
+document.getElementById("reroll_button").onmouseenter = function() {rerollButtonEnter()};
+document.getElementById("reroll_button").onmouseleave = function() {rerollButtonLeave()};
+function rerollButtonEnter(){
+    var button_reroll = document.getElementById("reroll_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
+        button_reroll.style.backgroundImage =  "url(/static/resources/pink_button_reserved.png)";
+        button_reroll.style.color = "rgb(175,175,175)"
+        button_reroll.onclick = function(){};
+    } else { //if it is your turn
+        button_reroll.style.backgroundImage =  "url(/static/resources/pink_pressed.png)";
+        button_reroll.style.color = "white"
+        button_reroll.onclick = function(){rerollDice();};
+    }
+}
+function rerollButtonLeave(){
+    var button_reroll = document.getElementById("reroll_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
+        button_reroll.style.backgroundImage =  "url(/static/resources/pink_button_reserved.png)";
+        button_reroll.style.color = "rgb(175,175,175)"
+        button_reroll.onclick = function(){};
+    } else { //if it is your turn
+        button_reroll.style.backgroundImage =  "url(/static/resources/pink_button.png)";
+        button_reroll.style.color = "white"
+        button_reroll.onclick = function(){rerollDice();};
+    }
+}
+
+document.getElementById("place_bet_button").onmouseenter = function() {place_betButtonEnter()};
+document.getElementById("place_bet_button").onmouseleave = function() {place_betButtonLeave()};
+function place_betButtonEnter(){
+    var button_place_bet = document.getElementById("place_bet_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
+        button_place_bet.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
+        button_place_bet.style.color = "rgb(175,175,175)"
+        button_place_bet.onclick = function(){};
+    } else { //if it is your turn
+        button_place_bet.style.backgroundImage =  "url(/static/resources/blue_pressed.png)";
+        button_place_bet.style.color = "white"
+        button_place_bet.onclick = function(){placeBet();};
+    }
+}
+function place_betButtonLeave(){
+    var button_place_bet = document.getElementById("place_bet_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
+        button_place_bet.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
+        button_place_bet.style.color = "rgb(175,175,175)"
+        button_place_bet.onclick = function(){};
+    } else { //if it is your turn
+        button_place_bet.style.backgroundImage =  "url(/static/resources/blue_button.png)";
+        button_place_bet.style.color = "white"
+        button_place_bet.onclick = function(){placBet();};
+    }
+}
 
 //update game
 function updateGameInterval(){
@@ -169,7 +251,7 @@ function updateGame(){
             orderPlayers();
             session_started_bool = false
         }
-        // checkCurrentTurn(); 
+        checkCurrentTurn(); 
     }
     getPos();
     postPos();
@@ -179,12 +261,51 @@ function updateGame(){
 
 function checkCurrentTurn(){
     //get current turn color
-    if(players_turn_order != []){
+    if(players_turn_order.length != 0){
         getCurrentTurn();
     } 
     //current_turn_color
-    //display crown at that person
+    //display playing at that person
+    if (current_turn_color != -1){
+        document.getElementById(colors[current_turn_color] + "_playing_text").style.visibility = "visible";
+    }
 
+    if (previous_turn_color != -1){
+        document.getElementById(colors[previous_turn_color] + "_playing_text").style.visibility = "hidden";
+    }
+
+    //all this stuff makes the buttons appear as non-clickable to people if it isn't their turn
+    var button_display = document.getElementById("display_button");
+    var button_reroll = document.getElementById("reroll_button");
+    var button_bet = document.getElementById("place_bet_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
+        button_display.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
+        button_display.style.color = "rgb(175,175,175)"
+        button_display.onclick = function(){};
+
+        button_reroll.style.backgroundImage =  "url(/static/resources/pink_button_reserved.png)";
+        button_reroll.style.color = "rgb(175,175,175)"
+        button_reroll.onclick = function(){};
+
+        button_bet.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
+        button_bet.style.color = "rgb(175,175,175)"
+        button_bet.onclick = function(){};
+    } 
+    else if (turn_changed && current_turn_color != previous_turn_color){ //it is your turn
+        turn_changed = false;
+
+        button_display.style.backgroundImage =  "url(/static/resources/blue_button.png)";
+        button_display.style.color = "white"
+        button_display.onclick = function(){displayDice();};
+
+        button_reroll.style.backgroundImage =  "url(/static/resources/pink_button.png)";
+        button_reroll.style.color = "white"
+        button_reroll.onclick = function(){displayDice();};
+
+        button_bet.style.backgroundImage =  "url(/static/resources/blue_button.png)";
+        button_bet.style.color = "white"
+        button_bet.onclick = function(){displayDice();};
+    }
 
 }
 
@@ -194,7 +315,12 @@ function getCurrentTurn(){
     usernameRequest.onreadystatechange = function() {
         if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
             var parsed = JSON.parse(this.responseText);
+            if(parsed.current_turn_color != current_turn_color){
+                previous_turn_color = current_turn_color; 
+                turn_changed = true;    
+            }
             current_turn_color = parsed.current_turn_color;
+            
         }
     };
     usernameRequest.open('GET', "/getCurrentTurnColor/", true);
@@ -360,15 +486,16 @@ function getPos(){
 function postPos() {
     let postPosXhr = new XMLHttpRequest();
     let url = "http://0.0.0.0:5000/postPos/";
-    postPosXhr.open("POST", url, true);
+    
     var data = JSON.stringify({"redPos": document.getElementById("redPos").value,
                              "orangePos": document.getElementById("orangePos").value,
                              "yellowPos": document.getElementById("yellowPos").value,
                              "greenPos": document.getElementById("greenPos").value,
                              "bluePos": document.getElementById("bluePos").value,
                              "blackPos": document.getElementById("blackPos").value
-})
-              postPosXhr.send(data)               
+                            });
+                            postPosXhr.open("POST", url, true);
+                            postPosXhr.send(data)               
 }
 
 //update displayed dice for each player
@@ -650,4 +777,16 @@ function face_down(){
         document.getElementById("face_number").innerHTML = String(face_bet - 1);
         face_bet = face_bet -1;
     }
+}
+
+function placeBet(){
+    postNextTurn();
+}
+
+function postNextTurn(){
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postNextTurn/"; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ "color": chosen_color});
+    xhr.send(data);
 }

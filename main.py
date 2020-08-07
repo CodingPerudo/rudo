@@ -258,7 +258,7 @@ def postTurnOrder():
 @app.route("/postNextTurn/", methods = ["POST"])
 def postNextTurn():
     global current_turn_idx
-    if (current_turn_idx < len(turnOrder)):
+    if (current_turn_idx < len(turnOrder) -1):
         current_turn_idx += 1
     else:
         current_turn_idx = 0
