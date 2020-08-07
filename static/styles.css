@@ -64,12 +64,14 @@
     position: relative;
     color: white;
     font-size: 20px;
+    padding-left: 10px;
 }
 
 #face_div {
     float: right;
     color: white;
     font-size: 20px;
+    padding-right: 10px;
 }
 
 #count_up_button, #face_up_button {
@@ -79,6 +81,7 @@
 
 #count_down_button, #face_down_button {
     background-image: url("resources/arrow_down.png");
+    margin-top: 5px;
 }
 
 .bet_label {
@@ -87,11 +90,11 @@
 }
 
 #face_text {
-    padding-left: 15px;
+    padding-left: 12px;
 }
 
 #count_text {
-    padding-left: 10px;
+    padding-left: 5px;
 }
 
 .bet_button {
@@ -100,16 +103,20 @@
     background-color:transparent;
     outline:none;
     background-size: 100% 100%;
-    width: 70px;
-    height: 50px;
+    width: 60px;
+    height: 30px;
     background-repeat: no-repeat;
     margin-bottom: 0px;
+    padding-bottom: 0px;
 }
 
 #count_number, #face_number {
     font-size: 50px;
     margin: 0px;
-    padding-left: 22px;
+    padding-left: 18px;
+    padding-bottom: 0px;
+    line-height: 50px;
+    height: 50px;
 }
 
 
@@ -271,4 +278,135 @@ body {
 
 #start_session_button {
     margin-top: 100px;
+}
+
+/* ________________________________previous bet_______________________________ */
+
+#previous_bet_div {
+    margin-top: 10px;
+    color: white;
+    background-image: url("resources/dark_green_background.png");
+    padding-right: 10px;
+    padding-left: 10px;
+    height: 107px;
+    
+}
+
+#previous_bet_title{
+    margin: 0px;
+    padding: 0px;
+    padding-top: 6px;
+    font-size: 18px;
+}
+
+#previous_labels_div{
+    padding-bottom: 3px;
+    padding-top: 6px;
+}
+
+
+#previous_count_label {
+    padding: 0px;
+    margin: 0px;
+    float: left;
+    font-size: 15px;
+    padding-left: 20px;
+}
+
+#previous_face_label{
+    float: right;
+    padding: 0px;
+    margin: 0px;
+    font-size: 15px;
+    padding-right: 27px;
+}
+
+#previous_numbers_div {
+    color: white;
+    background-image: url("resources/light_green_background.png");
+    font-size: 25px;
+    height: 40px;
+    margin-top: 20px;
+}
+
+#prev_count_num{
+    float:left;
+    padding: 0px;
+    margin: 0px;
+    padding-left: 35px;
+    padding-top: 5px;
+}
+
+#prev_face_num {
+    float: right;
+    padding: 0px;
+    margin: 0px;
+    padding-right: 35px;
+    padding-top: 5px;
+}
+
+/* ________________________________probability of bets_______________________________ */
+
+#probability_div {
+    margin-top: 10px;
+    color: white;
+    background-image: url("resources/dark_pink_background.png");
+    padding-right: 10px;
+    padding-left: 10px;
+    height: 107px;
+    
+}
+
+#probability_title{
+    margin: 0px;
+    padding: 0px;
+    padding-top: 6px;
+    font-size: 18px;
+}
+
+#probability_labels_div{
+    padding-bottom: 3px;
+    padding-top: 6px;
+}
+
+
+#probability_prev_label {
+    padding: 0px;
+    margin: 0px;
+    float: left;
+    font-size: 15px;
+    padding-left: 20px;
+}
+
+#probability_yours_label{
+    float: right;
+    padding: 0px;
+    margin: 0px;
+    font-size: 15px;
+    padding-right: 27px;
+}
+
+#probability_numbers_div {
+    color: white;
+    background-image: url("resources/light_pink_background.png");
+    font-size: 25px;
+    height: 40px;
+    margin-top: 20px;
+}
+
+#prob_prev_num{
+    float:left;
+    padding: 0px;
+    margin: 0px;
+    padding-left: 35px;
+    padding-top: 5px;
+}
+
+#prob_yours_num {
+    float: right;
+    padding: 0px;
+    margin: 0px;
+    padding-right: 35px;
+    padding-top: 5px;
+}
 }
