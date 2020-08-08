@@ -49,11 +49,22 @@
     width: 85px;
 }
 
+#game_id_display {
+    color: white;
+}
+
 #wrapper {
     float: left;
     position: relative;
 }
 
+.text {
+    padding: 20px;
+    width: 75px;
+    margin-left: 100px;
+    margin-top: 10px;
+    font-size: 17px;
+}
 #buttons {
     position: fixed;
     margin-left: 500px;
@@ -86,7 +97,7 @@
 
 .bet_label {
     margin-bottom: 10px;
-    
+
 }
 
 #face_text {
@@ -156,7 +167,7 @@
 #display_button {
     background-image: url(resources/blue_button.png);
 }
-/* 
+/*
 #display_button:hover {
     background-image: url(resources/blue_pressed.png);
 } */
@@ -192,11 +203,28 @@
     /* margin-top: 15px; */
 }
 
+#new_game {
+    background-image: url(resources/green_button.png);
+}
+
+#new_game:hover {
+    background-image: url(resources/green_pressed.png);
+}
+
+#join_game {
+    background-image: url(resources/pink_button.png);
+}
+
+#join_game:hover {
+    background-image: url(resources/pink_pressed.png);
+}
+
+
 /* ______________________________Other stuff______________________________ */
 
 
 
-#dudoMessage {
+#join_fail {
     color: white;
 }
 
@@ -207,7 +235,7 @@ body {
 }
 
 #redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername{
-    color: rgb(255, 255, 255); 
+    color: rgb(255, 255, 255);
     text-indent: 2%;
     text-shadow: 1px black;
     font-size: 20px;
@@ -235,7 +263,7 @@ body {
 #redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername {
     position: absolute;
     margin-top: 10px;
-} 
+}
 
 
 
@@ -289,7 +317,7 @@ body {
     padding-right: 10px;
     padding-left: 10px;
     height: 107px;
-    
+
 }
 
 #previous_bet_title{
@@ -354,7 +382,7 @@ body {
     padding-right: 10px;
     padding-left: 10px;
     height: 107px;
-    
+
 }
 
 #probability_title{

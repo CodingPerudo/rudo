@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body onload="enableButtons();">
+  <div>
+    <button class="button" id="new_game" onclick="newGame();" type="button">New Game</button>
+    <br><br>
+    <input class="text" type="text" id="session_id" placeholder="GAME ID" maxlength="4">
+    <button class="button" id="join_game" onclick="joinGame();" type="button">Join Game</button>
+    <p id="join_fail"></p>
+  </div>    
+
+  <script src="/static/game_session_control.js"></script>
+</body>
+</html>
