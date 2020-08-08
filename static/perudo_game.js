@@ -480,7 +480,7 @@ function updateCupPos(){//call it ever 500 ms, in update function
     colors.forEach(color => {if (document.getElementById(color + "Pos").value != document.getElementById(color + "Rank").value && document.getElementById(color + "Rank").value != -1){
         toMove.push(color)
     }})
-    toMove.forEach(color => parent.insertBefore(document.getElementById(color + "_player"), parent.childNodes[document.getElementById(color + "Rank").value]))
+    // toMove.forEach(color => parent.insertBefore(document.getElementById(color + "_player"), parent.childNodes[document.getElementById(color + "Rank").value]))
 }
 
 //get position of all the cup divs
@@ -649,7 +649,7 @@ function clicked_cup(num){
 //begins game. Shows all dice as peaches ;)
 function enterRound(){
     game_started = true;
-    insertCup();
+    //insertCup();//this function moves the cup when you click them. Has been disabled until further notice
     serverGameStart();
     for (var j = 0; j < 6; j++){
         for (var i = 0; i < 5; i++){
