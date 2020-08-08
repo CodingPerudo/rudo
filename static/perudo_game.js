@@ -572,7 +572,9 @@ function rollDice(){
     document.getElementById(colors[chosen_color]+"_die4_img").onmouseenter = function() {dieEnter(4)};
     document.getElementById(colors[chosen_color]+"_die5_img").onmouseenter = function() {dieEnter(5)};
     function dieEnter(num){
-        document.getElementById(colors[chosen_color]+"_die"+String(num)+"_img").src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
+        if(hidden_dice[num-1] == 0){
+            document.getElementById(colors[chosen_color]+"_die"+String(num)+"_img").src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
+        }   
     }
     document.getElementById(colors[chosen_color]+"_die1_img").onmouseleave = function() {dieLeave(1)};
     document.getElementById(colors[chosen_color]+"_die2_img").onmouseleave = function() {dieLeave(2)};
@@ -580,7 +582,7 @@ function rollDice(){
     document.getElementById(colors[chosen_color]+"_die4_img").onmouseleave = function() {dieLeave(4)};
     document.getElementById(colors[chosen_color]+"_die5_img").onmouseleave = function() {dieLeave(5)};
     function dieLeave(num){
-        if (selected_dice[num-1]==0){
+        if (selected_dice[num-1]==0 && hidden_dice[num-1] == 0){
             document.getElementById(colors[chosen_color]+"_die"+String(num)+"_img").src = dice_img[chosen_color][dice_numbers[num-1]-1];
         }
     }
@@ -697,6 +699,11 @@ function rerollDice(){
     }
     //display dice
     displayDice();
+
+    //deselect all dice
+    for (var j = 0; j < 5; j++){
+        selected_dice[j] = 0;
+    }
     
 
 
