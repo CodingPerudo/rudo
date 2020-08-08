@@ -432,29 +432,50 @@ function getUsernames(){//call this periodically
     
 }
 
+function insertCup() {
+    let cup_to_move = colors[chosen_color]+"_player"
+    let content = document.getElementById(cup_to_move);
+    let parent = content.parentNode;
+    let colorToSwitch = "initialColorToSwitch"
+    let highestRank = -1
 
-//the divs will hold their ranks
-function insertCup(cup_to_move) {
-    if (document.getElementById(colors[chosen_color]+"Rank").value == "-1" && userPicked == false){//if the clicked cup does not have a rank, then proceed
-        var content = document.getElementById(cup_to_move);
-        var parent = content.parentNode;
-        var highestRank = -1
-        getPos();
-        colors.forEach(color => {if (document.getElementById(color + "Rank").value > highestRank) {
-            highestRank = document.getElementById(color + "Rank").value
-        }})
-        if (highestRank = -1){
-            parent.insertBefore(content, parent.childNodes[1])
+    colors.forEach(color => {if (document.getElementById(color + "Rank").value > highestRank) {
+        highestRank = document.getElementById(color + "Rank").value
+    }})
+
+    if (highestRank == -1) {
+        colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == 0){
+            colorToSwitch = "red"
         }
-        else {
-        parent.insertBefore(content, parent.childNodes[highestRank+1])
-        }
+        })
     }
+    else {
+        colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == parseInt(highestRank)){
+        colorToSwitch = color}
+        })
+    }
+    let targetCupName = document.getElementById(cup_to_move)
+    let otherCupName = document.getElementById(colorToSwitch + "_player")
+    if (highestRank == -1) {
+    parent.insertBefore(targetCupName, otherCupName)
+    document.getElementById(colors[chosen_color]+"Pos").value = "1"; 
+    document.getElementById(colors[chosen_color]+"Rank").value = document.getElementById(colors[chosen_color]+"Pos").value
+    }
+    else {
+        insertAfter(targetCupName, otherCupName)
+        document.getElementById(colors[chosen_color]+"Pos").value = String(parseInt(highestRank) + 1); 
+        document.getElementById(colors[chosen_color]+"Rank").value = document.getElementById(colors[chosen_color]+"Pos").value
+    }
+    postPos();
+}
+
+function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
 function updateCupPos(){//call it ever 500 ms, in update function
     //if the cup has a rank, set its position to its rank, 
-    var parent= document.getElementById("red_player").parentNode; //use any cup to get it's parent
+    var parent= document.getElementById("orange_player").parentNode; //use any cup to get it's parent
     let toMove = []
     colors.forEach(color => {if (document.getElementById(color + "Pos").value != document.getElementById(color + "Rank").value && document.getElementById(color + "Rank").value != -1){
         toMove.push(color)
@@ -628,6 +649,7 @@ function clicked_cup(num){
 //begins game. Shows all dice as peaches ;)
 function enterRound(){
     game_started = true;
+    insertCup();
     serverGameStart();
     for (var j = 0; j < 6; j++){
         for (var i = 0; i < 5; i++){
