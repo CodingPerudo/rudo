@@ -6,6 +6,8 @@ class Game:
         self.last_bet = [0, 0]
         self.turnOrder = []
         self.current_turn_idx = 0
+        self.start_session = False
+        self.playerCodes = []
 
         self.playerInfo = {}
         for i, color in enumerate(self.colors):

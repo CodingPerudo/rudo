@@ -90,9 +90,13 @@ var face_bet = 2;
 var players_rank = [-1,-1,-1,-1,-1,-1]
 var players_turn_order = []
 var session_started_bool = false
+var host_started_session = false
 var previous_turn_color = -1;
 var current_turn_color = -1;
 var turn_changed = false;
+
+var playerCode = "";
+var recievedHost = false; //did you recieve a host, are you the host
 
 //deadling with the hover effect of the UI pieces
 //entering cup objects
@@ -239,6 +243,7 @@ function place_betButtonLeave(){
 
 //update game
 function updateGameInterval(){
+    setPlayerCode();
     setInterval(updateGame, 500);
 }
 
@@ -248,8 +253,11 @@ function updateGame(){
         updateDisplayedDice();
         checkDudo();
         if(session_started_bool){
+            start_session();
             orderPlayers();
-            session_started_bool = false
+            session_started_bool = false;
+        } else {
+            checkStartSession();
         }
         checkCurrentTurn(); 
     }
@@ -257,6 +265,65 @@ function updateGame(){
     postPos();
     updateCupPos();
     getUsernames();
+    if (!recievedHost){ //if you haven't recieved a host yet
+        getHost();
+    }
+}
+
+function setPlayerCode(){
+    playerCode = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    console.log("PLayercode: " + playerCode)
+    postPlayerCode();
+}
+
+function postPlayerCode(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postPlayerCode?id="+ session_id; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ "code": playerCode });
+    xhr.send(data);
+}
+
+function getHost(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200){
+            var parsed = JSON.parse(this.responseText);
+            console.log("parsed host: " + this.responseText)
+            if (parsed.host == playerCode){
+                document.getElementById("start_session_button").style.visibility = "visible";
+                recievedHost = true;
+            }
+        }
+    };
+    request.open('GET', "/getHost?id=" + session_id, true);
+    request.send();
+}
+
+function postPlayerCode(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postPlayerCode?id="+ session_id; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ "code": playerCode });
+    xhr.send(data);
+}
+
+function checkStartSession(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200){
+            var parsed = JSON.parse(this.responseText);
+            if (parsed.start_session){
+                session_started_bool = true;
+            }
+        }
+    };
+    request.open('GET', "/getStartSession?id=" + session_id, true);
+    request.send();
 }
 
 function checkCurrentTurn(){
@@ -353,7 +420,6 @@ function postTurnOrder(){
 //start a session
 function start_session(){
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
-    session_started_bool = true
     var usernameRequest = new XMLHttpRequest();
     usernameRequest.onreadystatechange = function() {
         if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
@@ -383,6 +449,17 @@ function start_session(){
     };
     usernameRequest.open('GET', "/info?id=" + session_id, true);
     usernameRequest.send();
+
+    postStartSession();
+}
+
+function postStartSession(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postStartSession?id="+ session_id; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ "color": chosen_color });
+    xhr.send(data);
 }
 
 //creates a username for each div when you click a cup and enter a string
@@ -634,9 +711,6 @@ function enterRound(){
             document.getElementById(dice_objects[j][i]).style.visibility = 'visible';
         }
     }
-
-    
-
     document.getElementById("enter_round_button").remove();
     document.getElementById("roll_button").style.visibility = 'visible';
     userPicked = true; 

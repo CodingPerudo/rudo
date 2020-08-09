@@ -138,7 +138,7 @@ def getDisplayedDice():
 
     return json.dumps({"success": True, "data": data}), 200
 
-@app.route("/getDoub/", methods=["GET"])
+@app.route("/getDoubt/", methods=["GET"])
 def getDoubt():
     game_id = request.args.get('id')
     return json.dumps({"success": True, "data": all_games[game_id].doubt}), 200
@@ -154,6 +154,24 @@ def getCurrentTurnColor():
     game_id = request.args.get('id')
     game = all_games[game_id]
     return json.dumps({"success": True, "current_turn_color": game.turnOrder[game.current_turn_idx]}), 200
+
+
+@app.route("/getStartSession", methods=["GET"])
+def getStartSession():
+    game_id = request.args.get('id')
+    game = all_games[game_id]
+    return json.dumps({"success": True, "start_session": game.start_session}), 200
+
+@app.route("/getHost", methods=["GET"])
+def getPlayersInSession():
+    game_id = request.args.get('id')
+    game = all_games[game_id]
+    if(len(game.playerCodes) != 0):
+        return json.dumps({"success": True, "host": game.playerCodes[0]}), 200
+    else:
+        return json.dumps({"success": True, "host": "No Host"}), 404
+
+
 
 #___________________________________POST Requests_________________________________________
 @app.route('/gamePage', methods=['POST'])
@@ -259,7 +277,20 @@ def postNextTurn():
         game.current_turn_idx = 0
     return json.dumps({"success": True}), 201
 
+@app.route("/postStartSession", methods = ["POST"])
+def postStartSession():
+    game_id = request.args.get('id')
+    game = all_games[game_id]
+    game.start_session = True
+    return json.dumps({"success": True}), 201
 
+@app.route("/postPlayerCode", methods = ["POST"])
+def postPlayerCode():
+    game_id = request.args.get('id')
+    game = all_games[game_id]
+    body = json.loads(request.data)
+    game.playerCodes.append(body["code"])
+    return json.dumps({"success": True}), 201
 
 #___________________________________Run the server_________________________________________
 if __name__ == "__main__":

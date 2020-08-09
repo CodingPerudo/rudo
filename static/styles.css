@@ -306,6 +306,7 @@ body {
 
 #start_session_button {
     margin-top: 100px;
+    visibility: hidden;
 }
 
 /* ________________________________previous bet_______________________________ */
