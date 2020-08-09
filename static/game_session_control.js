@@ -13,6 +13,7 @@ function displayGamePage(session_id) {
 
   xhttp.open("POST", "/gamePage?id=" + session_id, true);
   xhttp.send();
+
 }
 
 function loadGame(session_id) {
