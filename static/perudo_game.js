@@ -90,9 +90,13 @@ var face_bet = 2;
 var players_rank = [-1,-1,-1,-1,-1,-1]
 var players_turn_order = []
 var session_started_bool = false
+var host_started_session = false
 var previous_turn_color = -1;
 var current_turn_color = -1;
 var turn_changed = false;
+
+var playerCode = "";
+var recievedHost = false; //did you recieve a host, are you the host
 
 //deadling with the hover effect of the UI pieces
 //entering cup objects
@@ -239,6 +243,7 @@ function place_betButtonLeave(){
 
 //update game
 function updateGameInterval(){
+    setPlayerCode();
     setInterval(updateGame, 500);
 }
 
@@ -248,8 +253,11 @@ function updateGame(){
         updateDisplayedDice();
         checkDudo();
         if(session_started_bool){
+            start_session();
             orderPlayers();
-            session_started_bool = false
+            session_started_bool = false;
+        } else {
+            checkStartSession();
         }
         checkCurrentTurn(); 
     }
@@ -257,6 +265,65 @@ function updateGame(){
     postPos();
     updateCupPos();
     getUsernames();
+    if (!recievedHost){ //if you haven't recieved a host yet
+        getHost();
+    }
+}
+
+function setPlayerCode(){
+    playerCode = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    console.log("PLayercode: " + playerCode)
+    postPlayerCode();
+}
+
+function postPlayerCode(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postPlayerCode?id="+ session_id; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ "code": playerCode });
+    xhr.send(data);
+}
+
+function getHost(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200){
+            var parsed = JSON.parse(this.responseText);
+            console.log("parsed host: " + this.responseText)
+            if (parsed.host == playerCode){
+                document.getElementById("start_session_button").style.visibility = "visible";
+                recievedHost = true;
+            }
+        }
+    };
+    request.open('GET', "/getHost?id=" + session_id, true);
+    request.send();
+}
+
+function postPlayerCode(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postPlayerCode?id="+ session_id; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ "code": playerCode });
+    xhr.send(data);
+}
+
+function checkStartSession(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200){
+            var parsed = JSON.parse(this.responseText);
+            if (parsed.start_session){
+                session_started_bool = true;
+            }
+        }
+    };
+    request.open('GET', "/getStartSession?id=" + session_id, true);
+    request.send();
 }
 
 function checkCurrentTurn(){
@@ -353,7 +420,6 @@ function postTurnOrder(){
 //start a session
 function start_session(){
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
-    session_started_bool = true
     var usernameRequest = new XMLHttpRequest();
     usernameRequest.onreadystatechange = function() {
         if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
@@ -383,6 +449,17 @@ function start_session(){
     };
     usernameRequest.open('GET', "/info?id=" + session_id, true);
     usernameRequest.send();
+
+    postStartSession();
+}
+
+function postStartSession(){
+    let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
+    let xhr = new XMLHttpRequest();
+    let url = "http://0.0.0.0:5000/postStartSession?id="+ session_id; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ "color": chosen_color });
+    xhr.send(data);
 }
 
 //creates a username for each div when you click a cup and enter a string
@@ -432,34 +509,55 @@ function getUsernames(){//call this periodically
     
 }
 
+function insertCup() {
+    let cup_to_move = colors[chosen_color]+"_player"
+    let content = document.getElementById(cup_to_move);
+    let parent = content.parentNode;
+    let colorToSwitch = "initialColorToSwitch"
+    let highestRank = -1
 
-//the divs will hold their ranks
-function insertCup(cup_to_move) {
-    if (document.getElementById(colors[chosen_color]+"Rank").value == "-1" && userPicked == false){//if the clicked cup does not have a rank, then proceed
-        var content = document.getElementById(cup_to_move);
-        var parent = content.parentNode;
-        var highestRank = -1
-        getPos();
-        colors.forEach(color => {if (document.getElementById(color + "Rank").value > highestRank) {
-            highestRank = document.getElementById(color + "Rank").value
-        }})
-        if (highestRank = -1){
-            parent.insertBefore(content, parent.childNodes[1])
+    colors.forEach(color => {if (document.getElementById(color + "Rank").value > highestRank) {
+        highestRank = document.getElementById(color + "Rank").value
+    }})
+
+    if (highestRank == -1) {
+        colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == 0){
+            colorToSwitch = "red"
         }
-        else {
-        parent.insertBefore(content, parent.childNodes[highestRank+1])
-        }
+        })
     }
+    else {
+        colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == parseInt(highestRank)){
+        colorToSwitch = color}
+        })
+    }
+    let targetCupName = document.getElementById(cup_to_move)
+    let otherCupName = document.getElementById(colorToSwitch + "_player")
+    if (highestRank == -1) {
+    parent.insertBefore(targetCupName, otherCupName)
+    document.getElementById(colors[chosen_color]+"Pos").value = "1"; 
+    document.getElementById(colors[chosen_color]+"Rank").value = document.getElementById(colors[chosen_color]+"Pos").value
+    }
+    else {
+        insertAfter(targetCupName, otherCupName)
+        document.getElementById(colors[chosen_color]+"Pos").value = String(parseInt(highestRank) + 1); 
+        document.getElementById(colors[chosen_color]+"Rank").value = document.getElementById(colors[chosen_color]+"Pos").value
+    }
+    postPos();
+}
+
+function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
 function updateCupPos(){//call it ever 500 ms, in update function
     //if the cup has a rank, set its position to its rank, 
-    var parent= document.getElementById("red_player").parentNode; //use any cup to get it's parent
+    var parent= document.getElementById("orange_player").parentNode; //use any cup to get it's parent
     let toMove = []
     colors.forEach(color => {if (document.getElementById(color + "Pos").value != document.getElementById(color + "Rank").value && document.getElementById(color + "Rank").value != -1){
         toMove.push(color)
     }})
-    toMove.forEach(color => parent.insertBefore(document.getElementById(color + "_player"), parent.childNodes[document.getElementById(color + "Rank").value]))
+    // toMove.forEach(color => parent.insertBefore(document.getElementById(color + "_player"), parent.childNodes[document.getElementById(color + "Rank").value]))
 }
 
 //get position of all the cup divs
@@ -628,15 +726,13 @@ function clicked_cup(num){
 //begins game. Shows all dice as peaches ;)
 function enterRound(){
     game_started = true;
+    //insertCup();//this function moves the cup when you click them. Has been disabled until further notice
     serverGameStart();
     for (var j = 0; j < 6; j++){
         for (var i = 0; i < 5; i++){
             document.getElementById(dice_objects[j][i]).style.visibility = 'visible';
         }
     }
-
-    
-
     document.getElementById("enter_round_button").remove();
     document.getElementById("roll_button").style.visibility = 'visible';
     userPicked = true; 
