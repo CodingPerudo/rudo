@@ -138,7 +138,7 @@ def getDisplayedDice():
 
     return json.dumps({"success": True, "data": data}), 200
 
-@app.route("/getDoub/", methods=["GET"])
+@app.route("/getDoubt", methods=["GET"])
 def getDoubt():
     game_id = request.args.get('id')
     return json.dumps({"success": True, "data": all_games[game_id].doubt}), 200

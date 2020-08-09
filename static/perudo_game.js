@@ -344,7 +344,7 @@ function orderPlayers(){
 function postTurnOrder(){
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postTurnOrder?id=" + session_id; 
+    let url = "/postTurnOrder?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "turn_order": players_turn_order });
     xhr.send(data);
@@ -402,7 +402,7 @@ function makeUsername(cup_color){//figure out when to call this
 function postUsername(cup_color){
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let postUsernameXhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postUsername?id=" + session_id;
+    let url = "/postUsername?id=" + session_id;
     postUsernameXhr.open("POST", url, true);
     var colorUsername = cup_color+"Username"
     var data = JSON.stringify({"color": cup_color, 
@@ -492,7 +492,7 @@ function getPos(){
 function postPos() {
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let postPosXhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postPos?id=" + session_id;
+    let url = "/postPos?id=" + session_id;
     
     var data = JSON.stringify({"redPos": document.getElementById("redPos").value,
                              "orangePos": document.getElementById("orangePos").value,
@@ -594,7 +594,7 @@ function rollDice(){
 function post_dice_nums(){
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postNums?id=" + session_id; 
+    let url = "/postNums?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "color": chosen_color, "dice_nums": dice_numbers });
     xhr.send(data);
@@ -650,7 +650,7 @@ function enterRound(){
 function serverGameStart(){ //push information to the server
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/gameStart?id=" + session_id; 
+    let url = "/gameStart?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "color": chosen_color});
     xhr.send(data);
@@ -669,7 +669,7 @@ function displayDice(){
 function post_displayed_dice(){
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postDisplayed?id=" + session_id; 
+    let url = "/postDisplayed?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify(
         {   "color": chosen_color, 
@@ -740,7 +740,7 @@ function dudo() {
 function postDoubt(){
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postDoubt?id=" + session_id; 
+    let url = "/postDoubt?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify(
         {   "color": chosen_color }
@@ -810,7 +810,7 @@ function placeBet(){
 function postNextTurn(){
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postNextTurn?id=" + session_id; 
+    let url = "/postNextTurn?id=" + session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "color": chosen_color});
     xhr.send(data);
