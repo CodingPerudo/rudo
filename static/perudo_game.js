@@ -294,7 +294,6 @@ function updateGame(){
 
 function setPlayerCode(){
     playerCode = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    console.log("PLayercode: " + playerCode)
     postPlayerCode();
 }
 
@@ -313,7 +312,6 @@ function getHost(){
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200){
             var parsed = JSON.parse(this.responseText);
-            console.log("parsed host: " + this.responseText)
             if (parsed.host == playerCode){
                 document.getElementById("start_session_button").style.visibility = "visible";
                 recievedHost = true;
@@ -721,33 +719,78 @@ function post_dice_nums(){
     xhr.send(data);
 }
 
-function calcProbabilities() { //only use the dice that you can see, meaning your dice and the displayed dice on the server
-//calculate the probability of the current bet
+function calcProbabilities() { 
 
-//1: make an array with dice faces, add your dice to it, with 1-6, and "unknown" is a key as well
-diceFaces = [0,0,0,0,0,0,0] //diceFaces[1] = number of ones, etc. diceFaces[0] = number of unknown dice
-//dice_numbers holds data as [1,2,3,4,5], need to check only the dice which are not hiddden from you, 1 in a spot means that dice is hidden
-for (index in dice_numbers) {
-    if (hidden_dice[index] == 0) {
-        diceFaces[dice_numbers[index]] = parseInt(diceFaces[dice_numbers[index]]) + 1
-    }
-}
-
-for (i = 0; i< 6; i++){
-    if (colors[i] != colors[chosen_color]) {
-        for (j = 0; j <6; j++) {
-            if (disp[i][j] == 1) {
-                diceFaces[dice[i][j]] = parseInt(diceFaces[dice[i][j]]) + 1
-            }
+    diceFaces = [0,0,0,0,0,0,0] //diceFaces[1] = number of ones, etc. diceFaces[0] = number of unknown dice
+    //dice_numbers holds data as [1,2,3,4,5], need to check only the dice which are not hiddden from you, 1 in a spot means that dice is hidden
+    for (index in dice_numbers) {
+        if (hidden_dice[index] == 0) {
+            diceFaces[dice_numbers[index]] = parseInt(diceFaces[dice_numbers[index]]) + 1
+        }
+        else if (hidden_dice[index] == 1 && hidden_dice[index] != -1){
+            diceFaces[0] = parseInt(diceFaces[0]) + 1
         }
     }
-} 
 
-console.log("diceFaces = " + diceFaces)
+    for (i = 0; i< 6; i++){
+        if (colors[i] != colors[chosen_color]) {
+            for (j = 0; j <6; j++) {
+                if (disp[i][j] == 1) {
+                    diceFaces[dice[i][j]] = parseInt(diceFaces[dice[i][j]]) + 1
+                }
+                else if (dice[i][j] != 0 && dice[i][j] != undefined && dice[i][j] != -1){
+                    diceFaces[0] = parseInt(diceFaces[0]) + 1
+                }
+            }
+        }
+    } 
 
-//TODO:
-//3: get the current bet
-//4: calculate the probability of the current bet
+    let faceDice = parseInt(document.getElementById("face_number").innerHTML)
+    let numDice = parseInt(document.getElementById("count_number").innerHTML)
+    let probability; 
+    let prevFaceDice = parseInt(document.getElementById("prev_face_num").innerHTML)
+    let prevNumDice = parseInt(document.getElementById("prev_count_num").innerHTML)
+    let prevProbability;
+    let knownDice; 
+    let prevKnownDice;
+    if (faceDice == 1){
+        knownDice = diceFaces[1]
+    }
+    else {
+        knownDice = diceFaces[faceDice] + diceFaces[1]
+    }
+    if (prevFaceDice == 1){
+        prevKnownDice = diceFaces[1]
+    }
+    else {
+        prevKnownDice = diceFaces[prevFaceDice] + diceFaces[1]
+    }
+    let unknownDice = diceFaces[0]
+    let diceNeeded = numDice - knownDice
+    let prevDiceNeeded = prevNumDice - prevKnownDice
+    if (diceNeeded <= 0){
+        probability = 100; 
+    }
+    else if (diceNeeded > unknownDice) {
+        probability = 0;
+    }
+    else {
+        probability = 100*unknownDice * Math.pow(1/3, diceNeeded)*Math.pow(2/3, unknownDice-diceNeeded);
+        probability = (Math.round(probability * 100) / 100).toFixed(1)
+    }
+
+    if (prevDiceNeeded <= 0){
+        prevProbability = 100; 
+    }
+    else if (prevDiceNeeded > unknownDice) {
+        prevProbability = 0;
+    }
+    else {
+        prevProbability = 100*unknownDice * Math.pow(1/3, prevDiceNeeded)*Math.pow(2/3, unknownDice-prevDiceNeeded);
+        prevProbability = (Math.round(prevProbability * 100) / 100).toFixed(1)
+    }
+    document.getElementById("prob_yours_num").innerHTML = probability;
+    document.getElementById("prob_prev_num").innerHTML = prevProbability;
 }
 
 //when you click on one of your own dice
