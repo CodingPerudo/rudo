@@ -203,21 +203,7 @@
     /* margin-top: 15px; */
 }
 
-#new_game {
-    background-image: url(resources/green_button.png);
-}
 
-#new_game:hover {
-    background-image: url(resources/green_pressed.png);
-}
-
-#join_game {
-    background-image: url(resources/pink_button.png);
-}
-
-#join_game:hover {
-    background-image: url(resources/pink_pressed.png);
-}
 
 
 /* ______________________________Other stuff______________________________ */
@@ -231,7 +217,7 @@
 body {
     padding-top: 20px;
     background-image: url("resources/wood.jpg");
-    background-size: contain;
+    background-size: cover;
 }
 
 #redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername{
@@ -438,4 +424,32 @@ body {
     padding-right: 35px;
     padding-top: 5px;
 }
+
+/* _____________________________Home UI___________________________ */
+#title_image{
+    width: 230px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+}
+
+
+#new_game {
+    background-image: url(resources/green_button.png);
+}
+
+#new_game:hover {
+    background-image: url(resources/green_pressed.png);
+}
+
+#join_game {
+    background-image: url(resources/pink_button.png);
+}
+
+#join_game:hover {
+    background-image: url(resources/pink_pressed.png);
 }
