@@ -437,16 +437,6 @@ body {
     padding-left: 0px;
 }
 
-#home_buttons_div {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: fit-content;
-    margin-top: 60px;
-    padding-top: 0px;
-}
-
-
 
 #new_game {
     background-image: url(resources/green_button.png);
@@ -457,9 +447,9 @@ body {
 }
 
 #join_game {
-    background-image: url(resources/blue_button.png);
+    background-image: url(resources/pink_button.png);
 }
 
 #join_game:hover {
-    background-image: url(resources/blue_pressed.png);
+    background-image: url(resources/pink_pressed.png);
 }
