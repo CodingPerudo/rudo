@@ -98,6 +98,27 @@ var turn_changed = false;
 var playerCode = "";
 var recievedHost = false; //did you recieve a host, are you the host
 
+var red_dice;
+var red_disp;
+
+var orange_dice;
+var orange_disp;
+
+var yellow_dice;
+var yellow_disp;
+
+var green_dice;
+var green_disp;
+
+var blue_dice;
+var blue_disp;
+
+var black_dice;
+var black_disp;
+
+var dice = [];
+var disp = [];
+
 //deadling with the hover effect of the UI pieces
 //entering cup objects
 document.getElementById("red_cup").onmouseenter = function() {mouseEnter(0)};
@@ -261,6 +282,7 @@ function updateGame(){
         }
         checkCurrentTurn(); 
     }
+    calcProbabilities();
     getPos();
     postPos();
     updateCupPos();
@@ -610,26 +632,26 @@ function updateDisplayedDice(){
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200){
             var parsed = JSON.parse(this.responseText);
-            var red_dice = parsed.data.red.dice;
-            var red_disp = parsed.data.red.disp;
+            red_dice = parsed.data.red.dice;
+            red_disp = parsed.data.red.disp;
 
-            var orange_dice = parsed.data.orange.dice;
-            var orange_disp = parsed.data.orange.disp;
+            orange_dice = parsed.data.orange.dice;
+            orange_disp = parsed.data.orange.disp;
 
-            var yellow_dice = parsed.data.yellow.dice;
-            var yellow_disp = parsed.data.yellow.disp;
+            yellow_dice = parsed.data.yellow.dice;
+            yellow_disp = parsed.data.yellow.disp;
 
-            var green_dice = parsed.data.green.dice;
-            var green_disp = parsed.data.green.disp;
+            green_dice = parsed.data.green.dice;
+            green_disp = parsed.data.green.disp;
 
-            var blue_dice = parsed.data.blue.dice;
-            var blue_disp = parsed.data.blue.disp;
+            blue_dice = parsed.data.blue.dice;
+            blue_disp = parsed.data.blue.disp;
 
-            var black_dice = parsed.data.black.dice;
-            var black_disp = parsed.data.black.disp;
+            black_dice = parsed.data.black.dice;
+            black_disp = parsed.data.black.disp;
 
-            var dice = [red_dice, orange_dice, yellow_dice, green_dice, blue_dice, black_dice];
-            var disp = [red_disp, orange_disp, yellow_disp, green_disp, blue_disp, black_disp];
+            dice = [red_dice, orange_dice, yellow_dice, green_dice, blue_dice, black_dice];
+            disp = [red_disp, orange_disp, yellow_disp, green_disp, blue_disp, black_disp];
 
             for (var color = 0; color < 6; color++){
                 for (var dice_num = 0; dice_num < 5; dice_num++){
@@ -640,6 +662,7 @@ function updateDisplayedDice(){
                     }
                 }
             }
+            
 
         }
     };
@@ -696,6 +719,35 @@ function post_dice_nums(){
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "color": chosen_color, "dice_nums": dice_numbers });
     xhr.send(data);
+}
+
+function calcProbabilities() { //only use the dice that you can see, meaning your dice and the displayed dice on the server
+//calculate the probability of the current bet
+
+//1: make an array with dice faces, add your dice to it, with 1-6, and "unknown" is a key as well
+diceFaces = [0,0,0,0,0,0,0] //diceFaces[1] = number of ones, etc. diceFaces[0] = number of unknown dice
+//dice_numbers holds data as [1,2,3,4,5], need to check only the dice which are not hiddden from you, 1 in a spot means that dice is hidden
+for (index in dice_numbers) {
+    if (hidden_dice[index] == 0) {
+        diceFaces[dice_numbers[index]] = parseInt(diceFaces[dice_numbers[index]]) + 1
+    }
+}
+
+for (i = 0; i< 6; i++){
+    if (colors[i] != colors[chosen_color]) {
+        for (j = 0; j <6; j++) {
+            if (disp[i][j] == 1) {
+                diceFaces[dice[i][j]] = parseInt(diceFaces[dice[i][j]]) + 1
+            }
+        }
+    }
+} 
+
+console.log("diceFaces = " + diceFaces)
+
+//TODO:
+//3: get the current bet
+//4: calculate the probability of the current bet
 }
 
 //when you click on one of your own dice
