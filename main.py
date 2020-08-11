@@ -222,12 +222,12 @@ def postPos():
     game = all_games[game_id]
     body = json.loads(request.data)
     # print(str(body))
-    game.playerInfo["red"]["pos"] = body["redPos"]
-    game.playerInfo["orange"]["pos"] = body["orangePos"]
-    game.playerInfo["yellow"]["pos"] = body["yellowPos"]
-    game.playerInfo["green"]["pos"] = body["greenPos"]
-    game.playerInfo["blue"]["pos"] = body["bluePos"]
-    game.playerInfo["black"]["pos"] = body["blackPos"]
+    game.playerInfo["red"]["rank"] = body["redRank"]
+    game.playerInfo["orange"]["rank"] = body["orangeRank"]
+    game.playerInfo["yellow"]["rank"] = body["yellowRank"]
+    game.playerInfo["green"]["rank"] = body["greenRank"]
+    game.playerInfo["blue"]["rank"] = body["blueRank"]
+    game.playerInfo["black"]["rank"] = body["blackRank"]
     return json.dumps({"success": True, "data": body}), 201
     #for each die, make it's pos = the html pos
     #prior to clicking start game, you can see the host, and cannot click the host.
