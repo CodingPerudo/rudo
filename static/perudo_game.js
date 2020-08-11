@@ -854,10 +854,21 @@ function calcProbabilities() {
     else if (diceNeeded > unknownDice) {
         probability = 0;
     }
-    else {
-        probability = 100*unknownDice * Math.pow(1/3, diceNeeded)*Math.pow(2/3, unknownDice-diceNeeded);
-        probability = (Math.round(probability * 100) / 100).toFixed(1)
+    else if (faceDice != 1){
+        probability = 100;
+        for (i=0; i< diceNeeded; i++){
+            probability = probability - 100*binomial(unknownDice, i)*Math.pow(1/3, i)*Math.pow(2/3, unknownDice-i)
+            probability = (Math.round(probability * 100) / 100).toFixed(1)
+        }
     }
+    else{
+        probability = 100;
+        for (i=0; i< diceNeeded; i++){
+            probability = probability - 100*binomial(unknownDice, i)*Math.pow(1/6, i)*Math.pow(5/6, unknownDice-i)
+            probability = (Math.round(probability * 100) / 100).toFixed(1)
+        }
+        }
+
 
     if (prevDiceNeeded <= 0){
         prevProbability = 100; 
@@ -865,12 +876,31 @@ function calcProbabilities() {
     else if (prevDiceNeeded > unknownDice) {
         prevProbability = 0;
     }
-    else {
-        prevProbability = 100*unknownDice * Math.pow(1/3, prevDiceNeeded)*Math.pow(2/3, unknownDice-prevDiceNeeded);
+    else if (faceDice != 1){
+        prevProbability = 100;
+        for (i=0; i< prevDiceNeeded; i++){
+            prevProbability = prevProbability - 100*binomial(unknownDice, i)*Math.pow(1/3, i)*Math.pow(2/3, unknownDice-i)
+        }
+        prevProbability = (Math.round(prevProbability * 100) / 100).toFixed(1)
+    }
+    else{
+        prevProbability = 100;
+        for (i=0; i< prevDiceNeeded; i++){
+            prevProbability = prevProbability - 100*binomial(unknownDice, i)*Math.pow(1/5, i)*Math.pow(5/6, unknownDice-i)
+        }
         prevProbability = (Math.round(prevProbability * 100) / 100).toFixed(1)
     }
     document.getElementById("prob_yours_num").innerHTML = probability;
     document.getElementById("prob_prev_num").innerHTML = prevProbability;
+}
+
+function binomial(n, k) {
+    if ((typeof n !== 'number') || (typeof k !== 'number')) 
+ return false; 
+   var coeff = 1;
+   for (var x = n-k+1; x <= n; x++) coeff *= x;
+   for (x = 1; x <= k; x++) coeff /= x;
+   return coeff;
 }
 
 //when you click on one of your own dice
