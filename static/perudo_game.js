@@ -272,6 +272,7 @@ function updateGameInterval(){
 //update all aspects of game
 function updateGame(){
     if(game_started){
+        calcProbabilities();
         updateDisplayedDice();
         checkDudo();
         if(session_started_bool[0]){
@@ -286,9 +287,7 @@ function updateGame(){
         }
         checkCurrentTurn(); 
     }
-    calcProbabilities();
     getPos();
-    postPos();
     updateCupPos();
     getUsernames();
     if (!recievedHost){ //if you haven't recieved a host yet
@@ -298,7 +297,6 @@ function updateGame(){
 
 function setPlayerCode(){
     playerCode = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    console.log("PLayercode: " + playerCode)
     postPlayerCode();
 }
 
@@ -317,7 +315,6 @@ function getHost(){
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200){
             var parsed = JSON.parse(this.responseText);
-            console.log("parsed host: " + this.responseText)
             if (parsed.host == playerCode){
                 document.getElementById("start_session_button").style.visibility = "visible";
                 recievedHost = true;
@@ -547,49 +544,122 @@ function insertCup() {
     let parent = content.parentNode;
     let colorToSwitch = "initialColorToSwitch"
     let highestRank = -1
+    let changed = false;
 
     colors.forEach(color => {if (document.getElementById(color + "Rank").value > highestRank) {
         highestRank = document.getElementById(color + "Rank").value
     }})
 
     if (highestRank == -1) {
-        colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == 0){
             colorToSwitch = "red"
-        }
-        })
     }
     else {
-        colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == parseInt(highestRank)){
-        colorToSwitch = color}
+        colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == parseInt(highestRank) + 1){
+        colorToSwitch = color
+        changed = true; }
         })
+
+        if (changed ==false){
+        colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == 0){
+            colorToSwitch = color}
+            })
+        }
     }
     let targetCupName = document.getElementById(cup_to_move)
     let otherCupName = document.getElementById(colorToSwitch + "_player")
     if (highestRank == -1) {
-    parent.insertBefore(targetCupName, otherCupName)
-    document.getElementById(colors[chosen_color]+"Pos").value = "1"; 
-    document.getElementById(colors[chosen_color]+"Rank").value = document.getElementById(colors[chosen_color]+"Pos").value
+        let oldPos = document.getElementById(colors[chosen_color]+"Pos").value  
+        let oldPosDesired = document.getElementById(colorToSwitch+"Pos").value  
+        parent.insertBefore(targetCupName, otherCupName)
+        colors.forEach(color => {
+            if (parseInt(document.getElementById(color+"Pos").value) < oldPos && parseInt(document.getElementById(color+"Pos").value) >= oldPosDesired){
+                document.getElementById(color+"Pos").value = String(parseInt(document.getElementById(color+"Pos").value) + 1)
+            }
+        })
+        document.getElementById(colors[chosen_color]+"Pos").value = "0"; 
+        document.getElementById(colors[chosen_color]+"Rank").value = "0";
     }
     else {
-        insertAfter(targetCupName, otherCupName)
-        document.getElementById(colors[chosen_color]+"Pos").value = String(parseInt(highestRank) + 1); 
-        document.getElementById(colors[chosen_color]+"Rank").value = document.getElementById(colors[chosen_color]+"Pos").value
+        parent.insertBefore(targetCupName, otherCupName)
+        let oldPos = document.getElementById(colors[chosen_color]+"Pos").value    
+        document.getElementById(colors[chosen_color]+"Pos").value = document.getElementById(colorToSwitch+"Pos").value; 
+        document.getElementById(colors[chosen_color]+"Rank").value = String(parseInt(highestRank) + 1);
+        colors.forEach(color => {
+            if (parseInt(document.getElementById(color+"Pos").value) < oldPos && parseInt(document.getElementById(color+"Pos").value) >= parseInt(document.getElementById(colorToSwitch+"Pos").value) && color != colors[chosen_color]){
+                document.getElementById(color+"Pos").value = String(parseInt(document.getElementById(color+"Pos").value) + 1)
+            }
+        })
+        
     }
     postPos();
 }
 
-function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+function insertCupInput(input) {
+    let cup_to_move = input+"_player"
+    let content = document.getElementById(cup_to_move);
+    let parent = content.parentNode;
+    let colorToSwitch = "initialColorToSwitch"
+    let changed = false;
+
+    colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == parseInt(document.getElementById(input + "Rank").value)){
+    colorToSwitch = color
+    changed = true}
+    })
+    if (changed == true){
+
+        let targetCupName = document.getElementById(cup_to_move)
+        let otherCupName = document.getElementById(colorToSwitch + "_player")
+
+        parent.insertBefore(targetCupName, otherCupName)
+        let oldPosDesired = document.getElementById(colorToSwitch+"Pos").value
+        let oldPos = document.getElementById(input+"Pos").value    
+        document.getElementById(input+"Pos").value = document.getElementById(colorToSwitch+"Pos").value;
+        if (oldPosDesired < oldPos) {
+            colors.forEach(color => {
+                if (parseInt(document.getElementById(color+"Pos").value) < oldPos && parseInt(document.getElementById(color+"Pos").value) >= oldPosDesired && color != input){
+                    document.getElementById(color+"Pos").value = String(parseInt(document.getElementById(color+"Pos").value) + 1)
+                }
+            })
+        }
+        else {
+            colors.forEach(color => {
+                if (parseInt(document.getElementById(color+"Pos").value) > oldPos && parseInt(document.getElementById(color+"Pos").value) <= oldPosDesired && color != input){
+                    document.getElementById(color+"Pos").value = String(parseInt(document.getElementById(color+"Pos").value) - 1)
+                }
+            })
+        }
+    }
+    else {
+    }
+    postPos();
 }
+
+
+// function insertAfter(newNode, referenceNode) {
+//     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+// }
 
 function updateCupPos(){//call it ever 500 ms, in update function
     //if the cup has a rank, set its position to its rank, 
-    var parent= document.getElementById("orange_player").parentNode; //use any cup to get it's parent
     let toMove = []
-    colors.forEach(color => {if (document.getElementById(color + "Pos").value != document.getElementById(color + "Rank").value && document.getElementById(color + "Rank").value != -1){
+    colors.forEach(color => {if (document.getElementById(color + "Pos").value != document.getElementById(color + "Rank").value && document.getElementById(color + "Rank").value != "-1"){
         toMove.push(color)
     }})
-    // toMove.forEach(color => parent.insertBefore(document.getElementById(color + "_player"), parent.childNodes[document.getElementById(color + "Rank").value]))
+
+    //sort the colors in tomove by their current position
+    let colorRanks = ["none", "none", "none", "none", "none", "none"]
+    for (i = 0; i < toMove.length; i ++){
+        colorRanks[parseInt(document.getElementById(toMove[i] + "Pos").value)] = toMove[i]
+    }
+    colorRanks.forEach( color => {
+        if (color != "none"){
+            insertCupInput(color)
+        }
+    })
+
+    toMove.forEach( color => {
+        insertCupInput(color)
+    })
 }
 
 //get position of all the cup divs
@@ -599,12 +669,12 @@ function getPos(){
     rankRequest.onreadystatechange = function() {
         if (rankRequest.readyState == 4 && rankRequest.status == 200){
             var parsed = JSON.parse(this.responseText);
-            document.getElementById("redPos").value = parsed.data.red.pos
-            document.getElementById("orangePos").value = parsed.data.orange.pos
-            document.getElementById("yellowPos").value = parsed.data.yellow.pos
-            document.getElementById("greenPos").value = parsed.data.green.pos
-            document.getElementById("bluePos").value = parsed.data.blue.pos
-            document.getElementById("blackPos").value = parsed.data.black.pos
+            // document.getElementById("redPos").value = parsed.data.red.pos
+            // document.getElementById("orangePos").value = parsed.data.orange.pos
+            // document.getElementById("yellowPos").value = parsed.data.yellow.pos
+            // document.getElementById("greenPos").value = parsed.data.green.pos
+            // document.getElementById("bluePos").value = parsed.data.blue.pos
+            // document.getElementById("blackPos").value = parsed.data.black.pos
 
             document.getElementById("redRank").value = parsed.data.red.rank
             document.getElementById("orangeRank").value = parsed.data.orange.rank
@@ -623,14 +693,22 @@ function postPos() {
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     let postPosXhr = new XMLHttpRequest();
     let url = "/postPos?id=" + session_id;
+
+    var data = JSON.stringify({"redRank": document.getElementById("redRank").value,
+    "orangeRank": document.getElementById("orangeRank").value,
+    "yellowRank": document.getElementById("yellowRank").value,
+    "greenRank": document.getElementById("greenRank").value,
+    "blueRank": document.getElementById("blueRank").value,
+    "blackRank": document.getElementById("blackRank").value
+   });
     
-    var data = JSON.stringify({"redPos": document.getElementById("redPos").value,
-                             "orangePos": document.getElementById("orangePos").value,
-                             "yellowPos": document.getElementById("yellowPos").value,
-                             "greenPos": document.getElementById("greenPos").value,
-                             "bluePos": document.getElementById("bluePos").value,
-                             "blackPos": document.getElementById("blackPos").value
-                            });
+    // var data = JSON.stringify({"redPos": document.getElementById("redPos").value,
+    //                          "orangePos": document.getElementById("orangePos").value,
+    //                          "yellowPos": document.getElementById("yellowPos").value,
+    //                          "greenPos": document.getElementById("greenPos").value,
+    //                          "bluePos": document.getElementById("bluePos").value,
+    //                          "blackPos": document.getElementById("blackPos").value
+    //                         });
                             postPosXhr.open("POST", url, true);
                             postPosXhr.send(data)               
 }
@@ -733,33 +811,108 @@ function post_dice_nums(){
     xhr.send(data);
 }
 
-function calcProbabilities() { //only use the dice that you can see, meaning your dice and the displayed dice on the server
-//calculate the probability of the current bet
+function calcProbabilities() { 
 
-//1: make an array with dice faces, add your dice to it, with 1-6, and "unknown" is a key as well
-diceFaces = [0,0,0,0,0,0,0] //diceFaces[1] = number of ones, etc. diceFaces[0] = number of unknown dice
-//dice_numbers holds data as [1,2,3,4,5], need to check only the dice which are not hiddden from you, 1 in a spot means that dice is hidden
-for (index in dice_numbers) {
-    if (hidden_dice[index] == 0) {
-        diceFaces[dice_numbers[index]] = parseInt(diceFaces[dice_numbers[index]]) + 1
-    }
-}
-
-for (i = 0; i< 6; i++){
-    if (colors[i] != colors[chosen_color]) {
-        for (j = 0; j <6; j++) {
-            if (disp[i][j] == 1) {
-                diceFaces[dice[i][j]] = parseInt(diceFaces[dice[i][j]]) + 1
-            }
+    diceFaces = [0,0,0,0,0,0,0] //diceFaces[1] = number of ones, etc. diceFaces[0] = number of unknown dice
+    //dice_numbers holds data as [1,2,3,4,5], need to check only the dice which are not hiddden from you, 1 in a spot means that dice is hidden
+    for (index in dice_numbers) {
+        if (hidden_dice[index] == 0) {
+            diceFaces[dice_numbers[index]] = parseInt(diceFaces[dice_numbers[index]]) + 1
+        }
+        else if (hidden_dice[index] == 1 && hidden_dice[index] != -1){
+            diceFaces[0] = parseInt(diceFaces[0]) + 1
         }
     }
-} 
 
-console.log("diceFaces = " + diceFaces)
+    for (i = 0; i< 6; i++){
+        if (colors[i] != colors[chosen_color]) {
+            for (j = 0; j <6; j++) {
+                if (disp[i] != undefined && disp[i][j] == 1) {
+                    diceFaces[dice[i][j]] = parseInt(diceFaces[dice[i][j]]) + 1
+                }
+                else if (disp[i] != undefined && dice[i][j] != 0 && dice[i][j] != undefined && dice[i][j] != -1){
+                    diceFaces[0] = parseInt(diceFaces[0]) + 1
+                }
+            }
+        }
+    } 
 
-//TODO:
-//3: get the current bet
-//4: calculate the probability of the current bet
+    let faceDice = parseInt(document.getElementById("face_number").innerHTML)
+    let numDice = parseInt(document.getElementById("count_number").innerHTML)
+    let probability; 
+    let prevFaceDice = parseInt(document.getElementById("prev_face_num").innerHTML)
+    let prevNumDice = parseInt(document.getElementById("prev_count_num").innerHTML)
+    let prevProbability;
+    let knownDice; 
+    let prevKnownDice;
+    if (faceDice == 1){
+        knownDice = diceFaces[1]
+    }
+    else {
+        knownDice = diceFaces[faceDice] + diceFaces[1]
+    }
+    if (prevFaceDice == 1){
+        prevKnownDice = diceFaces[1]
+    }
+    else {
+        prevKnownDice = diceFaces[prevFaceDice] + diceFaces[1]
+    }
+    let unknownDice = diceFaces[0]
+    let diceNeeded = numDice - knownDice
+    let prevDiceNeeded = prevNumDice - prevKnownDice
+    if (diceNeeded <= 0){
+        probability = 100; 
+    }
+    else if (diceNeeded > unknownDice) {
+        probability = 0;
+    }
+    else if (faceDice != 1){
+        probability = 100;
+        for (i=0; i< diceNeeded; i++){
+            probability = probability - 100*binomial(unknownDice, i)*Math.pow(1/3, i)*Math.pow(2/3, unknownDice-i)
+            probability = (Math.round(probability * 100) / 100).toFixed(1)
+        }
+    }
+    else{
+        probability = 100;
+        for (i=0; i< diceNeeded; i++){
+            probability = probability - 100*binomial(unknownDice, i)*Math.pow(1/6, i)*Math.pow(5/6, unknownDice-i)
+            probability = (Math.round(probability * 100) / 100).toFixed(1)
+        }
+        }
+
+
+    if (prevDiceNeeded <= 0){
+        prevProbability = 100; 
+    }
+    else if (prevDiceNeeded > unknownDice) {
+        prevProbability = 0;
+    }
+    else if (faceDice != 1){
+        prevProbability = 100;
+        for (i=0; i< prevDiceNeeded; i++){
+            prevProbability = prevProbability - 100*binomial(unknownDice, i)*Math.pow(1/3, i)*Math.pow(2/3, unknownDice-i)
+        }
+        prevProbability = (Math.round(prevProbability * 100) / 100).toFixed(1)
+    }
+    else{
+        prevProbability = 100;
+        for (i=0; i< prevDiceNeeded; i++){
+            prevProbability = prevProbability - 100*binomial(unknownDice, i)*Math.pow(1/5, i)*Math.pow(5/6, unknownDice-i)
+        }
+        prevProbability = (Math.round(prevProbability * 100) / 100).toFixed(1)
+    }
+    document.getElementById("prob_yours_num").innerHTML = probability;
+    document.getElementById("prob_prev_num").innerHTML = prevProbability;
+}
+
+function binomial(n, k) {
+    if ((typeof n !== 'number') || (typeof k !== 'number')) 
+ return false; 
+   var coeff = 1;
+   for (var x = n-k+1; x <= n; x++) coeff *= x;
+   for (x = 1; x <= k; x++) coeff /= x;
+   return coeff;
 }
 
 //when you click on one of your own dice
@@ -790,7 +943,7 @@ function clicked_cup(num){
 //begins game. Shows all dice as peaches ;)
 function enterRound(){
     game_started = true;
-    //insertCup();//this function moves the cup when you click them. Has been disabled until further notice
+    insertCup();//this function moves the cup when you click them. Has been disabled until further notice
     serverGameStart();
     for (var j = 0; j < 6; j++){
         for (var i = 0; i < 5; i++){
