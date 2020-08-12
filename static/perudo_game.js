@@ -277,8 +277,6 @@ function updateGame(){
         checkDudo();
         if(session_started_bool[0]){
             start_session();
-            // console.log("ROLL BUTTON VBISIBLE>>>>>")
-            // document.getElementById("roll_div").visibility = "visible"
         } else if (session_started_bool[1] == 0){
             checkStartSession();
         }
@@ -468,6 +466,7 @@ function start_session(){
                     players_rank[i] = rank;  
                 }
             }
+            orderPlayers();
         }
     };
     usernameRequest.open('GET', "/info?id=" + session_id, false);
@@ -478,6 +477,8 @@ function start_session(){
     document.getElementById("roll_button").style.visibility = 'visible';
     
     postStartSession();
+
+    
 }
 
 function postStartSession(){
@@ -488,8 +489,7 @@ function postStartSession(){
     var data = JSON.stringify({ "color": chosen_color });
     xhr.send(data);
 
-
-    orderPlayers();
+    
     session_started_bool[0] = false;
     session_started_bool[1] += 1
 }
