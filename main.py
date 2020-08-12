@@ -6,47 +6,42 @@ from game import Game
 
 app = Flask(__name__)
 
-#make a server code to login to the game (have multiple sessions)
-#entering a name/ username per cup
 
-
-#USING DIFF SERVER PYTHON STUFF
-
-
-#cheeky round!
-    #disable increasing face num
-#we have to get rid of dice
-    #losing -> gray
 
 #shift everything to the middle of the screen more
 #because it looks ew rn and imma forget to do it if i dont write it down
+
 
 #militsa
     #dudo button
         #says who clicked it
     #exacto button
         #only available to a few people
-    #paste in example get and example post
+    #^^^^YOU WON or YOU LOST 
+    #play again button (keep track of data from sessions)
+    #refresh actions
+    #home page
 
 #michelle is not the best
-    #display dice and reroll dice
+    #display dice and reroll dice **buggy 
+    #convert to ones button? 
+    #we have to get rid of dice
+    #losing -> gray
+    #start session UI
+    #display who bet last and their bet 
+    #game ID
+    #flip prb and prev box
+    #flip prev and yours in each box
 
 #peter
-    #make cups go in order (DONE)
-    #make usernames (in progress)
-    #probability counter
-    #obvious whos turn it is
-        #opacity background highlights current player
-    #we need a way to make a bet
-        #input boxes with only increasing steps unless converting to ones (With a conversion button)
+    #make the server available online
+    #cheeky round!
+    #disable increasing face num
+    #when you get out change the order
 
 
-#display who bet last and thier bet
-#make the person's turn have a crown
-#LOSE and WIN
-#make game sessions
-    #get rid of players who aren't playing
-    #play again button (keep track of data from sessions)
+#future 
+    #make a computer player
 
 
 
