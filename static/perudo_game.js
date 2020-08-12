@@ -89,7 +89,7 @@ var face_bet = 2;
 //Dealing with the player's turns 
 var players_rank = [-1,-1,-1,-1,-1,-1]
 var players_turn_order = []
-var session_started_bool = false
+var session_started_bool = [false,0] //how many times its been started
 var host_started_session = false
 var previous_turn_color = -1;
 var current_turn_color = -1;
@@ -179,6 +179,7 @@ function faceDownEnter(){
 function faceDownLeave(){
     document.getElementById("face_down_button").src ="static/resources/arrow_down.png";
 }
+
 
 //dealing with button hovering (we can't just do hover in CSS because we can onlu hover sometimes)
 document.getElementById("display_button").onmouseenter = function() {displayButtonEnter()};
@@ -274,11 +275,14 @@ function updateGame(){
         calcProbabilities();
         updateDisplayedDice();
         checkDudo();
-        if(session_started_bool){
+        if(session_started_bool[0]){
+            console.log("started bool: " + String(session_started_bool[1]))
             start_session();
             orderPlayers();
-            session_started_bool = false;
-        } else {
+            session_started_bool[0] = false;
+            // console.log("ROLL BUTTON VBISIBLE>>>>>")
+            // document.getElementById("roll_div").visibility = "visible"
+        } else if (session_started_bool[1] == 0){
             checkStartSession();
         }
         checkCurrentTurn(); 
@@ -337,7 +341,7 @@ function checkStartSession(){
         if (request.readyState == 4 && request.status == 200){
             var parsed = JSON.parse(this.responseText);
             if (parsed.start_session){
-                session_started_bool = true;
+                session_started_bool[0] = true;
             }
         }
     };
@@ -438,6 +442,8 @@ function postTurnOrder(){
 
 //start a session
 function start_session(){
+    session_started_bool[1] += 1
+
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     var usernameRequest = new XMLHttpRequest();
     usernameRequest.onreadystatechange = function() {
@@ -469,6 +475,10 @@ function start_session(){
     usernameRequest.open('GET', "/info?id=" + session_id, true);
     usernameRequest.send();
 
+    console.log("started bool: " + String(session_started_bool[1]))
+    document.getElementById("start_session_button").remove();
+    document.getElementById("roll_button").style.visibility = 'visible';
+    
     postStartSession();
 }
 
@@ -762,6 +772,8 @@ function rollDice(){
     document.getElementById("dudo_button").style.visibility = 'visible';
     document.getElementById("betting_div").style.visibility = 'visible';
     document.getElementById("place_bet_button").style.visibility = 'visible';
+    document.getElementById("betting_div").style.visibility = 'visible';
+    document.getElementById("place_bet_button").style.visibility = 'visible';
     //send dice nums to server
     post_dice_nums();
 
@@ -939,7 +951,7 @@ function enterRound(){
         }
     }
     document.getElementById("enter_round_button").remove();
-    document.getElementById("roll_button").style.visibility = 'visible';
+    // document.getElementById("roll_button").style.visibility = 'visible';
     userPicked = true; 
     makeUsername(colors[chosen_color])
     document.getElementById(String(colors[chosen_color])+"_user_pic").src = "/static/"+String(colors[chosen_color])+"_user_crown.png";

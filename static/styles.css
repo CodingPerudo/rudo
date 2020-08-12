@@ -149,6 +149,7 @@
 
 
 
+
 #roll_button {
     background-image: url(resources/blue_button.png);
 }
@@ -304,6 +305,7 @@ body {
     padding-right: 10px;
     padding-left: 10px;
     height: 107px;
+    visibility: hidden;
 
 }
 
@@ -369,7 +371,7 @@ body {
     padding-right: 10px;
     padding-left: 10px;
     height: 107px;
-
+    visibility: hidden;
 }
 
 #probability_title{
@@ -424,6 +426,7 @@ body {
     padding-right: 35px;
     padding-top: 5px;
 }
+
 
 /* _____________________________Home UI___________________________ */
 #title_image{
