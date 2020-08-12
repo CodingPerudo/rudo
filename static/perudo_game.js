@@ -777,6 +777,9 @@ function rollDice(){
     document.getElementById("place_bet_button").style.visibility = 'visible';
     document.getElementById("betting_div").style.visibility = 'visible';
     document.getElementById("place_bet_button").style.visibility = 'visible';
+
+    document.getElementById("probability_div").style.visibility = "visible";
+    document.getElementById("previous_bet_div").style.visibility = "visible";
     //send dice nums to server
     post_dice_nums();
 

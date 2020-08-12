@@ -30,8 +30,6 @@ app = Flask(__name__)
     #start session UI
     #display who bet last and their bet 
     #game ID
-    #flip prb and prev box
-    #flip prev and yours in each box
 
 #peter
     #make the server available online
