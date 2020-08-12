@@ -276,10 +276,7 @@ function updateGame(){
         updateDisplayedDice();
         checkDudo();
         if(session_started_bool[0]){
-            console.log("started bool: " + String(session_started_bool[1]))
             start_session();
-            orderPlayers();
-            session_started_bool[0] = false;
             // console.log("ROLL BUTTON VBISIBLE>>>>>")
             // document.getElementById("roll_div").visibility = "visible"
         } else if (session_started_bool[1] == 0){
@@ -420,6 +417,7 @@ function getCurrentTurn(){
 
 //organize the player's turns
 function orderPlayers(){
+    console.log("rank array: " + String(players_rank))
     for (var turn= 0; turn < 6; turn++){
         for(var idx= 0; idx < 6; idx++){
             if(players_rank[idx]==turn){
@@ -442,7 +440,6 @@ function postTurnOrder(){
 
 //start a session
 function start_session(){
-    session_started_bool[1] += 1
 
     let session_id = document.getElementById("game_id_display").innerHTML.split(': ')[1];
     var usernameRequest = new XMLHttpRequest();
@@ -466,16 +463,17 @@ function start_session(){
                 } else { //store players in array
                     //get rank 
                     var rank = parsed.allInfo[colors[i]].rank;
+                    console.log("Ordering player: " + usernames[i] + "rank: " + String(rank))
                     //store colors based on rank and turn
                     players_rank[i] = rank;  
                 }
             }
         }
     };
-    usernameRequest.open('GET', "/info?id=" + session_id, true);
+    usernameRequest.open('GET', "/info?id=" + session_id, false);
     usernameRequest.send();
 
-    console.log("started bool: " + String(session_started_bool[1]))
+    // console.log("started bool: " + String(session_started_bool[1]))
     document.getElementById("start_session_button").remove();
     document.getElementById("roll_button").style.visibility = 'visible';
     
@@ -489,6 +487,11 @@ function postStartSession(){
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "color": chosen_color });
     xhr.send(data);
+
+
+    orderPlayers();
+    session_started_bool[0] = false;
+    session_started_bool[1] += 1
 }
 
 //creates a username for each div when you click a cup and enter a string
