@@ -65,6 +65,7 @@
     margin-top: 10px;
     font-size: 17px;
 }
+
 #buttons {
     position: fixed;
     margin-left: 500px;
@@ -429,7 +430,7 @@ body {
 
 
 /* _____________________________Home UI___________________________ */
-#title_image{
+#title_image {
     width: 230px;
     display: block;
     margin-left: auto;
@@ -440,9 +441,17 @@ body {
     padding-left: 0px;
 }
 
+#home_buttons_div {
+    display: block;
+    margin-top: 100px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
 
 #new_game {
     background-image: url(resources/green_button.png);
+    margin: 0 auto;
 }
 
 #new_game:hover {
@@ -455,4 +464,26 @@ body {
 
 #join_game:hover {
     background-image: url(resources/pink_pressed.png);
+}
+
+#session_id {
+    background-color: bisque;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+::placeholder {
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none !important;
+    box-shadow: 0 0 10px #719ECE;
 }
