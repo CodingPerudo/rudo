@@ -137,17 +137,23 @@
     </div>
 
     <div id="buttons">
-        <p id="game_id_display"></p>
+        <div id="game_id_div">
+            <p id=game_id_label> Game Code: </p>
+            <p id="game_id_display"></p>
+        </div>
         <div id= "start_div">
             <button class="button" id="enter_round_button" onclick="enterRound();" type="button">Enter Round!</button>
         </div>
+
+        <div id= "start_session_div">
+            <button class="button2" id="start_session_button" onclick="start_session();" type="button">Start Session</button>
+        </div>
+        
         <div id= "roll_div">
             <button class="button" id="roll_button" onclick="rollDice();" type="button">Roll Dice</button>
         </div>
 
-        <div id= "start_session_div">
-            <button class="button2" id="start_session_button" onclick="start_session();" type="button">start session</button>
-        </div>
+        
 
         <div id= "display_div">
             <button class="button" id="display_button" onclick="displayDice();" type="button">Display Dice</button>
@@ -185,8 +191,8 @@
                 <p id="probability_prev_label">Previous</p>   
             </div>
             <div id="probability_numbers_div">
-                <p id="prob_yours_num">60</p>
-                <p id="prob_prev_num">40</p>   
+                <p id="prob_yours_num">--</p>
+                <p id="prob_prev_num">--</p>   
             </div>
         </div>
 
@@ -197,8 +203,8 @@
                 <p id="previous_face_label">Face</p>
             </div>
             <div id="previous_numbers_div">
-                <p id="prev_count_num">2</p>   
-                <p id="prev_face_num">6</p>
+                <p id="prev_count_num">--</p>   
+                <p id="prev_face_num">--</p>
             </div>
         </div>
 
