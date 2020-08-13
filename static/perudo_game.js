@@ -1156,3 +1156,8 @@ function postNextTurn(){
         "bet_face" : bet_face });
     xhr.send(data);
 }
+
+
+function loseDie(){
+    document.getElementById("green_die5_img").src = "static/resources/lost_die.png";
+}
