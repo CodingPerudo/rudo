@@ -5,7 +5,7 @@ function displayGamePage(session_id) {
         document.open();
         document.write(this.responseText);
         document.close();
-        document.getElementById("game_id_display").innerHTML = "Game ID: " + session_id;
+        document.getElementById("game_id_display").innerHTML = session_id;
       } else {
           document.getElementById('join_fail').innerHTML = this.responseText;
       }

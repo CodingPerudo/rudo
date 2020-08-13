@@ -12,6 +12,9 @@ app = Flask(__name__)
 #because it looks ew rn and imma forget to do it if i dont write it down
 
 
+#we gotta make it so you can show/reroll your dice until the next player bets
+
+
 #militsa
     #dudo button
         #says who clicked it
@@ -28,7 +31,7 @@ app = Flask(__name__)
     #we have to get rid of dice
     #losing -> gray
     #start session UI
-    #display who bet last and their bet 
+    #display who bet last 
     #game ID
 
 #peter
@@ -164,6 +167,13 @@ def getPlayersInSession():
     else:
         return json.dumps({"success": True, "host": "No Host"}), 404
 
+@app.route("/getPreviousBet", methods=["GET"])
+def getPreviousBet():
+    game_id = request.args.get('id')
+    game = all_games[game_id]
+    return json.dumps({"success": True, "prev_bet_count": game.last_bet[0], "prev_bet_face": game.last_bet[1]}), 200
+
+
 
 
 #___________________________________POST Requests_________________________________________
@@ -260,6 +270,8 @@ def postTurnOrder():
     game.turnOrder = body["turn_order"]
     return json.dumps({"success": True}), 201
 
+#increments turn_idx to represent who is playing currently
+#also posts the new latest bet from the player
 @app.route("/postNextTurn", methods = ["POST"])
 def postNextTurn():
     game_id = request.args.get('id')
@@ -268,6 +280,9 @@ def postNextTurn():
         game.current_turn_idx += 1
     else:
         game.current_turn_idx = 0
+    body = json.loads(request.data)
+    game.last_bet[0] = body["bet_count"]
+    game.last_bet[1] = body["bet_face"]
     return json.dumps({"success": True}), 201
 
 @app.route("/postStartSession", methods = ["POST"])
