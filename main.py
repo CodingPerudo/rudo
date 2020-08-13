@@ -32,7 +32,7 @@ app = Flask(__name__)
     #losing -> gray
     #start session UI
     #display who bet last 
-    #game ID
+    #game id make smaller text
 
 #peter
     #make the server available online

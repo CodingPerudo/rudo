@@ -323,6 +323,7 @@ body {
     padding-left: 10px;
     height: 107px;
     visibility: hidden;
+    width: 180px;
 
 }
 
@@ -389,6 +390,7 @@ body {
     padding-left: 10px;
     height: 107px;
     visibility: hidden;
+    width: 180px;
 }
 
 #probability_title{
@@ -522,4 +524,8 @@ input:focus {
     margin: 0px;
     padding-bottom: 20px;
     padding-right: 5px;
+}
+/*______________________________Lost a die_________________________________*/
+#lost_button{
+    visibility: visible;
 }
