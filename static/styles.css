@@ -49,9 +49,6 @@
     width: 85px;
 }
 
-#game_id_display {
-    color: white;
-}
 
 #wrapper {
     float: left;
@@ -159,6 +156,8 @@
 
 #enter_round_button {
     background-image: url(resources/pink_button.png);
+    margin: 0px;
+    padding: 0px;
 }
 
 #enter_round_button:hover{
@@ -292,8 +291,25 @@ body {
 }
 
 #start_session_button {
-    margin-top: 100px;
     visibility: hidden;
+    margin: 0px;
+    padding: 0px;
+    background-image: url(resources/green_button.png);
+    border:none;
+    background-color:transparent;
+    outline:none;
+    background-size: 100% 100%;
+    color: white;
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 50px;
+    /* margin-left: 100px; */
+    margin-top: 10px;
+    font-size: 17px;
+}
+
+#start_session_button:hover{
+    background-image: url(resources/green_pressed.png);
 }
 
 /* ________________________________previous bet_______________________________ */
@@ -301,7 +317,7 @@ body {
 #previous_bet_div {
     margin-top: 10px;
     color: white;
-    background-image: url("resources/dark_green_background.png");
+    background-image: url("resources/dark_pink_background.png");
     padding-right: 10px;
     padding-left: 10px;
     height: 107px;
@@ -340,7 +356,7 @@ body {
 
 #previous_numbers_div {
     color: white;
-    background-image: url("resources/light_green_background.png");
+    background-image: url("resources/light_pink_background.png");
     font-size: 25px;
     height: 40px;
     margin-top: 20px;
@@ -367,7 +383,7 @@ body {
 #probability_div {
     margin-top: 10px;
     color: white;
-    background-image: url("resources/dark_pink_background.png");
+    background-image: url("resources/dark_green_background.png");
     padding-right: 10px;
     padding-left: 10px;
     height: 107px;
@@ -387,7 +403,7 @@ body {
 }
 
 
-#probability_prev_label {
+#probability_yours_label {
     padding: 0px;
     margin: 0px;
     float: left;
@@ -395,35 +411,35 @@ body {
     padding-left: 20px;
 }
 
-#probability_yours_label{
+#probability_prev_label{
     float: right;
     padding: 0px;
     margin: 0px;
     font-size: 15px;
-    padding-right: 27px;
+    margin-right: 15px;
 }
 
 #probability_numbers_div {
     color: white;
-    background-image: url("resources/light_pink_background.png");
+    background-image: url("resources/light_green_background.png");
     font-size: 25px;
     height: 40px;
     margin-top: 20px;
 }
 
-#prob_prev_num{
+#prob_yours_num{
     float:left;
     padding: 0px;
     margin: 0px;
-    padding-left: 35px;
+    padding-left: 23px;
     padding-top: 5px;
 }
 
-#prob_yours_num {
+#prob_prev_num {
     float: right;
     padding: 0px;
     margin: 0px;
-    padding-right: 35px;
+    padding-right: 23px;
     padding-top: 5px;
 }
 
@@ -455,4 +471,25 @@ body {
 
 #join_game:hover {
     background-image: url(resources/pink_pressed.png);
+}
+
+
+/* _____________________________GAME ID DIV___________________________ */
+#game_id_label {
+    float:left;
+    color: white;
+    padding: 0px;
+    margin: 0px;
+    font-size: 18px;
+    padding-top: 18px;
+}
+
+#game_id_display {
+    color: white;
+    font-size: 38px;
+    float: right;
+    padding: 0px;
+    margin: 0px;
+    padding-bottom: 20px;
+    padding-right: 5px;
 }
