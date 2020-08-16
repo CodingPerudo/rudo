@@ -69,6 +69,8 @@ var selected_dice = [0,0,0,0,0]
 //which dice you've displayed to other players
 var displayed_dice = [0,0,0,0,0]
 
+var num_dice_left = 5;
+
 //which color of cup/dice you've chosen
 var chosen_color = null;
 
@@ -742,32 +744,44 @@ function updateDisplayedDice(){
             var parsed = JSON.parse(this.responseText);
             red_dice = parsed.data.red.dice;
             red_disp = parsed.data.red.disp;
+            red_num = parsed.data.red.dice_left;
 
             orange_dice = parsed.data.orange.dice;
             orange_disp = parsed.data.orange.disp;
+            orange_num = parsed.data.orange.dice_left;
 
             yellow_dice = parsed.data.yellow.dice;
             yellow_disp = parsed.data.yellow.disp;
+            yellow_num = parsed.data.yellow.dice_left;
 
             green_dice = parsed.data.green.dice;
             green_disp = parsed.data.green.disp;
+            green_num = parsed.data.green.dice_left;
 
             blue_dice = parsed.data.blue.dice;
             blue_disp = parsed.data.blue.disp;
+            blue_num = parsed.data.blue.dice_left;
 
             black_dice = parsed.data.black.dice;
             black_disp = parsed.data.black.disp;
+            black_num = parsed.data.black.dice_left;
 
             dice = [red_dice, orange_dice, yellow_dice, green_dice, blue_dice, black_dice];
             disp = [red_disp, orange_disp, yellow_disp, green_disp, blue_disp, black_disp];
+            dice_left = [red_num, orange_num, yellow_num, green_num, blue_num, black_num];
 
             for (var color = 0; color < 6; color++){
-                for (var dice_num = 0; dice_num < 5; dice_num++){
-                    if (disp[color][dice_num] === 1){
-                        if(color != chosen_color){
-                            document.getElementById(dice_objects[color][dice_num]).src = dice_img[color][dice[color][dice_num]-1];
-                        } 
+                for (var dice_idx = 0; dice_idx < 5; dice_idx++){
+                    if (dice_idx < dice_left[color]){
+                        if (disp[color][dice_idx] === 1){
+                            if(color != chosen_color){
+                                document.getElementById(dice_objects[color][dice_idx]).src = dice_img[color][dice[color][dice_idx]-1];
+                            } 
+                        }
+                    } else {
+                        document.getElementById(colors[color]+"_die"+String(dice_idx+1)+"_img").src = "static/resources/lost_die.png";
                     }
+                    
                 }
             }
             
@@ -806,7 +820,7 @@ function rollDice(){
     document.getElementById(colors[chosen_color]+"_die4_img").onmouseenter = function() {dieEnter(4)};
     document.getElementById(colors[chosen_color]+"_die5_img").onmouseenter = function() {dieEnter(5)};
     function dieEnter(num){
-        if(hidden_dice[num-1] == 0){
+        if(hidden_dice[num-1] == 0 && num <= num_dice_left){
             document.getElementById(colors[chosen_color]+"_die"+String(num)+"_img").src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
         }   
     }
@@ -816,7 +830,7 @@ function rollDice(){
     document.getElementById(colors[chosen_color]+"_die4_img").onmouseleave = function() {dieLeave(4)};
     document.getElementById(colors[chosen_color]+"_die5_img").onmouseleave = function() {dieLeave(5)};
     function dieLeave(num){
-        if (selected_dice[num-1]==0 && hidden_dice[num-1] == 0){
+        if (selected_dice[num-1]==0 && hidden_dice[num-1] == 0  && num <= num_dice_left){
             document.getElementById(colors[chosen_color]+"_die"+String(num)+"_img").src = dice_img[chosen_color][dice_numbers[num-1]-1];
         }
     }
@@ -838,7 +852,7 @@ function calcProbabilities() {
 
     diceFaces = [0,0,0,0,0,0,0] //diceFaces[1] = number of ones, etc. diceFaces[0] = number of unknown dice
     //dice_numbers holds data as [1,2,3,4,5], need to check only the dice which are not hiddden from you, 1 in a spot means that dice is hidden
-    for (index in dice_numbers) {
+    for (var index = 0; index < num_dice_left; index++) {
         if (hidden_dice[index] == 0) {
             diceFaces[dice_numbers[index]] = parseInt(diceFaces[dice_numbers[index]]) + 1
         }
@@ -1159,5 +1173,12 @@ function postNextTurn(){
 
 
 function loseDie(){
-    document.getElementById("green_die5_img").src = "static/resources/lost_die.png";
+    num_dice_left = num_dice_left -1;
+    let session_id = document.getElementById("game_id_display").innerHTML;
+    let xhr = new XMLHttpRequest();
+    let url = "/postLostDie?id=" + session_id; 
+    xhr.open("POST", url, true);
+    var data = JSON.stringify({ 
+        "color": chosen_color });
+    xhr.send(data);
 }
