@@ -102,33 +102,40 @@ def getDisplayedDice():
         "red":
         {
             "dice": playerInfo["red"]["dice_nums"],
-            "disp": playerInfo["red"]["displayed_dice"]
+            "disp": playerInfo["red"]["displayed_dice"],
+            "dice_left": playerInfo["red"]["num_dice_left"]
         },
         "orange":
         {
             "dice": playerInfo["orange"][ "dice_nums"],
-            "disp": playerInfo["orange"]["displayed_dice"]
+            "disp": playerInfo["orange"]["displayed_dice"],
+            "dice_left": playerInfo["orange"]["num_dice_left"]
         },
         "yellow":
         {
             "dice": playerInfo["yellow"][ "dice_nums"],
-            "disp": playerInfo["yellow"]["displayed_dice"]
+            "disp": playerInfo["yellow"]["displayed_dice"],
+            "dice_left": playerInfo["yellow"]["num_dice_left"]
         },
         "green":
         {
             "dice": playerInfo["green"][ "dice_nums"],
-            "disp": playerInfo["green"]["displayed_dice"]
+            "disp": playerInfo["green"]["displayed_dice"],
+            "dice_left": playerInfo["green"]["num_dice_left"]
         },
         "blue":
         {
             "dice": playerInfo["blue"][ "dice_nums"],
-            "disp": playerInfo["blue"]["displayed_dice"]
+            "disp": playerInfo["blue"]["displayed_dice"],
+            "dice_left": playerInfo["blue"]["num_dice_left"]
         },
         "black":
         {
             "dice": playerInfo["black"][ "dice_nums"],
-            "disp": playerInfo["black"]["displayed_dice"]
+            "disp": playerInfo["black"]["displayed_dice"],
+            "dice_left": playerInfo["black"]["num_dice_left"]
         }
+
 
     }
 
@@ -298,6 +305,15 @@ def postPlayerCode():
     game = all_games[game_id]
     body = json.loads(request.data)
     game.playerCodes.append(body["code"])
+    return json.dumps({"success": True}), 201
+
+@app.route("/postLostDie", methods = ["POST"])
+def postLostDie():
+    game_id = request.args.get('id')
+    game = all_games[game_id]
+    body = json.loads(request.data)
+    color_player = body["color"]
+    game.playerInfo[game.colors[color_player]]["num_dice_left"] -= 1
     return json.dumps({"success": True}), 201
 
 #___________________________________Run the server_________________________________________

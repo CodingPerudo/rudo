@@ -17,5 +17,6 @@ class Game:
                 "rank": -1,
                 "gameStart": False,
                 "pos": i,
-                "username": ""
+                "username": "",
+                "num_dice_left": 5
             }
