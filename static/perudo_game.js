@@ -776,7 +776,7 @@ function updateDisplayedDice(){
 
             for (var color = 0; color < 6; color++){ //for each color
                 for (var dice_idx = 0; dice_idx < 5; dice_idx++){ //for all dice in each color
-                    if (dice_idx < dice_left[color]){
+                    if (dice_idx < parseInt(dice_left[color])){
                         if (disp[color][dice_idx] === 1){
                             if(color != chosen_color){
                                 document.getElementById(dice_objects[color][dice_idx]).src = dice_img[color][dice[color][dice_idx]-1];
@@ -963,10 +963,10 @@ function binomial(n, k) {
 //when you click on one of your own dice
 function clicked_die(color, num){
     if(color == chosen_color){
-        if(selected_dice[num-1] == 0 && hidden_dice[num-1] == 0){  //if the die has not been selected
+        if(selected_dice[num-1] == 0 && hidden_dice[num-1] == 0 && num < num_dice_left){  //if the die has not been selected
             document.getElementById(dice_objects[chosen_color][num-1]).src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
             selected_dice[num-1] = 1;
-        } else if (hidden_dice[num-1] == 0) {  //if the die is already selected
+        } else if (hidden_dice[num-1] == 0 && num < num_dice_left) {  //if the die is already selected
             document.getElementById(dice_objects[chosen_color][num-1]).src =dice_img[chosen_color][dice_numbers[num-1]-1];
             selected_dice[num-1] = 0;
         } 
