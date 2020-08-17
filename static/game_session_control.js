@@ -46,7 +46,7 @@ function newGame() {
 }
 
 function joinGame() {
-  let session_id = document.getElementById("session_id").value.toString();
+  let session_id = document.getElementById("session_id").value.toString().toUpperCase();
   loadGame(session_id);
 }
 
