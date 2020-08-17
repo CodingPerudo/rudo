@@ -139,10 +139,14 @@ document.getElementById("black_cup").onmouseleave = function() {mouseLeave(5)};
 
 //entering and leaving cup objects 
 function mouseEnter(num){
-    document.getElementById(cups[num]).src = cup_color_dark[num];
+    if (!userPicked){
+        document.getElementById(cups[num]).src = cup_color_dark[num];
+    }   
 }
 function mouseLeave(num){
-    document.getElementById(cups[num]).src = cup_colors[num];
+    if (chosen_color != num){
+        document.getElementById(cups[num]).src = cup_colors[num];
+    }
 }
 
 //dealing with hovering actions of buttons on UI (the counter for the bet)
@@ -770,12 +774,16 @@ function updateDisplayedDice(){
             disp = [red_disp, orange_disp, yellow_disp, green_disp, blue_disp, black_disp];
             dice_left = [red_num, orange_num, yellow_num, green_num, blue_num, black_num];
 
-            for (var color = 0; color < 6; color++){
-                for (var dice_idx = 0; dice_idx < 5; dice_idx++){
+            for (var color = 0; color < 6; color++){ //for each color
+                for (var dice_idx = 0; dice_idx < 5; dice_idx++){ //for all dice in each color
                     if (dice_idx < dice_left[color]){
                         if (disp[color][dice_idx] === 1){
                             if(color != chosen_color){
                                 document.getElementById(dice_objects[color][dice_idx]).src = dice_img[color][dice[color][dice_idx]-1];
+                            } 
+                        } else {
+                            if(color != chosen_color){
+                                document.getElementById(dice_objects[color][dice_idx]).src = "static/resources/peach.png";
                             } 
                         }
                     } else {
@@ -1032,6 +1040,7 @@ function post_displayed_dice(){
 //reroll the selected dice, and then hide those rerolled dice
 function rerollDice(){
     for (var i = 0; i < 5; i++){
+        hidden_dice[i] = 0;
         if (selected_dice[i] == 1){
             hidden_dice[i] = 1;
             dice_numbers[i] = Math.ceil(Math.random()*6);
@@ -1041,6 +1050,7 @@ function rerollDice(){
     post_dice_nums();
     //make displayed dice array opposite
     for (var j = 0; j < 5; j++){
+        displayed_dice[j] = 0;
         if (selected_dice[j] == 0) {
             selected_dice[j] = 1;
         } else {
@@ -1051,8 +1061,8 @@ function rerollDice(){
     displayDice();
 
     //deselect all dice
-    for (var j = 0; j < 5; j++){
-        selected_dice[j] = 0;
+    for (var k = 0; k < 5; k++){
+        selected_dice[k] = 0;
     }
     
 
@@ -1106,9 +1116,12 @@ function checkDudo(){
     if (someone_doubted){
         selected_dice = [1,1,1,1,1];
         displayDice();
+        for (var i = 0; i < 5; i++){
+            document.getElementById(dice_objects[chosen_color][i]).src= dice_img[chosen_color][dice_numbers[i]-1];
+        }
     }
 }
-
+ 
 //see if anyone has doubted
 function getDoubt(){
     let session_id = document.getElementById("game_id_display").innerHTML;
