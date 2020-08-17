@@ -323,7 +323,7 @@ function setPlayerCode(){
 function postPlayerCode(){
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postPlayerCode?id="+ session_id; 
+    let url = "/postPlayerCode?id="+ session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "code": playerCode });
     xhr.send(data);
@@ -348,7 +348,7 @@ function getHost(){
 function postPlayerCode(){
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postPlayerCode?id="+ session_id; 
+    let url = "/postPlayerCode?id="+ session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "code": playerCode });
     xhr.send(data);
@@ -440,7 +440,6 @@ function getCurrentTurn(){
 
 //organize the player's turns
 function orderPlayers(){
-    console.log("rank array: " + String(players_rank))
     for (var turn= 0; turn < 6; turn++){
         for(var idx= 0; idx < 6; idx++){
             if(players_rank[idx]==turn){
@@ -486,7 +485,6 @@ function start_session(){
                 } else { //store players in array
                     //get rank 
                     var rank = parsed.allInfo[colors[i]].rank;
-                    console.log("Ordering player: " + usernames[i] + "rank: " + String(rank))
                     //store colors based on rank and turn
                     players_rank[i] = rank;  
                 }
@@ -497,7 +495,6 @@ function start_session(){
     usernameRequest.open('GET', "/info?id=" + session_id, true);
     usernameRequest.send();
 
-    // console.log("started bool: " + String(session_started_bool[1]))
     document.getElementById("start_session_div").remove();
     document.getElementById("roll_button").style.visibility = 'visible';
     
@@ -509,7 +506,7 @@ function start_session(){
 function postStartSession(){
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "http://0.0.0.0:5000/postStartSession?id="+ session_id; 
+    let url = "/postStartSession?id="+ session_id; 
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "color": chosen_color });
     xhr.send(data);
@@ -1092,7 +1089,6 @@ function dudo() {
     */
 
     //set doubt in server to true
-    console.log("DOUBTING");
     postDoubt();
 
 
