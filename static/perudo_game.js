@@ -271,12 +271,14 @@ function place_betButtonLeave(){
 
 //update game
 function updateGameInterval(){
-    setPlayerCode();
     setInterval(updateGame, 500);
 }
 
 //update all aspects of game
 function updateGame(){
+    if (playerCode == ""){
+        setPlayerCode();
+    }
     if(game_started){ //if you've entered the round
         calcProbabilities();
         updateDisplayedDice();
