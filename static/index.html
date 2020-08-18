@@ -137,7 +137,72 @@
     </div>
 
     <div id="buttons">
+
+        <div>
+            <button class="button" id="help_button" onclick="displayHelp();" type="button" title="help by Alice Design from the Noun Project"></button>
+        </div>
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+              <span class="close" onclick="closeModal()">&times;</span>
+              <p>Perudo (Rudo) is a dice game. The object of perudo is to be the last player with a die or more.</p>
+
+              <p>Perudo is played in rounds. Each player receives a cup and five dice. 
+                  Each round begins by all players rolling their dice around in the cup. 
+                  Each player may peek in his own cup.</p>
+                
+                <p>Players bid, guessing at the number of rolls. 
+                    When a player believes that another player has over-estimated, 
+                    they say Dudo, which means I doubt in Spanish.</p>
+                
+                <p>The first player announces a number, and then the next player 
+                    has the choice of doubting it, by saying Dudo or raising the bid, 
+                    either by the number of dice or by the value of the dice (or by doing both). 
+                    For example, if player 1 bid three twos, then player two could bid three threes, 
+                    four twos, four fours, or even ten sixes.</p>
+            
+                <p>After player 2 bids, play goes on to the left.</p>
+        
+                <p>If a player calls Dudo, and is correct, then the player must show the dice, 
+                    and each player must show their dice to verify whether the number was indeed too high.</p>
+        
+                <p>If there are enough dice of that number, then the player who called 
+                    Dudo must place a die in the discard pile. If there are not, then 
+                    the player who made the last bid must place a die in the middle. 
+                    In either case, a new round begins.</p>
+        
+                <p>The player who lost a die in the last round is the first player 
+                    in the new round. If the player lost his last die, 
+                    then the player to his left plays first instead. Players may 
+                    bid Aces (ones) in a round, and halve the previous number announced. 
+                    If the number does not halve, they should round up. 
+                    The next player will need to bid more aces or to bid one more than 
+                    double the number bid in order to bid a different number.</p>
+        
+                <p>If a player has lost his fourth die, the round after losing 
+                    the fourth die is played differently. The player is called Palafico. 
+                    First, aces are not wild. Next, the player may begin with aces, and third, 
+                    players who have not been palafico before may only bid on the same number 
+                    that the player before them bid on. The palafico rules do not apply 
+                    when there are only two players left!</p>
+
+                <p>A player who is not currently betting or didn't just place a bet can 
+                    Exacto, which means that they are betting that the current bet
+                    exactly reflects the situation on the table. For example, if the bet
+                    is five fours and a player Exactos, if there are exactly five fours, 
+                    they regain a die (max is 5). If they are incorrect, they lose a die.
+                </p>
+        
+                <p>The last player left with at least one die wins the game.</p>
+
+                <p>These instructions have been slightly modified from <a href="http://www.perudo.com/perudo-rules.html" target="_blank">this source.</a></p>
+            </div>
+          
+          </div>
+
         <div id="game_id_div">
+            
             <p id=game_id_label> Game Code: </p>
             <p id="game_id_display"></p>
         </div>
