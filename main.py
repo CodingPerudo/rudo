@@ -30,9 +30,9 @@ app = Flask(__name__)
     #convert to ones button? 
     #we have to get rid of dice
     #losing -> gray
-    #start session UI
     #display who bet last 
     #game id make smaller text
+    #fix bug with rerolling dice
 
 #peter
     #make the server available online
