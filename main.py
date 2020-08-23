@@ -46,6 +46,18 @@ app = Flask(__name__)
 
 
 
+#Uncaught TypeError: Cannot set property 'onmouseenter' of null at perudo_game.js:126
+#make it more apparent when the turn changes 
+#resultion make a scrolling 
+#make reroll more obvious
+#if she selected display dice, reset selection after display dice
+#each die should only reroll once
+##show which dice are displayed
+#last dice doesnt select
+#when you bet with 1's probability calculates with relation to 1's
+
+
+
 #___________________________________Information on all players_________________________________________
 all_games = {} # key is session ID, value is Game instance
 
@@ -318,4 +330,4 @@ def postLostDie():
 
 #___________________________________Run the server_________________________________________
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
