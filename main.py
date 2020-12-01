@@ -25,7 +25,7 @@ app = Flask(__name__)
     #refresh actions
     #home page
 
-#michelle is not the best
+#michelle 
     #display dice and reroll dice **buggy 
     #convert to ones button? 
     #we have to get rid of dice
