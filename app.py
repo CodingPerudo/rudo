@@ -74,8 +74,7 @@ def update_session_cookies():
 #___________________________________GET Requests_________________________________________
 @app.route('/')
 def index():
-    return "<h1>Welcome to our server !!</h1>"
-    # return app.send_static_file('home.html')
+    return app.send_static_file('home.html')
 
 @app.route('/getNewSession', methods=['GET'])
 def generate_session_id():
