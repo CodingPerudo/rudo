@@ -104,9 +104,7 @@ def getInfo():
 def getPos():
     game_id = request.args.get('id')
     print("iddddddddd yeeee", game_id)
-    logger = logging.getLogger()
-    logger.propogate = True
-    logger.error("This will be propogated")
+    print("yeeeee", all_games[game_id].playerInfo)
     return json.dumps({"success": True, "data": all_games[game_id].playerInfo}), 200
 
 #GET and return player's dice and displayed dice
