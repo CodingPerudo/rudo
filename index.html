@@ -2,135 +2,135 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 
 <body onload="updateGameInterval();">
-    
+
     <div id="wrapper">
 
-        <div class= "player_div" id="red_player"> <input type="hidden" id="redRank" value="-1"> <input type="hidden" id="redPos" value="0">
-            <div class= "user_info" id= "red_user_info">
+        <div class="player_div" id="red_player"> <input type="hidden" id="redRank" value="-1"> <input type="hidden" id="redPos" value="0">
+            <div class="user_info" id="red_user_info">
                 <p id="redUsername"> </p>
-                <img class="player_pic" id="red_user_pic" src="/static/red_user.png" >
+                <img class="player_pic" id="red_user_pic" src="static/red_user.png">
             </div>
-            
-            <img class="cup" id="red_cup" src="/static/resources/cups/red_cup.png" onclick="clicked_cup(0);">
-            <div id= "red_table_div">
-                <div id= "playing_red_div">
+
+            <img class="cup" id="red_cup" src="static/resources/cups/red_cup.png" onclick="clicked_cup(0);">
+            <div id="red_table_div">
+                <div id="playing_red_div">
                     <p class="playing_text" id="red_playing_text">Playing...</p>
                 </div>
-                <div id= "red_dice_div">
-                    <img class=red_die_img id="red_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(0, 1);">
-                    <img class=red_die_img id="red_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(0, 2);">
-                    <img class=red_die_img id="red_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(0, 3);">
-                    <img class=red_die_img id="red_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(0, 4);">
-                    <img class=red_die_img id="red_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(0, 5);">
+                <div id="red_dice_div">
+                    <img class=red_die_img id="red_die1_img" src="static/resources/peach.png" onmousedown="clicked_die(0, 1);">
+                    <img class=red_die_img id="red_die2_img" src="static/resources/peach.png" onmousedown="clicked_die(0, 2);">
+                    <img class=red_die_img id="red_die3_img" src="static/resources/peach.png" onmousedown="clicked_die(0, 3);">
+                    <img class=red_die_img id="red_die4_img" src="static/resources/peach.png" onmousedown="clicked_die(0, 4);">
+                    <img class=red_die_img id="red_die5_img" src="static/resources/peach.png" onmousedown="clicked_die(0, 5);">
                 </div>
             </div>
         </div>
 
-        <div class= "player_div" id="orange_player"> <input type="hidden" id="orangeRank" value="-1"> <input type="hidden" id="orangePos" value="1">
-            <div class= "user_info" id= "orange_user_info">
-                <img class="player_pic" id="orange_user_pic" src="/static/orange_user.png" >
+        <div class="player_div" id="orange_player"> <input type="hidden" id="orangeRank" value="-1"> <input type="hidden" id="orangePos" value="1">
+            <div class="user_info" id="orange_user_info">
+                <img class="player_pic" id="orange_user_pic" src="static/orange_user.png">
                 <p id="orangeUsername"> </p>
             </div>
-            
-            <img class="cup" id="orange_cup" src="/static/resources/cups/orange_cup.png" onclick="clicked_cup(1); ">
-            <div id= "orange_table_div">
-                <div id= "playing_orange_div">
+
+            <img class="cup" id="orange_cup" src="static/resources/cups/orange_cup.png" onclick="clicked_cup(1); ">
+            <div id="orange_table_div">
+                <div id="playing_orange_div">
                     <p class="playing_text" id="orange_playing_text">Playing...</p>
                 </div>
-                <div id= "orange_dice_div">
-                    <img class=orange_die_img id="orange_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(1, 1);">
-                    <img class=orange_die_img id="orange_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(1, 2);">
-                    <img class=orange_die_img id="orange_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(1, 3);">
-                    <img class=orange_die_img id="orange_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(1, 4);">
-                    <img class=orange_die_img id="orange_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(1, 5);">
+                <div id="orange_dice_div">
+                    <img class=orange_die_img id="orange_die1_img" src="static/resources/peach.png" onmousedown="clicked_die(1, 1);">
+                    <img class=orange_die_img id="orange_die2_img" src="static/resources/peach.png" onmousedown="clicked_die(1, 2);">
+                    <img class=orange_die_img id="orange_die3_img" src="static/resources/peach.png" onmousedown="clicked_die(1, 3);">
+                    <img class=orange_die_img id="orange_die4_img" src="static/resources/peach.png" onmousedown="clicked_die(1, 4);">
+                    <img class=orange_die_img id="orange_die5_img" src="static/resources/peach.png" onmousedown="clicked_die(1, 5);">
                 </div>
             </div>
         </div>
 
-        <div class= "player_div" id="yellow_player"> <input type="hidden" id="yellowRank" value="-1"> <input type="hidden" id="yellowPos" value="2">
-            <div class= "user_info" id= "yellow_user_info">
-                <img class="player_pic" id="yellow_user_pic" src="/static/yellow_user.png" >
+        <div class="player_div" id="yellow_player"> <input type="hidden" id="yellowRank" value="-1"> <input type="hidden" id="yellowPos" value="2">
+            <div class="user_info" id="yellow_user_info">
+                <img class="player_pic" id="yellow_user_pic" src="static/yellow_user.png">
                 <p id="yellowUsername"> </p>
             </div>
 
-            <img class="cup" id="yellow_cup" src="/static/resources/cups/yellow_cup.png" onclick="clicked_cup(2);">
-            <div id= "yellow_table_div">
-                <div id= "playing_yellow_div">
+            <img class="cup" id="yellow_cup" src="static/resources/cups/yellow_cup.png" onclick="clicked_cup(2);">
+            <div id="yellow_table_div">
+                <div id="playing_yellow_div">
                     <p class="playing_text" id="yellow_playing_text">Playing...</p>
                 </div>
-                <div id= "yellow_dice_div">
-                    <img class=yellow_die_img id="yellow_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(2, 1);">
-                    <img class=yellow_die_img id="yellow_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(2, 2);">
-                    <img class=yellow_die_img id="yellow_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(2, 3);">
-                    <img class=yellow_die_img id="yellow_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(2, 4);">
-                    <img class=yellow_die_img id="yellow_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(2, 5);">
+                <div id="yellow_dice_div">
+                    <img class=yellow_die_img id="yellow_die1_img" src="static/resources/peach.png" onmousedown="clicked_die(2, 1);">
+                    <img class=yellow_die_img id="yellow_die2_img" src="static/resources/peach.png" onmousedown="clicked_die(2, 2);">
+                    <img class=yellow_die_img id="yellow_die3_img" src="static/resources/peach.png" onmousedown="clicked_die(2, 3);">
+                    <img class=yellow_die_img id="yellow_die4_img" src="static/resources/peach.png" onmousedown="clicked_die(2, 4);">
+                    <img class=yellow_die_img id="yellow_die5_img" src="static/resources/peach.png" onmousedown="clicked_die(2, 5);">
                 </div>
             </div>
         </div>
 
-        <div class= "player_div" id="green_player"> <input type="hidden" id="greenRank" value="-1"> <input type="hidden" id="greenPos" value="3">
-            <div class= "user_info" id= "green_user_info">
-                <img class="player_pic" id="green_user_pic" src="/static/green_user.png" >
+        <div class="player_div" id="green_player"> <input type="hidden" id="greenRank" value="-1"> <input type="hidden" id="greenPos" value="3">
+            <div class="user_info" id="green_user_info">
+                <img class="player_pic" id="green_user_pic" src="static/green_user.png">
                 <p id="greenUsername"> </p>
             </div>
-            
-            <img class="cup" id="green_cup" src="/static/resources/cups/green_cup.png" onclick="clicked_cup(3);">
-            <div id= "green_table_div">
-                <div id= "playing_green_div">
+
+            <img class="cup" id="green_cup" src="static/resources/cups/green_cup.png" onclick="clicked_cup(3);">
+            <div id="green_table_div">
+                <div id="playing_green_div">
                     <p class="playing_text" id="green_playing_text">Playing...</p>
                 </div>
-                <div id= "green_dice_div">
-                    <img class=green_die_img id="green_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(3, 1);">
-                    <img class=green_die_img id="green_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(3, 2);">
-                    <img class=green_die_img id="green_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(3, 3);">
-                    <img class=green_die_img id="green_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(3, 4);">
-                    <img class=green_die_img id="green_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(3, 5);">
+                <div id="green_dice_div">
+                    <img class=green_die_img id="green_die1_img" src="static/resources/peach.png" onmousedown="clicked_die(3, 1);">
+                    <img class=green_die_img id="green_die2_img" src="static/resources/peach.png" onmousedown="clicked_die(3, 2);">
+                    <img class=green_die_img id="green_die3_img" src="static/resources/peach.png" onmousedown="clicked_die(3, 3);">
+                    <img class=green_die_img id="green_die4_img" src="static/resources/peach.png" onmousedown="clicked_die(3, 4);">
+                    <img class=green_die_img id="green_die5_img" src="static/resources/peach.png" onmousedown="clicked_die(3, 5);">
                 </div>
             </div>
         </div>
 
-        <div class= "player_div" id="blue_player"> <input type="hidden" id="blueRank" value="-1"> <input type="hidden" id="bluePos" value="4">
-            <div class= "user_info" id= "blue_user_info">
-                <img class="player_pic" id="blue_user_pic" src="/static/blue_user.png" >
+        <div class="player_div" id="blue_player"> <input type="hidden" id="blueRank" value="-1"> <input type="hidden" id="bluePos" value="4">
+            <div class="user_info" id="blue_user_info">
+                <img class="player_pic" id="blue_user_pic" src="static/blue_user.png">
                 <p id="blueUsername"> </p>
             </div>
-            
-            <img class="cup" id="blue_cup" src="/static/resources/cups/blue_cup.png" onclick="clicked_cup(4);">
-            <div id= "blue_table_div">
-                <div id= "playing_blue_div">
+
+            <img class="cup" id="blue_cup" src="static/resources/cups/blue_cup.png" onclick="clicked_cup(4);">
+            <div id="blue_table_div">
+                <div id="playing_blue_div">
                     <p class="playing_text" id="blue_playing_text">Playing...</p>
                 </div>
-                <div id= "blue_dice_div">
-                    <img class=blue_die_img id="blue_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(4, 1);">
-                    <img class=blue_die_img id="blue_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(4, 2);">
-                    <img class=blue_die_img id="blue_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(4, 3);">
-                    <img class=blue_die_img id="blue_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(4, 4);">
-                    <img class=blue_die_img id="blue_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(4, 5);">
+                <div id="blue_dice_div">
+                    <img class=blue_die_img id="blue_die1_img" src="static/resources/peach.png" onmousedown="clicked_die(4, 1);">
+                    <img class=blue_die_img id="blue_die2_img" src="static/resources/peach.png" onmousedown="clicked_die(4, 2);">
+                    <img class=blue_die_img id="blue_die3_img" src="static/resources/peach.png" onmousedown="clicked_die(4, 3);">
+                    <img class=blue_die_img id="blue_die4_img" src="static/resources/peach.png" onmousedown="clicked_die(4, 4);">
+                    <img class=blue_die_img id="blue_die5_img" src="static/resources/peach.png" onmousedown="clicked_die(4, 5);">
                 </div>
             </div>
         </div>
 
-        <div class= "player_div" id="black_player"> <input type="hidden" id="blackRank" value="-1"> <input type="hidden" id="blackPos" value="5">
-            <div class= "user_info" id= "black_user_info">
-                <img class="player_pic" id="black_user_pic" src="/static/black_user.png" >
+        <div class="player_div" id="black_player"> <input type="hidden" id="blackRank" value="-1"> <input type="hidden" id="blackPos" value="5">
+            <div class="user_info" id="black_user_info">
+                <img class="player_pic" id="black_user_pic" src="static/black_user.png">
                 <p id="blackUsername"> </p>
             </div>
-            
-            <img class="cup" id="black_cup" src="/static/resources/cups/black_cup.png" onclick="clicked_cup(5);">
-            <div id= "black_table_div">
-                <div id= "playing_black_div">
+
+            <img class="cup" id="black_cup" src="static/resources/cups/black_cup.png" onclick="clicked_cup(5);">
+            <div id="black_table_div">
+                <div id="playing_black_div">
                     <p class="playing_text" id="black_playing_text">Playing...</p>
                 </div>
-                <div id= "black_dice_div">
-                    <img class=black_die_img id="black_die1_img" src="/static/resources/peach.png" onmousedown="clicked_die(5, 1);">
-                    <img class=black_die_img id="black_die2_img" src="/static/resources/peach.png" onmousedown="clicked_die(5, 2);">
-                    <img class=black_die_img id="black_die3_img" src="/static/resources/peach.png" onmousedown="clicked_die(5, 3);">
-                    <img class=black_die_img id="black_die4_img" src="/static/resources/peach.png" onmousedown="clicked_die(5, 4);">
-                    <img class=black_die_img id="black_die5_img" src="/static/resources/peach.png" onmousedown="clicked_die(5, 5);">
+                <div id="black_dice_div">
+                    <img class=black_die_img id="black_die1_img" src="static/resources/peach.png" onmousedown="clicked_die(5, 1);">
+                    <img class=black_die_img id="black_die2_img" src="static/resources/peach.png" onmousedown="clicked_die(5, 2);">
+                    <img class=black_die_img id="black_die3_img" src="static/resources/peach.png" onmousedown="clicked_die(5, 3);">
+                    <img class=black_die_img id="black_die4_img" src="static/resources/peach.png" onmousedown="clicked_die(5, 4);">
+                    <img class=black_die_img id="black_die5_img" src="static/resources/peach.png" onmousedown="clicked_die(5, 5);">
                 </div>
             </div>
         </div>
@@ -145,140 +145,117 @@
 
             <!-- Modal content -->
             <div class="modal-content">
-              <span class="close" onclick="closeModal()">&times;</span>
-              <p>Perudo (Rudo) is a dice game. The object of perudo is to be the last player with a die or more.</p>
+                <span class="close" onclick="closeModal()">&times;</span>
+                <p>Perudo (Rudo) is a dice game. The object of perudo is to be the last player with a die or more.</p>
 
-              <p>Perudo is played in rounds. Each player receives a cup and five dice. 
-                  Each round begins by all players rolling their dice around in the cup. 
-                  Each player may peek in his own cup.</p>
-                
-                <p>Players bid, guessing at the number of rolls. 
-                    When a player believes that another player has over-estimated, 
-                    they say Dudo, which means I doubt in Spanish.</p>
-                
-                <p>The first player announces a number, and then the next player 
-                    has the choice of doubting it, by saying Dudo or raising the bid, 
-                    either by the number of dice or by the value of the dice (or by doing both). 
-                    For example, if player 1 bid three twos, then player two could bid three threes, 
-                    four twos, four fours, or even ten sixes.</p>
-            
+                <p>Perudo is played in rounds. Each player receives a cup and five dice. Each round begins by all players rolling their dice around in the cup. Each player may peek in his own cup.</p>
+
+                <p>Players bid, guessing at the number of rolls. When a player believes that another player has over-estimated, they say Dudo, which means I doubt in Spanish.</p>
+
+                <p>The first player announces a number, and then the next player has the choice of doubting it, by saying Dudo or raising the bid, either by the number of dice or by the value of the dice (or by doing both). For example, if player 1 bid three
+                    twos, then player two could bid three threes, four twos, four fours, or even ten sixes.</p>
+
                 <p>After player 2 bids, play goes on to the left.</p>
-        
-                <p>If a player calls Dudo, and is correct, then the player must show the dice, 
-                    and each player must show their dice to verify whether the number was indeed too high.</p>
-        
-                <p>If there are enough dice of that number, then the player who called 
-                    Dudo must place a die in the discard pile. If there are not, then 
-                    the player who made the last bid must place a die in the middle. 
-                    In either case, a new round begins.</p>
-        
-                <p>The player who lost a die in the last round is the first player 
-                    in the new round. If the player lost his last die, 
-                    then the player to his left plays first instead. Players may 
-                    bid Aces (ones) in a round, and halve the previous number announced. 
-                    If the number does not halve, they should round up. 
-                    The next player will need to bid more aces or to bid one more than 
-                    double the number bid in order to bid a different number.</p>
-        
-                <p>If a player has lost his fourth die, the round after losing 
-                    the fourth die is played differently. The player is called Palafico. 
-                    First, aces are not wild. Next, the player may begin with aces, and third, 
-                    players who have not been palafico before may only bid on the same number 
-                    that the player before them bid on. The palafico rules do not apply 
-                    when there are only two players left!</p>
 
-                <p>A player who is not currently betting or didn't just place a bet can 
-                    Exacto, which means that they are betting that the current bet
-                    exactly reflects the situation on the table. For example, if the bet
-                    is five fours and a player Exactos, if there are exactly five fours, 
-                    they regain a die (max is 5). If they are incorrect, they lose a die.
+                <p>If a player calls Dudo, and is correct, then the player must show the dice, and each player must show their dice to verify whether the number was indeed too high.</p>
+
+                <p>If there are enough dice of that number, then the player who called Dudo must place a die in the discard pile. If there are not, then the player who made the last bid must place a die in the middle. In either case, a new round begins.</p>
+
+                <p>The player who lost a die in the last round is the first player in the new round. If the player lost his last die, then the player to his left plays first instead. Players may bid Aces (ones) in a round, and halve the previous number announced.
+                    If the number does not halve, they should round up. The next player will need to bid more aces or to bid one more than double the number bid in order to bid a different number.</p>
+
+                <p>If a player has lost his fourth die, the round after losing the fourth die is played differently. The player is called Palafico. First, aces are not wild. Next, the player may begin with aces, and third, players who have not been palafico
+                    before may only bid on the same number that the player before them bid on. The palafico rules do not apply when there are only two players left!</p>
+
+                <p>A player who is not currently betting or didn't just place a bet can Exacto, which means that they are betting that the current bet exactly reflects the situation on the table. For example, if the bet is five fours and a player Exactos,
+                    if there are exactly five fours, they regain a die (max is 5). If they are incorrect, they lose a die.
                 </p>
-        
+
                 <p>The last player left with at least one die wins the game.</p>
 
                 <p>These instructions have been slightly modified from <a href="http://www.perudo.com/perudo-rules.html" target="_blank">this source.</a></p>
             </div>
-          
-          </div>
+
+        </div>
 
         <div id="game_id_div">
-            
+
             <p id=game_id_label> Game Code: </p>
             <p id="game_id_display"></p>
         </div>
-        <div id= "start_div">
+        <div id="start_div">
             <button class="button" id="enter_round_button" onclick="enterRound();" type="button">Enter Round!</button>
         </div>
 
-        <div id= "start_session_div">
+        <div id="start_session_div">
             <button class="button2" id="start_session_button" onclick="start_session();" type="button">All Players Are In</button>
         </div>
 
-        <div id= "roll_div">
+        <div id="roll_div">
             <button class="button" id="roll_button" onclick="rollDice();" type="button">Roll Dice</button>
         </div>
 
-        
 
-        <div id= "display_div">
+
+        <div id="display_div">
             <button class="button" id="display_button" onclick="displayDice();" type="button">Display Dice</button>
         </div>
-        <div id= "reroll_div">
+        <div id="reroll_div">
             <button class="button" id="reroll_button" onclick="rerollDice();" type="button">Reroll Dice</button>
         </div>
-        <div id= "dudo_div">
+        <div id="dudo_div">
             <button class="button" id="dudo_button" onclick="dudo();" type="button">Dudo</button>
         </div>
-        <div id= "betting_div">
-            <div id= "count_div">
-                <p class= "bet_label" id= "count_text">Count</p>
-                <img class= "bet_button" id="count_up_button" src = "static/resources/arrow_up.png" onclick="count_up();"></img>
-                <p id= "count_number">1</p>
-                <img class= "bet_button" id="count_down_button" src = "static/resources/arrow_down.png" onclick="count_down();"></img>
+        <div id="betting_div">
+            <div id="count_div">
+                <p class="bet_label" id="count_text">Count</p>
+                <img class="bet_button" id="count_up_button" src="static/resources/arrow_up.png" onclick="count_up();"></img>
+                <p id="count_number">1</p>
+                <img class="bet_button" id="count_down_button" src="static/resources/arrow_down.png" onclick="count_down();"></img>
             </div>
-            <div id= "face_div">
-                <p class= "bet_label" id= "face_text">Face</p>
-                <img class= "bet_button" id="face_up_button" src = "static/resources/arrow_up.png" onclick="face_up();"></img>
-                <p id= "face_number">2</p>
-                <img class= "bet_button" id="face_down_button" src = "static/resources/arrow_down.png" onclick="face_down();"></img>
+            <div id="face_div">
+                <p class="bet_label" id="face_text">Face</p>
+                <img class="bet_button" id="face_up_button" src="static/resources/arrow_up.png" onclick="face_up();"></img>
+                <p id="face_number">2</p>
+                <img class="bet_button" id="face_down_button" src="static/resources/arrow_down.png" onclick="face_down();"></img>
             </div>
         </div>
-        <div id= "place_bet_div">
+        <div id="place_bet_div">
             <button class="button" id="place_bet_button" onclick="placeBet();" type="button">Place Bet</button>
         </div>
 
-        
+
 
         <div id="probability_div">
             <p id="probability_title">Probability of Bets %</p>
             <div id="probability_labels_div">
                 <p id="probability_yours_label">Yours</p>
-                <p id="probability_prev_label">Previous</p>   
+                <p id="probability_prev_label">Previous</p>
             </div>
             <div id="probability_numbers_div">
                 <p id="prob_yours_num">--</p>
-                <p id="prob_prev_num">--</p>   
+                <p id="prob_prev_num">--</p>
             </div>
         </div>
 
         <div id="previous_bet_div">
             <p id="previous_bet_title">Previous Bet</p>
             <div id="previous_labels_div">
-                <p id="previous_count_label">Count</p>   
+                <p id="previous_count_label">Count</p>
                 <p id="previous_face_label">Face</p>
             </div>
             <div id="previous_numbers_div">
-                <p id="prev_count_num">--</p>   
+                <p id="prev_count_num">--</p>
                 <p id="prev_face_num">--</p>
             </div>
         </div>
 
         <button id="lose_button" onclick="loseDie();" type="button">I lose a die</button>
-        
+
         <!-- <p id='dudoMessage'></p> -->
     </div>
 
-    <script src="/static/perudo_game.js"></script>
+    <script src="static/perudo_game.js"></script>
 
 </body>
 
