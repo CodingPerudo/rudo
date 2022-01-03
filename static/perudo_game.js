@@ -14,7 +14,7 @@
  * 
  * This number is stored in "chosen_color" and is referenced in 2D arrays to get the selected color of dice
  * 
-*/
+ */
 var colors = ["red", "orange", "yellow", "green", "blue", "black"]
 
 //cup images and html objects
@@ -62,12 +62,12 @@ var black_dice_objects = ["black_die1_img", "black_die2_img", "black_die3_img", 
 var dice_objects = [red_dice_objects, orange_dice_objects, yellow_dice_objects, green_dice_objects, blue_dice_objects, black_dice_objects]
 
 //your own dice numbers
-var dice_numbers = [0,0,0,0,0]
-//which dice you've selected
-var selected_dice = [0,0,0,0,0]
+var dice_numbers = [0, 0, 0, 0, 0]
+    //which dice you've selected
+var selected_dice = [0, 0, 0, 0, 0]
 
 //which dice you've displayed to other players
-var displayed_dice = [0,0,0,0,0]
+var displayed_dice = [0, 0, 0, 0, 0]
 
 var num_dice_left = 5;
 
@@ -77,7 +77,7 @@ var chosen_color = null;
 var game_started = false;
 var someone_doubted = false;
 //all dice that are hidden from you!
-var hidden_dice = [1,1,1,1,1]
+var hidden_dice = [1, 1, 1, 1, 1]
 
 //animal names to simulate usernames
 var animals = ["Dolphin", "Penguin", "Otter", "Lion", "Bear", "Monkey", "Salmon", "Horse", "Turtle", "Hare", "Giraffe", "Emu"]
@@ -89,9 +89,9 @@ var count_bet = 1;
 var face_bet = 2;
 
 //Dealing with the player's turns 
-var players_rank = [-1,-1,-1,-1,-1,-1]
+var players_rank = [-1, -1, -1, -1, -1, -1]
 var players_turn_order = []
-var session_started_bool = [false,0] //how many times its been started
+var session_started_bool = [false, 0] //how many times its been started
 var host_started_session = false
 var previous_turn_color = -1;
 var current_turn_color = -1;
@@ -123,187 +123,200 @@ var disp = [];
 
 //deadling with the hover effect of the UI pieces
 //entering cup objects
-document.getElementById("red_cup").onmouseenter = function() {mouseEnter(0)};
-document.getElementById("orange_cup").onmouseenter = function() {mouseEnter(1)};
-document.getElementById("yellow_cup").onmouseenter = function() {mouseEnter(2)};
-document.getElementById("green_cup").onmouseenter = function() {mouseEnter(3)};
-document.getElementById("blue_cup").onmouseenter = function() {mouseEnter(4)};
-document.getElementById("black_cup").onmouseenter = function() {mouseEnter(5)};
+document.getElementById("red_cup").onmouseenter = function() { mouseEnter(0) };
+document.getElementById("orange_cup").onmouseenter = function() { mouseEnter(1) };
+document.getElementById("yellow_cup").onmouseenter = function() { mouseEnter(2) };
+document.getElementById("green_cup").onmouseenter = function() { mouseEnter(3) };
+document.getElementById("blue_cup").onmouseenter = function() { mouseEnter(4) };
+document.getElementById("black_cup").onmouseenter = function() { mouseEnter(5) };
 //leaving cup objects with mouse
-document.getElementById("red_cup").onmouseleave = function() {mouseLeave(0)};
-document.getElementById("orange_cup").onmouseleave = function() {mouseLeave(1)};
-document.getElementById("yellow_cup").onmouseleave = function() {mouseLeave(2)};
-document.getElementById("green_cup").onmouseleave = function() {mouseLeave(3)};
-document.getElementById("blue_cup").onmouseleave = function() {mouseLeave(4)};
-document.getElementById("black_cup").onmouseleave = function() {mouseLeave(5)};
+document.getElementById("red_cup").onmouseleave = function() { mouseLeave(0) };
+document.getElementById("orange_cup").onmouseleave = function() { mouseLeave(1) };
+document.getElementById("yellow_cup").onmouseleave = function() { mouseLeave(2) };
+document.getElementById("green_cup").onmouseleave = function() { mouseLeave(3) };
+document.getElementById("blue_cup").onmouseleave = function() { mouseLeave(4) };
+document.getElementById("black_cup").onmouseleave = function() { mouseLeave(5) };
 
 //entering and leaving cup objects 
-function mouseEnter(num){
-    if (!userPicked){
+function mouseEnter(num) {
+    if (!userPicked) {
         document.getElementById(cups[num]).src = cup_color_dark[num];
-    }   
+    }
 }
-function mouseLeave(num){
-    if (chosen_color != num){
+
+function mouseLeave(num) {
+    if (chosen_color != num) {
         document.getElementById(cups[num]).src = cup_colors[num];
     }
 }
 
 //dealing with hovering actions of buttons on UI (the counter for the bet)
-document.getElementById("count_up_button").onmouseenter = function() {countUpEnter()};
-document.getElementById("count_up_button").onmouseleave = function() {countUpLeave()};
-document.getElementById("count_down_button").onmouseenter = function() {countDownEnter()};
-document.getElementById("count_down_button").onmouseleave = function() {countDownLeave()};
+document.getElementById("count_up_button").onmouseenter = function() { countUpEnter() };
+document.getElementById("count_up_button").onmouseleave = function() { countUpLeave() };
+document.getElementById("count_down_button").onmouseenter = function() { countDownEnter() };
+document.getElementById("count_down_button").onmouseleave = function() { countDownLeave() };
 
-document.getElementById("face_up_button").onmouseenter = function() {faceUpEnter()};
-document.getElementById("face_up_button").onmouseleave = function() {faceUpLeave()};
-document.getElementById("face_down_button").onmouseenter = function() {faceDownEnter()};
-document.getElementById("face_down_button").onmouseleave = function() {faceDownLeave()};
+document.getElementById("face_up_button").onmouseenter = function() { faceUpEnter() };
+document.getElementById("face_up_button").onmouseleave = function() { faceUpLeave() };
+document.getElementById("face_down_button").onmouseenter = function() { faceDownEnter() };
+document.getElementById("face_down_button").onmouseleave = function() { faceDownLeave() };
 
-function countUpEnter(){
-    document.getElementById("count_up_button").src ="static/resources/arrow_up_dark.png";
-}
-function countUpLeave(){
-    document.getElementById("count_up_button").src ="static/resources/arrow_up.png";
-}
-function countDownEnter(){
-    document.getElementById("count_down_button").src ="static/resources/arrow_down_dark.png";
-}
-function countDownLeave(){
-    document.getElementById("count_down_button").src ="static/resources/arrow_down.png";
+function countUpEnter() {
+    document.getElementById("count_up_button").src = "static/resources/arrow_up_dark.png";
 }
 
-function faceUpEnter(){
-    document.getElementById("face_up_button").src ="static/resources/arrow_up_dark.png";
+function countUpLeave() {
+    document.getElementById("count_up_button").src = "static/resources/arrow_up.png";
 }
-function faceUpLeave(){
-    document.getElementById("face_up_button").src ="static/resources/arrow_up.png";
+
+function countDownEnter() {
+    document.getElementById("count_down_button").src = "static/resources/arrow_down_dark.png";
 }
-function faceDownEnter(){
-    document.getElementById("face_down_button").src ="static/resources/arrow_down_dark.png";
+
+function countDownLeave() {
+    document.getElementById("count_down_button").src = "static/resources/arrow_down.png";
 }
-function faceDownLeave(){
-    document.getElementById("face_down_button").src ="static/resources/arrow_down.png";
+
+function faceUpEnter() {
+    document.getElementById("face_up_button").src = "static/resources/arrow_up_dark.png";
+}
+
+function faceUpLeave() {
+    document.getElementById("face_up_button").src = "static/resources/arrow_up.png";
+}
+
+function faceDownEnter() {
+    document.getElementById("face_down_button").src = "static/resources/arrow_down_dark.png";
+}
+
+function faceDownLeave() {
+    document.getElementById("face_down_button").src = "static/resources/arrow_down.png";
 }
 
 
 //dealing with button hovering (we can't just do hover in CSS because we can onlu hover sometimes)
-document.getElementById("display_button").onmouseenter = function() {displayButtonEnter()};
-document.getElementById("display_button").onmouseleave = function() {displayButtonLeave()};
-function displayButtonEnter(){
+document.getElementById("display_button").onmouseenter = function() { displayButtonEnter() };
+document.getElementById("display_button").onmouseleave = function() { displayButtonLeave() };
+
+function displayButtonEnter() {
     var button_display = document.getElementById("display_button");
-    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
-        button_display.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
+    if (current_turn_color != -1 && current_turn_color != chosen_color) { //if its not your turn
+        button_display.style.backgroundImage = "url(/static/resources/blue_button_reserved.png)";
         button_display.style.color = "rgb(175,175,175)"
-        button_display.onclick = function(){};
+        button_display.onclick = function() {};
     } else { //if it is your turn
-        button_display.style.backgroundImage =  "url(/static/resources/blue_pressed.png)";
+        button_display.style.backgroundImage = "url(/static/resources/blue_pressed.png)";
         button_display.style.color = "white"
-        button_display.onclick = function(){displayDice();};
-    }
-}
-function displayButtonLeave(){
-    var button_display = document.getElementById("display_button");
-    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
-        button_display.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
-        button_display.style.color = "rgb(175,175,175)"
-        button_display.onclick = function(){};
-    } else { //if it is your turn
-        button_display.style.backgroundImage =  "url(/static/resources/blue_button.png)";
-        button_display.style.color = "white"
-        button_display.onclick = function(){displayDice();};
+        button_display.onclick = function() { displayDice(); };
     }
 }
 
-document.getElementById("reroll_button").onmouseenter = function() {rerollButtonEnter()};
-document.getElementById("reroll_button").onmouseleave = function() {rerollButtonLeave()};
-function rerollButtonEnter(){
-    var button_reroll = document.getElementById("reroll_button");
-    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
-        button_reroll.style.backgroundImage =  "url(/static/resources/pink_button_reserved.png)";
-        button_reroll.style.color = "rgb(175,175,175)"
-        button_reroll.onclick = function(){};
+function displayButtonLeave() {
+    var button_display = document.getElementById("display_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color) { //if its not your turn
+        button_display.style.backgroundImage = "url(/static/resources/blue_button_reserved.png)";
+        button_display.style.color = "rgb(175,175,175)"
+        button_display.onclick = function() {};
     } else { //if it is your turn
-        button_reroll.style.backgroundImage =  "url(/static/resources/pink_pressed.png)";
-        button_reroll.style.color = "white"
-        button_reroll.onclick = function(){rerollDice();};
-    }
-}
-function rerollButtonLeave(){
-    var button_reroll = document.getElementById("reroll_button");
-    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
-        button_reroll.style.backgroundImage =  "url(/static/resources/pink_button_reserved.png)";
-        button_reroll.style.color = "rgb(175,175,175)"
-        button_reroll.onclick = function(){};
-    } else { //if it is your turn
-        button_reroll.style.backgroundImage =  "url(/static/resources/pink_button.png)";
-        button_reroll.style.color = "white"
-        button_reroll.onclick = function(){rerollDice();};
+        button_display.style.backgroundImage = "url(/static/resources/blue_button.png)";
+        button_display.style.color = "white"
+        button_display.onclick = function() { displayDice(); };
     }
 }
 
-document.getElementById("place_bet_button").onmouseenter = function() {place_betButtonEnter()};
-document.getElementById("place_bet_button").onmouseleave = function() {place_betButtonLeave()};
-function place_betButtonEnter(){
-    var button_place_bet = document.getElementById("place_bet_button");
-    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
-        button_place_bet.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
-        button_place_bet.style.color = "rgb(175,175,175)"
-        button_place_bet.onclick = function(){};
+document.getElementById("reroll_button").onmouseenter = function() { rerollButtonEnter() };
+document.getElementById("reroll_button").onmouseleave = function() { rerollButtonLeave() };
+
+function rerollButtonEnter() {
+    var button_reroll = document.getElementById("reroll_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color) { //if its not your turn
+        button_reroll.style.backgroundImage = "url(/static/resources/pink_button_reserved.png)";
+        button_reroll.style.color = "rgb(175,175,175)"
+        button_reroll.onclick = function() {};
     } else { //if it is your turn
-        button_place_bet.style.backgroundImage =  "url(/static/resources/blue_pressed.png)";
-        button_place_bet.style.color = "white"
-        button_place_bet.onclick = function(){placeBet();};
+        button_reroll.style.backgroundImage = "url(/static/resources/pink_pressed.png)";
+        button_reroll.style.color = "white"
+        button_reroll.onclick = function() { rerollDice(); };
     }
 }
-function place_betButtonLeave(){
-    var button_place_bet = document.getElementById("place_bet_button");
-    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
-        button_place_bet.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
-        button_place_bet.style.color = "rgb(175,175,175)"
-        button_place_bet.onclick = function(){};
+
+function rerollButtonLeave() {
+    var button_reroll = document.getElementById("reroll_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color) { //if its not your turn
+        button_reroll.style.backgroundImage = "url(/static/resources/pink_button_reserved.png)";
+        button_reroll.style.color = "rgb(175,175,175)"
+        button_reroll.onclick = function() {};
     } else { //if it is your turn
-        button_place_bet.style.backgroundImage =  "url(/static/resources/blue_button.png)";
+        button_reroll.style.backgroundImage = "url(/static/resources/pink_button.png)";
+        button_reroll.style.color = "white"
+        button_reroll.onclick = function() { rerollDice(); };
+    }
+}
+
+document.getElementById("place_bet_button").onmouseenter = function() { place_betButtonEnter() };
+document.getElementById("place_bet_button").onmouseleave = function() { place_betButtonLeave() };
+
+function place_betButtonEnter() {
+    var button_place_bet = document.getElementById("place_bet_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color) { //if its not your turn
+        button_place_bet.style.backgroundImage = "url(/static/resources/blue_button_reserved.png)";
+        button_place_bet.style.color = "rgb(175,175,175)"
+        button_place_bet.onclick = function() {};
+    } else { //if it is your turn
+        button_place_bet.style.backgroundImage = "url(/static/resources/blue_pressed.png)";
         button_place_bet.style.color = "white"
-        button_place_bet.onclick = function(){placBet();};
+        button_place_bet.onclick = function() { placeBet(); };
+    }
+}
+
+function place_betButtonLeave() {
+    var button_place_bet = document.getElementById("place_bet_button");
+    if (current_turn_color != -1 && current_turn_color != chosen_color) { //if its not your turn
+        button_place_bet.style.backgroundImage = "url(/static/resources/blue_button_reserved.png)";
+        button_place_bet.style.color = "rgb(175,175,175)"
+        button_place_bet.onclick = function() {};
+    } else { //if it is your turn
+        button_place_bet.style.backgroundImage = "url(/static/resources/blue_button.png)";
+        button_place_bet.style.color = "white"
+        button_place_bet.onclick = function() { placBet(); };
     }
 }
 
 //update game
-function updateGameInterval(){
+function updateGameInterval() {
     setInterval(updateGame, 500);
 }
 
 //update all aspects of game
-function updateGame(){
-    if (playerCode == ""){
+function updateGame() {
+    if (playerCode == "") {
         setPlayerCode();
     }
-    if(game_started){ //if you've entered the round
+    if (game_started) { //if you've entered the round
         calcProbabilities();
         updateDisplayedDice();
         checkDudo();
-        if(session_started_bool[0]){
+        if (session_started_bool[0]) {
             start_session();
-        } else if (session_started_bool[1] == 0){
+        } else if (session_started_bool[1] == 0) {
             checkStartSession();
         }
-        checkCurrentTurn(); 
+        checkCurrentTurn();
         getLastBet();
     }
     getPos();
     updateCupPos();
     getUsernames();
-    if (!recievedHost && userPicked){ //if you haven't recieved a host yet
+    if (!recievedHost && userPicked) { //if you haven't recieved a host yet
         getHost();
     }
 }
 
-function getLastBet(){
+function getLastBet() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
-        if (request.readyState == 4 && request.status == 200){
+        if (request.readyState == 4 && request.status == 200) {
             var parsed = JSON.parse(this.responseText);
             if (parseInt(parsed.prev_bet_count) != 0) {
                 document.getElementById("prev_count_num").innerHTML = parsed.prev_bet_count;
@@ -315,27 +328,27 @@ function getLastBet(){
     request.send();
 }
 
-function setPlayerCode(){
+function setPlayerCode() {
     playerCode = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     postPlayerCode();
 }
 
-function postPlayerCode(){
+function postPlayerCode() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "/postPlayerCode?id="+ session_id; 
+    let url = "/postPlayerCode?id=" + session_id;
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "code": playerCode });
     xhr.send(data);
 }
 
-function getHost(){
+function getHost() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
-        if (request.readyState == 4 && request.status == 200){
+        if (request.readyState == 4 && request.status == 200) {
             var parsed = JSON.parse(this.responseText);
-            if (parsed.host == playerCode){
+            if (parsed.host == playerCode) {
                 document.getElementById("start_session_button").style.visibility = "visible";
                 recievedHost = true;
             }
@@ -345,22 +358,22 @@ function getHost(){
     request.send();
 }
 
-function postPlayerCode(){
+function postPlayerCode() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "/postPlayerCode?id="+ session_id; 
+    let url = "/postPlayerCode?id=" + session_id;
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "code": playerCode });
     xhr.send(data);
 }
 
-function checkStartSession(){
+function checkStartSession() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
-        if (request.readyState == 4 && request.status == 200){
+        if (request.readyState == 4 && request.status == 200) {
             var parsed = JSON.parse(this.responseText);
-            if (parsed.start_session){
+            if (parsed.start_session) {
                 session_started_bool[0] = true;
             }
         }
@@ -369,18 +382,18 @@ function checkStartSession(){
     request.send();
 }
 
-function checkCurrentTurn(){
+function checkCurrentTurn() {
     //get current turn color
-    if(players_turn_order.length != 0){
+    if (players_turn_order.length != 0) {
         getCurrentTurn();
-    } 
+    }
     //current_turn_color
     //display playing at that person
-    if (current_turn_color != -1){
+    if (current_turn_color != -1) {
         document.getElementById(colors[current_turn_color] + "_playing_text").style.visibility = "visible";
     }
 
-    if (previous_turn_color != -1){
+    if (previous_turn_color != -1) {
         document.getElementById(colors[previous_turn_color] + "_playing_text").style.visibility = "hidden";
     }
 
@@ -388,50 +401,49 @@ function checkCurrentTurn(){
     var button_display = document.getElementById("display_button");
     var button_reroll = document.getElementById("reroll_button");
     var button_bet = document.getElementById("place_bet_button");
-    if (current_turn_color != -1 && current_turn_color != chosen_color){ //if its not your turn
-        button_display.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
+    if (current_turn_color != -1 && current_turn_color != chosen_color) { //if its not your turn
+        button_display.style.backgroundImage = "url(/static/resources/blue_button_reserved.png)";
         button_display.style.color = "rgb(175,175,175)"
-        button_display.onclick = function(){};
+        button_display.onclick = function() {};
 
-        button_reroll.style.backgroundImage =  "url(/static/resources/pink_button_reserved.png)";
+        button_reroll.style.backgroundImage = "url(/static/resources/pink_button_reserved.png)";
         button_reroll.style.color = "rgb(175,175,175)"
-        button_reroll.onclick = function(){};
+        button_reroll.onclick = function() {};
 
-        button_bet.style.backgroundImage =  "url(/static/resources/blue_button_reserved.png)";
+        button_bet.style.backgroundImage = "url(/static/resources/blue_button_reserved.png)";
         button_bet.style.color = "rgb(175,175,175)"
-        button_bet.onclick = function(){};
-    } 
-    else if (turn_changed && current_turn_color != previous_turn_color){ //it is your turn
+        button_bet.onclick = function() {};
+    } else if (turn_changed && current_turn_color != previous_turn_color) { //it is your turn
         turn_changed = false;
 
-        button_display.style.backgroundImage =  "url(/static/resources/blue_button.png)";
+        button_display.style.backgroundImage = "url(/static/resources/blue_button.png)";
         button_display.style.color = "white"
-        button_display.onclick = function(){displayDice();};
+        button_display.onclick = function() { displayDice(); };
 
-        button_reroll.style.backgroundImage =  "url(/static/resources/pink_button.png)";
+        button_reroll.style.backgroundImage = "url(/static/resources/pink_button.png)";
         button_reroll.style.color = "white"
-        button_reroll.onclick = function(){displayDice();};
+        button_reroll.onclick = function() { displayDice(); };
 
-        button_bet.style.backgroundImage =  "url(/static/resources/blue_button.png)";
+        button_bet.style.backgroundImage = "url(/static/resources/blue_button.png)";
         button_bet.style.color = "white"
-        button_bet.onclick = function(){displayDice();};
+        button_bet.onclick = function() { displayDice(); };
     }
 
 }
 
 //get the color of the player whos turn it currently is
-function getCurrentTurn(){
+function getCurrentTurn() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     var usernameRequest = new XMLHttpRequest();
     usernameRequest.onreadystatechange = function() {
-        if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
+        if (usernameRequest.readyState == 4 && usernameRequest.status == 200) {
             var parsed = JSON.parse(this.responseText);
-            if(parsed.current_turn_color != current_turn_color){
-                previous_turn_color = current_turn_color; 
-                turn_changed = true;    
+            if (parsed.current_turn_color != current_turn_color) {
+                previous_turn_color = current_turn_color;
+                turn_changed = true;
             }
             current_turn_color = parsed.current_turn_color;
-            
+
         }
     };
     usernameRequest.open('GET', "/getCurrentTurnColor?id=" + session_id, true);
@@ -439,10 +451,10 @@ function getCurrentTurn(){
 }
 
 //organize the player's turns
-function orderPlayers(){
-    for (var turn= 0; turn < 6; turn++){
-        for(var idx= 0; idx < 6; idx++){
-            if(players_rank[idx]==turn){
+function orderPlayers() {
+    for (var turn = 0; turn < 6; turn++) {
+        for (var idx = 0; idx < 6; idx++) {
+            if (players_rank[idx] == turn) {
                 players_turn_order.push(idx);
             }
         }
@@ -451,42 +463,42 @@ function orderPlayers(){
 }
 
 //put turn order into the server
-function postTurnOrder(){
+function postTurnOrder() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "/postTurnOrder?id=" + session_id; 
+    let url = "/postTurnOrder?id=" + session_id;
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "turn_order": players_turn_order });
     xhr.send(data);
 }
 
 //start a session
-function start_session(){
+function start_session() {
 
     let session_id = document.getElementById("game_id_display").innerHTML;
     var usernameRequest = new XMLHttpRequest();
     usernameRequest.onreadystatechange = function() {
-        if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
+        if (usernameRequest.readyState == 4 && usernameRequest.status == 200) {
             var parsed = JSON.parse(this.responseText);
-            var usernames = ["","","","","",""]
+            var usernames = ["", "", "", "", "", ""]
             usernames[0] = parsed.allInfo.red.username;
             usernames[1] = parsed.allInfo.orange.username;
             usernames[2] = parsed.allInfo.yellow.username;
             usernames[3] = parsed.allInfo.green.username;
             usernames[4] = parsed.allInfo.blue.username;
             usernames[5] = parsed.allInfo.black.username;
-            for (var i = 0; i < 6; i++){
+            for (var i = 0; i < 6; i++) {
                 //delete colors without username
-                if (usernames[i] == ""){
-                    document.getElementById(String(colors[i])+"_player").style.visibility= 'hidden';
-                    for (var j = 0; j < 5; j++){
-                        document.getElementById(String(colors[i])+"_die"+String(j+1)+"_img").style.visibility= 'hidden';
+                if (usernames[i] == "") {
+                    document.getElementById(String(colors[i]) + "_player").style.visibility = 'hidden';
+                    for (var j = 0; j < 5; j++) {
+                        document.getElementById(String(colors[i]) + "_die" + String(j + 1) + "_img").style.visibility = 'hidden';
                     }
                 } else { //store players in array
                     //get rank 
                     var rank = parsed.allInfo[colors[i]].rank;
                     //store colors based on rank and turn
-                    players_rank[i] = rank;  
+                    players_rank[i] = rank;
                 }
             }
             orderPlayers();
@@ -497,58 +509,59 @@ function start_session(){
 
     document.getElementById("start_session_div").remove();
     document.getElementById("roll_button").style.visibility = 'visible';
-    
+
     postStartSession();
 
-    
+
 }
 
-function postStartSession(){
+function postStartSession() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "/postStartSession?id="+ session_id; 
+    let url = "/postStartSession?id=" + session_id;
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "color": chosen_color });
     xhr.send(data);
 
-    
+
     session_started_bool[0] = false;
     session_started_bool[1] += 1
 }
 
 //creates a username for each div when you click a cup and enter a string
-function makeUsername(cup_color){//figure out when to call this
+function makeUsername(cup_color) { //figure out when to call this
     var newUsername = prompt("Enter " + cup_color + " Username") //make usernameSlot in html
-    if (newUsername == ""){//only use this if the user input is ""
-        var randIndex = Math.floor(Math.random()*animals.length);
-        newUsername = cup_color + animals[randIndex]; 
-        document.getElementById(cup_color+"Username").innerHTML = newUsername
+    if (newUsername == "") { //only use this if the user input is ""
+        var randIndex = Math.floor(Math.random() * animals.length);
+        newUsername = cup_color + animals[randIndex];
+        document.getElementById(cup_color + "Username").innerHTML = newUsername
         animals.splice(randIndex, 1); //pop username from animals, each username only used once
     }
     document.getElementById(cup_color + "Username").innerHTML = newUsername //make usernameBox in html
-    postUsername(cup_color); 
+    postUsername(cup_color);
 }
 
 //put username into server
-function postUsername(cup_color){
+function postUsername(cup_color) {
     let session_id = document.getElementById("game_id_display").innerHTML;
     let postUsernameXhr = new XMLHttpRequest();
     let url = "/postUsername?id=" + session_id;
     postUsernameXhr.open("POST", url, true);
-    var colorUsername = cup_color+"Username"
-    var data = JSON.stringify({"color": cup_color, 
-    "username": document.getElementById(colorUsername).innerText
-})
-              postUsernameXhr.send(data)       
+    var colorUsername = cup_color + "Username"
+    var data = JSON.stringify({
+        "color": cup_color,
+        "username": document.getElementById(colorUsername).innerText
+    })
+    postUsernameXhr.send(data)
 
 }
 
 //update the displayed usernames
-function getUsernames(){//call this periodically
+function getUsernames() { //call this periodically
     let session_id = document.getElementById("game_id_display").innerHTML;
     var usernameRequest = new XMLHttpRequest();
     usernameRequest.onreadystatechange = function() {
-        if (usernameRequest.readyState == 4 && usernameRequest.status == 200){
+        if (usernameRequest.readyState == 4 && usernameRequest.status == 200) {
             var parsed = JSON.parse(this.responseText);
             document.getElementById("redUsername").innerText = parsed.data.red.username
             document.getElementById("orangeUsername").innerText = parsed.data.orange.username
@@ -560,102 +573,105 @@ function getUsernames(){//call this periodically
     };
     usernameRequest.open('GET', "/getPos?id=" + session_id, true);
     usernameRequest.send();
-    
+
 }
 
 function insertCup() {
-    let cup_to_move = colors[chosen_color]+"_player"
+    let cup_to_move = colors[chosen_color] + "_player"
     let content = document.getElementById(cup_to_move);
     let parent = content.parentNode;
     let colorToSwitch = "initialColorToSwitch"
     let highestRank = -1
     let changed = false;
 
-    colors.forEach(color => {if (document.getElementById(color + "Rank").value > highestRank) {
-        highestRank = document.getElementById(color + "Rank").value
-    }})
+    colors.forEach(color => {
+        if (document.getElementById(color + "Rank").value > highestRank) {
+            highestRank = document.getElementById(color + "Rank").value
+        }
+    })
 
     if (highestRank == -1) {
-            colorToSwitch = "red"
-    }
-    else {
-        colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == parseInt(highestRank) + 1){
-        colorToSwitch = color
-        changed = true; }
+        colorToSwitch = "red"
+    } else {
+        colors.forEach(color => {
+            if (parseInt(document.getElementById(color + "Pos").value) == parseInt(highestRank) + 1) {
+                colorToSwitch = color
+                changed = true;
+            }
         })
 
-        if (changed ==false){
-        colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == 0){
-            colorToSwitch = color}
+        if (changed == false) {
+            colors.forEach(color => {
+                if (parseInt(document.getElementById(color + "Pos").value) == 0) {
+                    colorToSwitch = color
+                }
             })
         }
     }
     let targetCupName = document.getElementById(cup_to_move)
     let otherCupName = document.getElementById(colorToSwitch + "_player")
     if (highestRank == -1) {
-        let oldPos = document.getElementById(colors[chosen_color]+"Pos").value  
-        let oldPosDesired = document.getElementById(colorToSwitch+"Pos").value  
+        let oldPos = document.getElementById(colors[chosen_color] + "Pos").value
+        let oldPosDesired = document.getElementById(colorToSwitch + "Pos").value
         parent.insertBefore(targetCupName, otherCupName)
         colors.forEach(color => {
-            if (parseInt(document.getElementById(color+"Pos").value) < oldPos && parseInt(document.getElementById(color+"Pos").value) >= oldPosDesired){
-                document.getElementById(color+"Pos").value = String(parseInt(document.getElementById(color+"Pos").value) + 1)
+            if (parseInt(document.getElementById(color + "Pos").value) < oldPos && parseInt(document.getElementById(color + "Pos").value) >= oldPosDesired) {
+                document.getElementById(color + "Pos").value = String(parseInt(document.getElementById(color + "Pos").value) + 1)
             }
         })
-        document.getElementById(colors[chosen_color]+"Pos").value = "0"; 
-        document.getElementById(colors[chosen_color]+"Rank").value = "0";
-    }
-    else {
+        document.getElementById(colors[chosen_color] + "Pos").value = "0";
+        document.getElementById(colors[chosen_color] + "Rank").value = "0";
+    } else {
         parent.insertBefore(targetCupName, otherCupName)
-        let oldPos = document.getElementById(colors[chosen_color]+"Pos").value    
-        document.getElementById(colors[chosen_color]+"Pos").value = document.getElementById(colorToSwitch+"Pos").value; 
-        document.getElementById(colors[chosen_color]+"Rank").value = String(parseInt(highestRank) + 1);
+        let oldPos = document.getElementById(colors[chosen_color] + "Pos").value
+        document.getElementById(colors[chosen_color] + "Pos").value = document.getElementById(colorToSwitch + "Pos").value;
+        document.getElementById(colors[chosen_color] + "Rank").value = String(parseInt(highestRank) + 1);
         colors.forEach(color => {
-            if (parseInt(document.getElementById(color+"Pos").value) < oldPos && parseInt(document.getElementById(color+"Pos").value) >= parseInt(document.getElementById(colorToSwitch+"Pos").value) && color != colors[chosen_color]){
-                document.getElementById(color+"Pos").value = String(parseInt(document.getElementById(color+"Pos").value) + 1)
+            if (parseInt(document.getElementById(color + "Pos").value) < oldPos && parseInt(document.getElementById(color + "Pos").value) >= parseInt(document.getElementById(colorToSwitch + "Pos").value) && color != colors[chosen_color]) {
+                document.getElementById(color + "Pos").value = String(parseInt(document.getElementById(color + "Pos").value) + 1)
             }
         })
-        
+
     }
     postPos();
 }
 
 function insertCupInput(input) {
-    let cup_to_move = input+"_player"
+    let cup_to_move = input + "_player"
     let content = document.getElementById(cup_to_move);
     let parent = content.parentNode;
     let colorToSwitch = "initialColorToSwitch"
     let changed = false;
 
-    colors.forEach(color => {if (parseInt(document.getElementById(color + "Pos").value) == parseInt(document.getElementById(input + "Rank").value)){
-    colorToSwitch = color
-    changed = true}
+    colors.forEach(color => {
+        if (parseInt(document.getElementById(color + "Pos").value) == parseInt(document.getElementById(input + "Rank").value)) {
+            colorToSwitch = color
+            changed = true
+        }
     })
-    if (changed == true){
+    if (changed == true) {
 
         let targetCupName = document.getElementById(cup_to_move)
         let otherCupName = document.getElementById(colorToSwitch + "_player")
 
         parent.insertBefore(targetCupName, otherCupName)
-        let oldPosDesired = document.getElementById(colorToSwitch+"Pos").value
-        let oldPos = document.getElementById(input+"Pos").value    
-        document.getElementById(input+"Pos").value = document.getElementById(colorToSwitch+"Pos").value;
+        let oldPosDesired = document.getElementById(colorToSwitch + "Pos").value
+        let oldPos = document.getElementById(input + "Pos").value
+        document.getElementById(input + "Pos").value = document.getElementById(colorToSwitch + "Pos").value;
         if (oldPosDesired < oldPos) {
             colors.forEach(color => {
-                if (parseInt(document.getElementById(color+"Pos").value) < oldPos && parseInt(document.getElementById(color+"Pos").value) >= oldPosDesired && color != input){
-                    document.getElementById(color+"Pos").value = String(parseInt(document.getElementById(color+"Pos").value) + 1)
+                if (parseInt(document.getElementById(color + "Pos").value) < oldPos && parseInt(document.getElementById(color + "Pos").value) >= oldPosDesired && color != input) {
+                    document.getElementById(color + "Pos").value = String(parseInt(document.getElementById(color + "Pos").value) + 1)
                 }
             })
-        }
-        else {
+        } else {
             colors.forEach(color => {
-                if (parseInt(document.getElementById(color+"Pos").value) > oldPos && parseInt(document.getElementById(color+"Pos").value) <= oldPosDesired && color != input){
-                    document.getElementById(color+"Pos").value = String(parseInt(document.getElementById(color+"Pos").value) - 1)
+                if (parseInt(document.getElementById(color + "Pos").value) > oldPos && parseInt(document.getElementById(color + "Pos").value) <= oldPosDesired && color != input) {
+                    document.getElementById(color + "Pos").value = String(parseInt(document.getElementById(color + "Pos").value) - 1)
                 }
             })
         }
-    }
-    else {
-    }
+    } else {}
     postPos();
 }
 
@@ -664,35 +680,37 @@ function insertCupInput(input) {
 //     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 // }
 
-function updateCupPos(){//call it ever 500 ms, in update function
+function updateCupPos() { //call it ever 500 ms, in update function
     //if the cup has a rank, set its position to its rank, 
     let toMove = []
-    colors.forEach(color => {if (document.getElementById(color + "Pos").value != document.getElementById(color + "Rank").value && document.getElementById(color + "Rank").value != "-1"){
-        toMove.push(color)
-    }})
+    colors.forEach(color => {
+        if (document.getElementById(color + "Pos").value != document.getElementById(color + "Rank").value && document.getElementById(color + "Rank").value != "-1") {
+            toMove.push(color)
+        }
+    })
 
     //sort the colors in tomove by their current position
     let colorRanks = ["none", "none", "none", "none", "none", "none"]
-    for (i = 0; i < toMove.length; i ++){
+    for (i = 0; i < toMove.length; i++) {
         colorRanks[parseInt(document.getElementById(toMove[i] + "Pos").value)] = toMove[i]
     }
-    colorRanks.forEach( color => {
-        if (color != "none"){
+    colorRanks.forEach(color => {
+        if (color != "none") {
             insertCupInput(color)
         }
     })
 
-    toMove.forEach( color => {
+    toMove.forEach(color => {
         insertCupInput(color)
     })
 }
 
 //get position of all the cup divs
-function getPos(){
+function getPos() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     var rankRequest = new XMLHttpRequest();
     rankRequest.onreadystatechange = function() {
-        if (rankRequest.readyState == 4 && rankRequest.status == 200){
+        if (rankRequest.readyState == 4 && rankRequest.status == 200) {
             var parsed = JSON.parse(this.responseText);
             // document.getElementById("redPos").value = parsed.data.red.pos
             // document.getElementById("orangePos").value = parsed.data.orange.pos
@@ -708,9 +726,10 @@ function getPos(){
             document.getElementById("blueRank").value = parsed.data.blue.rank
             document.getElementById("blackRank").value = parsed.data.black.rank
         }
-    };rankRequest.open('GET', "/getPos?id=" + session_id, true);
+    };
+    rankRequest.open('GET', "/getPos?id=" + session_id, true);
     rankRequest.send();
-    
+
 }
 
 //put cup div positions into the server
@@ -719,14 +738,15 @@ function postPos() {
     let postPosXhr = new XMLHttpRequest();
     let url = "/postPos?id=" + session_id;
 
-    var data = JSON.stringify({"redRank": document.getElementById("redRank").value,
-    "orangeRank": document.getElementById("orangeRank").value,
-    "yellowRank": document.getElementById("yellowRank").value,
-    "greenRank": document.getElementById("greenRank").value,
-    "blueRank": document.getElementById("blueRank").value,
-    "blackRank": document.getElementById("blackRank").value
-   });
-    
+    var data = JSON.stringify({
+        "redRank": document.getElementById("redRank").value,
+        "orangeRank": document.getElementById("orangeRank").value,
+        "yellowRank": document.getElementById("yellowRank").value,
+        "greenRank": document.getElementById("greenRank").value,
+        "blueRank": document.getElementById("blueRank").value,
+        "blackRank": document.getElementById("blackRank").value
+    });
+
     // var data = JSON.stringify({"redPos": document.getElementById("redPos").value,
     //                          "orangePos": document.getElementById("orangePos").value,
     //                          "yellowPos": document.getElementById("yellowPos").value,
@@ -734,16 +754,16 @@ function postPos() {
     //                          "bluePos": document.getElementById("bluePos").value,
     //                          "blackPos": document.getElementById("blackPos").value
     //                         });
-                            postPosXhr.open("POST", url, true);
-                            postPosXhr.send(data)               
+    postPosXhr.open("POST", url, true);
+    postPosXhr.send(data)
 }
 
 //update displayed dice for each player
-function updateDisplayedDice(){
+function updateDisplayedDice() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
-        if (request.readyState == 4 && request.status == 200){
+        if (request.readyState == 4 && request.status == 200) {
             var parsed = JSON.parse(this.responseText);
             red_dice = parsed.data.red.dice;
             red_disp = parsed.data.red.disp;
@@ -773,25 +793,25 @@ function updateDisplayedDice(){
             disp = [red_disp, orange_disp, yellow_disp, green_disp, blue_disp, black_disp];
             dice_left = [red_num, orange_num, yellow_num, green_num, blue_num, black_num];
 
-            for (var color = 0; color < 6; color++){ //for each color
-                for (var dice_idx = 0; dice_idx < 5; dice_idx++){ //for all dice in each color
-                    if (dice_idx < parseInt(dice_left[color])){
-                        if (disp[color][dice_idx] === 1){
-                            if(color != chosen_color){
-                                document.getElementById(dice_objects[color][dice_idx]).src = dice_img[color][dice[color][dice_idx]-1];
-                            } 
+            for (var color = 0; color < 6; color++) { //for each color
+                for (var dice_idx = 0; dice_idx < 5; dice_idx++) { //for all dice in each color
+                    if (dice_idx < parseInt(dice_left[color])) {
+                        if (disp[color][dice_idx] === 1) {
+                            if (color != chosen_color) {
+                                document.getElementById(dice_objects[color][dice_idx]).src = dice_img[color][dice[color][dice_idx] - 1];
+                            }
                         } else {
-                            if(color != chosen_color){
+                            if (color != chosen_color) {
                                 document.getElementById(dice_objects[color][dice_idx]).src = "static/resources/peach.png";
-                            } 
+                            }
                         }
                     } else {
-                        document.getElementById(colors[color]+"_die"+String(dice_idx+1)+"_img").src = "static/resources/lost_die.png";
+                        document.getElementById(colors[color] + "_die" + String(dice_idx + 1) + "_img").src = "static/resources/lost_die.png";
                     }
-                    
+
                 }
             }
-            
+
 
         }
     };
@@ -800,12 +820,12 @@ function updateDisplayedDice(){
 }
 
 //displays your dice to yourself
-function rollDice(){
+function rollDice() {
 
-    for(var i = 0; i < 5; i++){
-        dice_numbers[i] = Math.ceil(Math.random()*6);
+    for (var i = 0; i < 5; i++) {
+        dice_numbers[i] = Math.ceil(Math.random() * 6);
         hidden_dice[i] = 0;
-        document.getElementById(dice_objects[chosen_color][i]).src= dice_img[chosen_color][dice_numbers[i]-1];
+        document.getElementById(dice_objects[chosen_color][i]).src = dice_img[chosen_color][dice_numbers[i] - 1];
     }
     document.getElementById("roll_button").remove();
     document.getElementById("display_button").style.visibility = 'visible';
@@ -821,24 +841,26 @@ function rollDice(){
     //send dice nums to server
     post_dice_nums();
 
-    document.getElementById(colors[chosen_color]+"_die1_img").onmouseenter = function() {dieEnter(1)};
-    document.getElementById(colors[chosen_color]+"_die2_img").onmouseenter = function() {dieEnter(2)};
-    document.getElementById(colors[chosen_color]+"_die3_img").onmouseenter = function() {dieEnter(3)};
-    document.getElementById(colors[chosen_color]+"_die4_img").onmouseenter = function() {dieEnter(4)};
-    document.getElementById(colors[chosen_color]+"_die5_img").onmouseenter = function() {dieEnter(5)};
-    function dieEnter(num){
-        if(hidden_dice[num-1] == 0 && num <= num_dice_left){
-            document.getElementById(colors[chosen_color]+"_die"+String(num)+"_img").src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
-        }   
+    document.getElementById(colors[chosen_color] + "_die1_img").onmouseenter = function() { dieEnter(1) };
+    document.getElementById(colors[chosen_color] + "_die2_img").onmouseenter = function() { dieEnter(2) };
+    document.getElementById(colors[chosen_color] + "_die3_img").onmouseenter = function() { dieEnter(3) };
+    document.getElementById(colors[chosen_color] + "_die4_img").onmouseenter = function() { dieEnter(4) };
+    document.getElementById(colors[chosen_color] + "_die5_img").onmouseenter = function() { dieEnter(5) };
+
+    function dieEnter(num) {
+        if (hidden_dice[num - 1] == 0 && num <= num_dice_left) {
+            document.getElementById(colors[chosen_color] + "_die" + String(num) + "_img").src = dice_img_dark[chosen_color][dice_numbers[num - 1] - 1];
+        }
     }
-    document.getElementById(colors[chosen_color]+"_die1_img").onmouseleave = function() {dieLeave(1)};
-    document.getElementById(colors[chosen_color]+"_die2_img").onmouseleave = function() {dieLeave(2)};
-    document.getElementById(colors[chosen_color]+"_die3_img").onmouseleave = function() {dieLeave(3)};
-    document.getElementById(colors[chosen_color]+"_die4_img").onmouseleave = function() {dieLeave(4)};
-    document.getElementById(colors[chosen_color]+"_die5_img").onmouseleave = function() {dieLeave(5)};
-    function dieLeave(num){
-        if (selected_dice[num-1]==0 && hidden_dice[num-1] == 0  && num <= num_dice_left){
-            document.getElementById(colors[chosen_color]+"_die"+String(num)+"_img").src = dice_img[chosen_color][dice_numbers[num-1]-1];
+    document.getElementById(colors[chosen_color] + "_die1_img").onmouseleave = function() { dieLeave(1) };
+    document.getElementById(colors[chosen_color] + "_die2_img").onmouseleave = function() { dieLeave(2) };
+    document.getElementById(colors[chosen_color] + "_die3_img").onmouseleave = function() { dieLeave(3) };
+    document.getElementById(colors[chosen_color] + "_die4_img").onmouseleave = function() { dieLeave(4) };
+    document.getElementById(colors[chosen_color] + "_die5_img").onmouseleave = function() { dieLeave(5) };
+
+    function dieLeave(num) {
+        if (selected_dice[num - 1] == 0 && hidden_dice[num - 1] == 0 && num <= num_dice_left) {
+            document.getElementById(colors[chosen_color] + "_die" + String(num) + "_img").src = dice_img[chosen_color][dice_numbers[num - 1] - 1];
         }
     }
 
@@ -846,103 +868,93 @@ function rollDice(){
 }
 
 //post all of your own dice nums to the server
-function post_dice_nums(){
+function post_dice_nums() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "/postNums?id=" + session_id; 
+    let url = "/postNums?id=" + session_id;
     xhr.open("POST", url, true);
     var data = JSON.stringify({ "color": chosen_color, "dice_nums": dice_numbers });
     xhr.send(data);
 }
 
-function calcProbabilities() { 
+function calcProbabilities() {
 
-    diceFaces = [0,0,0,0,0,0,0] //diceFaces[1] = number of ones, etc. diceFaces[0] = number of unknown dice
-    //dice_numbers holds data as [1,2,3,4,5], need to check only the dice which are not hiddden from you, 1 in a spot means that dice is hidden
+    diceFaces = [0, 0, 0, 0, 0, 0, 0] //diceFaces[1] = number of ones, etc. diceFaces[0] = number of unknown dice
+        //dice_numbers holds data as [1,2,3,4,5], need to check only the dice which are not hiddden from you, 1 in a spot means that dice is hidden
     for (var index = 0; index < num_dice_left; index++) {
         if (hidden_dice[index] == 0) {
             diceFaces[dice_numbers[index]] = parseInt(diceFaces[dice_numbers[index]]) + 1
-        }
-        else if (hidden_dice[index] == 1 && hidden_dice[index] != -1){
+        } else if (hidden_dice[index] == 1 && hidden_dice[index] != -1) {
             diceFaces[0] = parseInt(diceFaces[0]) + 1
         }
     }
 
-    for (i = 0; i< 6; i++){
+    for (i = 0; i < 6; i++) {
         if (colors[i] != colors[chosen_color]) {
-            for (j = 0; j <6; j++) {
+            for (j = 0; j < 6; j++) {
                 if (disp[i] != undefined && disp[i][j] == 1) {
                     diceFaces[dice[i][j]] = parseInt(diceFaces[dice[i][j]]) + 1
-                }
-                else if (disp[i] != undefined && dice[i][j] != 0 && dice[i][j] != undefined && dice[i][j] != -1){
+                } else if (disp[i] != undefined && dice[i][j] != 0 && dice[i][j] != undefined && dice[i][j] != -1) {
                     diceFaces[0] = parseInt(diceFaces[0]) + 1
                 }
             }
         }
-    } 
+    }
 
     let faceDice = parseInt(document.getElementById("face_number").innerHTML)
     let numDice = parseInt(document.getElementById("count_number").innerHTML)
-    let probability; 
+    let probability;
     let prevFaceDice = parseInt(document.getElementById("prev_face_num").innerHTML)
     let prevNumDice = parseInt(document.getElementById("prev_count_num").innerHTML)
     let prevProbability;
-    let knownDice; 
+    let knownDice;
     let prevKnownDice;
-    if (faceDice == 1){
+    if (faceDice == 1) {
         knownDice = diceFaces[1]
-    }
-    else {
+    } else {
         knownDice = diceFaces[faceDice] + diceFaces[1]
     }
-    if (prevFaceDice == 1){
+    if (prevFaceDice == 1) {
         prevKnownDice = diceFaces[1]
-    }
-    else {
+    } else {
         prevKnownDice = diceFaces[prevFaceDice] + diceFaces[1]
     }
     let unknownDice = diceFaces[0]
     let diceNeeded = numDice - knownDice
     let prevDiceNeeded = prevNumDice - prevKnownDice
-    if (diceNeeded <= 0){
-        probability = 100; 
-    }
-    else if (diceNeeded > unknownDice) {
+    if (diceNeeded <= 0) {
+        probability = 100;
+    } else if (diceNeeded > unknownDice) {
         probability = 0;
-    }
-    else if (faceDice != 1){
+    } else if (faceDice != 1) {
         probability = 100;
-        for (i=0; i< diceNeeded; i++){
-            probability = probability - 100*binomial(unknownDice, i)*Math.pow(1/3, i)*Math.pow(2/3, unknownDice-i)
+        for (i = 0; i < diceNeeded; i++) {
+            probability = probability - 100 * binomial(unknownDice, i) * Math.pow(1 / 3, i) * Math.pow(2 / 3, unknownDice - i)
+            probability = (Math.round(probability * 100) / 100).toFixed(1)
+        }
+    } else {
+        probability = 100;
+        for (i = 0; i < diceNeeded; i++) {
+            probability = probability - 100 * binomial(unknownDice, i) * Math.pow(1 / 6, i) * Math.pow(5 / 6, unknownDice - i)
             probability = (Math.round(probability * 100) / 100).toFixed(1)
         }
     }
-    else{
-        probability = 100;
-        for (i=0; i< diceNeeded; i++){
-            probability = probability - 100*binomial(unknownDice, i)*Math.pow(1/6, i)*Math.pow(5/6, unknownDice-i)
-            probability = (Math.round(probability * 100) / 100).toFixed(1)
-        }
-        }
 
 
-    if (prevDiceNeeded <= 0){
-        prevProbability = 100; 
-    }
-    else if (prevDiceNeeded > unknownDice) {
-        prevProbability = 0;
-    }
-    else if (faceDice != 1){
+    if (prevDiceNeeded <= 0) {
         prevProbability = 100;
-        for (i=0; i< prevDiceNeeded; i++){
-            prevProbability = prevProbability - 100*binomial(unknownDice, i)*Math.pow(1/3, i)*Math.pow(2/3, unknownDice-i)
+    } else if (prevDiceNeeded > unknownDice) {
+        prevProbability = 0;
+    } else if (faceDice != 1) {
+        prevProbability = 100;
+        for (i = 0; i < prevDiceNeeded; i++) {
+            prevProbability = prevProbability - 100 * binomial(unknownDice, i) * Math.pow(1 / 3, i) * Math.pow(2 / 3, unknownDice - i)
         }
         prevProbability = (Math.round(prevProbability * 100) / 100).toFixed(1)
-    }
-    else{
+    } else {
         prevProbability = 100;
-        for (i=0; i< prevDiceNeeded; i++){
-            prevProbability = prevProbability - 100*binomial(unknownDice, i)*Math.pow(1/5, i)*Math.pow(5/6, unknownDice-i)
+        for (i = 0; i < prevDiceNeeded; i++) {
+            prevProbability = prevProbability - 100 * binomial(unknownDice, i) * Math.pow(1 / 5, i) * Math.pow(5 / 6, unknownDice - i)
         }
         prevProbability = (Math.round(prevProbability * 100) / 100).toFixed(1)
     }
@@ -951,71 +963,71 @@ function calcProbabilities() {
 }
 
 function binomial(n, k) {
-    if ((typeof n !== 'number') || (typeof k !== 'number')) 
- return false; 
-   var coeff = 1;
-   for (var x = n-k+1; x <= n; x++) coeff *= x;
-   for (x = 1; x <= k; x++) coeff /= x;
-   return coeff;
+    if ((typeof n !== 'number') || (typeof k !== 'number'))
+        return false;
+    var coeff = 1;
+    for (var x = n - k + 1; x <= n; x++) coeff *= x;
+    for (x = 1; x <= k; x++) coeff /= x;
+    return coeff;
 }
 
 //when you click on one of your own dice
-function clicked_die(color, num){
-    if(color == chosen_color){
-        if(selected_dice[num-1] == 0 && hidden_dice[num-1] == 0 && num < num_dice_left){  //if the die has not been selected
-            document.getElementById(dice_objects[chosen_color][num-1]).src = dice_img_dark[chosen_color][dice_numbers[num-1]-1];
-            selected_dice[num-1] = 1;
-        } else if (hidden_dice[num-1] == 0 && num < num_dice_left) {  //if the die is already selected
-            document.getElementById(dice_objects[chosen_color][num-1]).src =dice_img[chosen_color][dice_numbers[num-1]-1];
-            selected_dice[num-1] = 0;
-        } 
-    } 
+function clicked_die(color, num) {
+    if (color == chosen_color) {
+        if (selected_dice[num - 1] == 0 && hidden_dice[num - 1] == 0 && num < num_dice_left) { //if the die has not been selected
+            document.getElementById(dice_objects[chosen_color][num - 1]).src = dice_img_dark[chosen_color][dice_numbers[num - 1] - 1];
+            selected_dice[num - 1] = 1;
+        } else if (hidden_dice[num - 1] == 0 && num < num_dice_left) { //if the die is already selected
+            document.getElementById(dice_objects[chosen_color][num - 1]).src = dice_img[chosen_color][dice_numbers[num - 1] - 1];
+            selected_dice[num - 1] = 0;
+        }
+    }
 }
 
 //when you click on a colored cup
-function clicked_cup(num){
-    if (document.getElementById(colors[num]+"Rank").value == "-1" && userPicked == false){//if the clicked cup does not have a rank, then proceed
-        if (chosen_color != null && chosen_color != num){ //if you select a new color
-            document.getElementById(cups[chosen_color]).src= cup_colors[chosen_color];
+function clicked_cup(num) {
+    if (document.getElementById(colors[num] + "Rank").value == "-1" && userPicked == false) { //if the clicked cup does not have a rank, then proceed
+        if (chosen_color != null && chosen_color != num) { //if you select a new color
+            document.getElementById(cups[chosen_color]).src = cup_colors[chosen_color];
         }
         chosen_color = num;
-        document.getElementById(cups[chosen_color]).src= cup_color_dark[chosen_color];
+        document.getElementById(cups[chosen_color]).src = cup_color_dark[chosen_color];
         document.getElementById("enter_round_button").style.visibility = 'visible';
     }
 }
 
 //begins game. Shows all dice as peaches ;)
-function enterRound(){
+function enterRound() {
     game_started = true;
-    insertCup();//this function moves the cup when you click them. Has been disabled until further notice
+    insertCup(); //this function moves the cup when you click them. Has been disabled until further notice
     serverGameStart();
-    for (var j = 0; j < 6; j++){
-        for (var i = 0; i < 5; i++){
+    for (var j = 0; j < 6; j++) {
+        for (var i = 0; i < 5; i++) {
             document.getElementById(dice_objects[j][i]).style.visibility = 'visible';
         }
     }
     document.getElementById("start_div").remove();
     // document.getElementById("roll_button").style.visibility = 'visible';
-    userPicked = true; 
+    userPicked = true;
     makeUsername(colors[chosen_color])
-    document.getElementById(String(colors[chosen_color])+"_user_pic").src = "/static/"+String(colors[chosen_color])+"_user_crown.png";
-    document.getElementById(String(colors[chosen_color])+"Username").style.marginTop = "5px"
-    
+    document.getElementById(String(colors[chosen_color]) + "_user_pic").src = "/static/resources/user_avatars/" + String(colors[chosen_color]) + "_user_crown.png";
+    document.getElementById(String(colors[chosen_color]) + "Username").style.marginTop = "5px"
+
 }
 
 //tell server that the game has started
-function serverGameStart(){ //push information to the server
+function serverGameStart() { //push information to the server
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "/gameStart?id=" + session_id; 
+    let url = "/gameStart?id=" + session_id;
     xhr.open("POST", url, true);
-    var data = JSON.stringify({ "color": chosen_color});
+    var data = JSON.stringify({ "color": chosen_color });
     xhr.send(data);
 }
 
 //send selected dice to the server
-function displayDice(){
-    for (var i = 0; i < 5; i++){
+function displayDice() {
+    for (var i = 0; i < 5; i++) {
         displayed_dice[i] = selected_dice[i];
     }
     //send displayed array to server
@@ -1023,32 +1035,32 @@ function displayDice(){
 }
 
 //POST selected dice to the server
-function post_displayed_dice(){
+function post_displayed_dice() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "/postDisplayed?id=" + session_id; 
+    let url = "/postDisplayed?id=" + session_id;
     xhr.open("POST", url, true);
-    var data = JSON.stringify(
-        {   "color": chosen_color, 
-            "displayed": displayed_dice }
-        );
+    var data = JSON.stringify({
+        "color": chosen_color,
+        "displayed": displayed_dice
+    });
     xhr.send(data);
 }
 
 //when the player selects dice to reroll, we automatically display all other dice to other players, 
 //reroll the selected dice, and then hide those rerolled dice
-function rerollDice(){
-    for (var i = 0; i < 5; i++){
+function rerollDice() {
+    for (var i = 0; i < 5; i++) {
         hidden_dice[i] = 0;
-        if (selected_dice[i] == 1){
+        if (selected_dice[i] == 1) {
             hidden_dice[i] = 1;
-            dice_numbers[i] = Math.ceil(Math.random()*6);
-            document.getElementById(dice_objects[chosen_color][i]).src= "/static/resources/peach.png";
+            dice_numbers[i] = Math.ceil(Math.random() * 6);
+            document.getElementById(dice_objects[chosen_color][i]).src = "/static/resources/peach.png";
         }
     }
     post_dice_nums();
     //make displayed dice array opposite
-    for (var j = 0; j < 5; j++){
+    for (var j = 0; j < 5; j++) {
         displayed_dice[j] = 0;
         if (selected_dice[j] == 0) {
             selected_dice[j] = 1;
@@ -1060,10 +1072,10 @@ function rerollDice(){
     displayDice();
 
     //deselect all dice
-    for (var k = 0; k < 5; k++){
+    for (var k = 0; k < 5; k++) {
         selected_dice[k] = 0;
     }
-    
+
 
 
 }
@@ -1095,102 +1107,103 @@ function dudo() {
 }
 
 //tell the server that someone doubted
-function postDoubt(){
+function postDoubt() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "/postDoubt?id=" + session_id; 
+    let url = "/postDoubt?id=" + session_id;
     xhr.open("POST", url, true);
-    var data = JSON.stringify(
-        {   "color": chosen_color }
-        );
+    var data = JSON.stringify({ "color": chosen_color });
     xhr.send(data);
 }
 
 //see if anyone has doubted!
-function checkDudo(){
+function checkDudo() {
     //check if doubt is true
     getDoubt();
     //display ALL dice if true
-    if (someone_doubted){
-        selected_dice = [1,1,1,1,1];
+    if (someone_doubted) {
+        selected_dice = [1, 1, 1, 1, 1];
         displayDice();
-        for (var i = 0; i < 5; i++){
-            document.getElementById(dice_objects[chosen_color][i]).src= dice_img[chosen_color][dice_numbers[i]-1];
+        for (var i = 0; i < 5; i++) {
+            document.getElementById(dice_objects[chosen_color][i]).src = dice_img[chosen_color][dice_numbers[i] - 1];
         }
     }
 }
- 
+
 //see if anyone has doubted
-function getDoubt(){
+function getDoubt() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
-        if (request.readyState == 4 && request.status == 200){
+        if (request.readyState == 4 && request.status == 200) {
             var parsed = JSON.parse(this.responseText);
             someone_doubted = parsed.data;
         }
-    };request.open('GET', "/getDoubt?id=" + session_id, true);
+    };
+    request.open('GET', "/getDoubt?id=" + session_id, true);
     request.send();
 }
 
 //increase the count number
-function count_up(){
+function count_up() {
     document.getElementById("count_number").innerHTML = String(count_bet + 1);
     count_bet = count_bet + 1;
-    
+
 }
 
 //decrease the count number
-function count_down(){
-    if (count_bet > 1){
+function count_down() {
+    if (count_bet > 1) {
         document.getElementById("count_number").innerHTML = String(count_bet - 1);
         count_bet = count_bet - 1;
     }
 }
 
 //increase the face number
-function face_up(){
-    if (face_bet <= 5){
+function face_up() {
+    if (face_bet <= 5) {
         document.getElementById("face_number").innerHTML = String(face_bet + 1);
         face_bet = face_bet + 1;
     }
 }
 
 //decrease the face number
-function face_down(){
-    if (face_bet > 1){
+function face_down() {
+    if (face_bet > 1) {
         document.getElementById("face_number").innerHTML = String(face_bet - 1);
-        face_bet = face_bet -1;
+        face_bet = face_bet - 1;
     }
 }
 
-function placeBet(){
+function placeBet() {
     postNextTurn();
 }
 
-function postNextTurn(){
+function postNextTurn() {
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "/postNextTurn?id=" + session_id; 
+    let url = "/postNextTurn?id=" + session_id;
     xhr.open("POST", url, true);
     var bet_count = document.getElementById("count_number").textContent;
     var bet_face = document.getElementById("face_number").textContent;
-    var data = JSON.stringify({ 
-        "color": chosen_color, 
-        "bet_count": bet_count, 
-        "bet_face" : bet_face });
+    var data = JSON.stringify({
+        "color": chosen_color,
+        "bet_count": bet_count,
+        "bet_face": bet_face
+    });
     xhr.send(data);
 }
 
 
-function loseDie(){
-    num_dice_left = num_dice_left -1;
+function loseDie() {
+    num_dice_left = num_dice_left - 1;
     let session_id = document.getElementById("game_id_display").innerHTML;
     let xhr = new XMLHttpRequest();
-    let url = "/postLostDie?id=" + session_id; 
+    let url = "/postLostDie?id=" + session_id;
     xhr.open("POST", url, true);
-    var data = JSON.stringify({ 
-        "color": chosen_color });
+    var data = JSON.stringify({
+        "color": chosen_color
+    });
     xhr.send(data);
 }
 
@@ -1207,6 +1220,6 @@ function closeModal() {
 window.onclick = function(event) {
     var modal = document.getElementById("myModal");
     if (event.target == modal) {
-      modal.style.display = "none";
+        modal.style.display = "none";
     }
-  }
+}
