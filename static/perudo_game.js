@@ -284,7 +284,7 @@ function place_betButtonLeave() {
 
 //update game
 function updateGameInterval() {
-    setInterval(updateGame, 500);
+    setInterval(updateGame, 5000);
 }
 
 //update all aspects of game
