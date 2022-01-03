@@ -194,7 +194,6 @@ def getPreviousBet():
 
 
 
-
 #___________________________________POST Requests_________________________________________
 @app.route('/gamePage', methods=['POST'])
 def enter():
