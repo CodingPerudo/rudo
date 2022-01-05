@@ -2,27 +2,26 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="/static/styles.css">
 </head>
 
 <body onload="enableButtons();">
     <div>
-        <div id="title_div">
-            <img id="title_image" src="/static/resources/title_text2.png">
+        <div id= "title_div">
+            <img id="title_image" src="/static/resources/title_text2.png" >
         </div>
         <div id="home_buttons_div">
             <button class="button" id="new_game" onclick="newGame();" type="button">Host New Game</button>
             <br><br>
-            <input class="text" type="text" id="session_id" placeholder="GAME ID" maxlength="4">
-            <br>
-            <button class="button" id="join_game" onclick="joinGame();" type="button">Join Game</button>
+                <input class="text" type="text" id="session_id" placeholder="GAME ID" maxlength="4">
+                <br>
+                <button class="button" id="join_game" onclick="joinGame();" type="button">Join Game</button>
             <p id="join_fail"></p>
         </div>
-    </div>
+    </div>    
 
     <script src="/static/perudo_game.js"></script>
     <script src="/static/game_session_control.js"></script>
-
+  
 </body>
-
 </html>
