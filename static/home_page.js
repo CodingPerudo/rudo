@@ -23,7 +23,7 @@ function makePlayerDiv(color) {
     var playerPicImage = document.createElement("img")
     playerPicImage.className = "player_pic"
     playerPicImage.id = color + "_user_pic"
-    playerPicImage.src = "/static/" + color + "_user.png"
+    playerPicImage.src = "/static/resources/user_avatars/" + color + "_user.png"
 
 
     userInfoDiv.appendChild(playerPicImage);
