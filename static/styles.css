@@ -1,8 +1,10 @@
 /* ___________________________the dice images__________________________ */
+
 .red_die_img {
     width: 50px;
     visibility: hidden;
     padding-top: 3px;
+    margin-right: 10px;
     /* padding-bottom: 25px; */
 }
 
@@ -10,6 +12,7 @@
     width: 50px;
     visibility: hidden;
     padding-top: 3px;
+    margin-right: 10px;
     /* padding-bottom: 25px; */
 }
 
@@ -17,38 +20,40 @@
     width: 50px;
     visibility: hidden;
     padding-top: 3px;
+    margin-right: 10px;
     /* padding-bottom: 25px; */
 }
-
 
 .green_die_img {
     width: 50px;
     visibility: hidden;
     padding-top: 3px;
+    margin-right: 10px;
     /* padding-bottom: 25px; */
 }
-
 
 .blue_die_img {
     width: 50px;
     visibility: hidden;
     padding-top: 3px;
+    margin-right: 10px;
     /* padding-bottom: 25px; */
 }
-
 
 .black_die_img {
     width: 50px;
     visibility: hidden;
     padding-top: 3px;
+    margin-right: 10px;
     /* padding-bottom: 25px; */
 }
 
+
 /* ______________________________Buttons______________________________ */
+
 .cup {
     width: 85px;
 }
-
 
 #wrapper {
     float: left;
@@ -83,19 +88,20 @@
     padding-right: 10px;
 }
 
-#count_up_button, #face_up_button {
+#count_up_button,
+#face_up_button {
     background-image: url("resources/arrow_up.png");
     margin-top: 0px;
 }
 
-#count_down_button, #face_down_button {
+#count_down_button,
+#face_down_button {
     background-image: url("resources/arrow_down.png");
     margin-top: 5px;
 }
 
 .bet_label {
     margin-bottom: 10px;
-
 }
 
 #face_text {
@@ -108,9 +114,9 @@
 
 .bet_button {
     /* visibility: hidden; */
-    border:none;
-    background-color:transparent;
-    outline:none;
+    border: none;
+    background-color: transparent;
+    outline: none;
     background-size: 100% 100%;
     width: 60px;
     height: 30px;
@@ -119,7 +125,8 @@
     padding-bottom: 0px;
 }
 
-#count_number, #face_number {
+#count_number,
+#face_number {
     font-size: 50px;
     margin: 0px;
     padding-left: 18px;
@@ -128,13 +135,11 @@
     height: 50px;
 }
 
-
-
 .button {
     visibility: hidden;
-    border:none;
-    background-color:transparent;
-    outline:none;
+    border: none;
+    background-color: transparent;
+    outline: none;
     background-size: 100% 100%;
     color: white;
     background-repeat: no-repeat;
@@ -145,13 +150,11 @@
     font-size: 17px;
 }
 
-
-
-
 #roll_button {
     background-image: url(resources/blue_button.png);
 }
-#roll_button:hover{
+
+#roll_button:hover {
     background-image: url(resources/blue_pressed.png);
 }
 
@@ -161,13 +164,15 @@
     padding: 0px;
 }
 
-#enter_round_button:hover{
+#enter_round_button:hover {
     background-image: url(resources/pink_pressed.png);
 }
 
 #display_button {
     background-image: url(resources/blue_button.png);
 }
+
+
 /*
 #display_button:hover {
     background-image: url(resources/blue_pressed.png);
@@ -176,6 +181,8 @@
 #reroll_button {
     background-image: url(resources/pink_button.png);
 }
+
+
 /* #reroll_button:hover{
     background-image: url(resources/pink_pressed.png);
 } */
@@ -185,11 +192,11 @@
     visibility: hidden;
 }
 
-#dudo_button:hover{
+#dudo_button:hover {
     background-image: url(resources/green_pressed.png);
 }
 
-#betting_div{
+#betting_div {
     visibility: hidden;
 }
 
@@ -205,11 +212,7 @@
 }
 
 
-
-
 /* ______________________________Other stuff______________________________ */
-
-
 
 #join_fail {
     color: white;
@@ -221,7 +224,12 @@ body {
     background-size: cover;
 }
 
-#redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername{
+#redUsername,
+#orangeUsername,
+#yellowUsername,
+#greenUsername,
+#blueUsername,
+#blackUsername {
     color: rgb(255, 255, 255);
     text-indent: 2%;
     text-shadow: 1px black;
@@ -240,26 +248,35 @@ body {
 .player_div {
     padding-bottom: 20px;
     margin-left: 0px;
-
 }
 
 #redUsername {
     padding-top: 60px;
 }
 
-#redUsername, #orangeUsername, #yellowUsername, #greenUsername, #blueUsername, #blackUsername {
+#redUsername,
+#orangeUsername,
+#yellowUsername,
+#greenUsername,
+#blueUsername,
+#blackUsername {
     position: absolute;
     margin-top: 10px;
 }
 
-
-
-#red_table_div, #orange_table_div, #yellow_table_div, #green_table_div, #blue_table_div, #black_table_div {
+#red_table_div,
+#orange_table_div,
+#yellow_table_div,
+#green_table_div,
+#blue_table_div,
+#black_table_div {
     float: right;
     margin-left: 10px;
 }
 
+
 /* ________________________________playing text_______________________________ */
+
 .playing_text {
     margin-bottom: 0px;
     margin-top: 3px;
@@ -284,11 +301,11 @@ body {
 }
 
 #blue_playing_text {
-    color: rgb(68,114,196);
+    color: rgb(68, 114, 196);
 }
 
 #black_playing_text {
-    color: rgb(180,180,180);
+    color: rgb(180, 180, 180);
 }
 
 #start_session_button {
@@ -296,9 +313,9 @@ body {
     margin: 0px;
     padding: 0px;
     background-image: url(resources/green_button.png);
-    border:none;
-    background-color:transparent;
-    outline:none;
+    border: none;
+    background-color: transparent;
+    outline: none;
     background-size: 100% 100%;
     color: white;
     background-repeat: no-repeat;
@@ -309,9 +326,10 @@ body {
     font-size: 17px;
 }
 
-#start_session_button:hover{
+#start_session_button:hover {
     background-image: url(resources/green_pressed.png);
 }
+
 
 /* ________________________________previous bet_______________________________ */
 
@@ -324,21 +342,19 @@ body {
     height: 107px;
     visibility: hidden;
     width: 180px;
-
 }
 
-#previous_bet_title{
+#previous_bet_title {
     margin: 0px;
     padding: 0px;
     padding-top: 6px;
     font-size: 18px;
 }
 
-#previous_labels_div{
+#previous_labels_div {
     padding-bottom: 3px;
     padding-top: 6px;
 }
-
 
 #previous_count_label {
     padding: 0px;
@@ -348,7 +364,7 @@ body {
     padding-left: 20px;
 }
 
-#previous_face_label{
+#previous_face_label {
     float: right;
     padding: 0px;
     margin: 0px;
@@ -364,8 +380,8 @@ body {
     margin-top: 20px;
 }
 
-#prev_count_num{
-    float:left;
+#prev_count_num {
+    float: left;
     padding: 0px;
     margin: 0px;
     padding-left: 35px;
@@ -380,6 +396,7 @@ body {
     padding-top: 5px;
 }
 
+
 /* ________________________________probability of bets_______________________________ */
 
 #probability_div {
@@ -393,18 +410,17 @@ body {
     width: 180px;
 }
 
-#probability_title{
+#probability_title {
     margin: 0px;
     padding: 0px;
     padding-top: 6px;
     font-size: 18px;
 }
 
-#probability_labels_div{
+#probability_labels_div {
     padding-bottom: 3px;
     padding-top: 6px;
 }
-
 
 #probability_yours_label {
     padding: 0px;
@@ -414,7 +430,7 @@ body {
     padding-left: 20px;
 }
 
-#probability_prev_label{
+#probability_prev_label {
     float: right;
     padding: 0px;
     margin: 0px;
@@ -430,8 +446,8 @@ body {
     margin-top: 20px;
 }
 
-#prob_yours_num{
-    float:left;
+#prob_yours_num {
+    float: left;
     padding: 0px;
     margin: 0px;
     padding-left: 23px;
@@ -448,6 +464,7 @@ body {
 
 
 /* _____________________________Home UI___________________________ */
+
 #title_image {
     width: 230px;
     display: block;
@@ -506,9 +523,11 @@ input:focus {
     box-shadow: 0 0 10px #719ECE;
 }
 
+
 /* _____________________________GAME ID DIV___________________________ */
+
 #game_id_label {
-    float:left;
+    float: left;
     color: white;
     padding: 0px;
     margin: 0px;
@@ -541,47 +560,63 @@ input:focus {
     cursor: pointer;
 }
 
+
 /* The Modal (background) */
+
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content */
-  .modal-content {
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+
+/* Modal Content */
+
+.modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-  }
-  
-  /* The Close Button */
-  .close {
+}
+
+
+/* The Close Button */
+
+.close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
+}
+
+.close:hover,
+.close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-  }
-/*______________________________Lost a die_________________________________*/
-#lost_button{
-    visibility: visible;
 }
 
 
+/*______________________________Lost a die_________________________________*/
+
+#lost_button {
+    visibility: visible;
+}

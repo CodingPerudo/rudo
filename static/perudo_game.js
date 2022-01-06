@@ -121,24 +121,16 @@ var black_disp;
 var dice = [];
 var disp = [];
 
-//deadling with the hover effect of the UI pieces
-for (color in colors) {
-    var colorString = colors[color]
-        //entering cup objects
-    document.getElementById(colorString + "_cup").mouseEnter = function() { mouseEnter(color) };
-    //leaving cup objects with mouse
-    document.getElementById(colorString + "_cup").onmouseleave = function() { mouseLeave(color) };
-}
 //entering and leaving cup objects 
-function mouseEnter(num) {
+function mouseEnterCup(num) {
     if (!userPicked) {
-        document.getElementById(cups[num]).src = cup_color_dark[num];
+        document.getElementById(colors[num] + "_cup").src = cup_color_dark[num];
     }
 }
 
-function mouseLeave(num) {
+function mouseLeaveCup(num) {
     if (chosen_color != num) {
-        document.getElementById(cups[num]).src = cup_colors[num];
+        document.getElementById(colors[num] + "_cup").src = cup_colors[num];
     }
 }
 
@@ -833,30 +825,27 @@ function rollDice() {
     //send dice nums to server
     post_dice_nums();
 
-    document.getElementById(colors[chosen_color] + "_die1_img").onmouseenter = function() { dieEnter(1) };
-    document.getElementById(colors[chosen_color] + "_die2_img").onmouseenter = function() { dieEnter(2) };
-    document.getElementById(colors[chosen_color] + "_die3_img").onmouseenter = function() { dieEnter(3) };
-    document.getElementById(colors[chosen_color] + "_die4_img").onmouseenter = function() { dieEnter(4) };
-    document.getElementById(colors[chosen_color] + "_die5_img").onmouseenter = function() { dieEnter(5) };
+    var colorString = colors[chosen_color]
 
-    function dieEnter(num) {
-        if (hidden_dice[num - 1] == 0 && num <= num_dice_left) {
-            document.getElementById(colors[chosen_color] + "_die" + String(num) + "_img").src = dice_img_dark[chosen_color][dice_numbers[num - 1] - 1];
-        }
-    }
-    document.getElementById(colors[chosen_color] + "_die1_img").onmouseleave = function() { dieLeave(1) };
-    document.getElementById(colors[chosen_color] + "_die2_img").onmouseleave = function() { dieLeave(2) };
-    document.getElementById(colors[chosen_color] + "_die3_img").onmouseleave = function() { dieLeave(3) };
-    document.getElementById(colors[chosen_color] + "_die4_img").onmouseleave = function() { dieLeave(4) };
-    document.getElementById(colors[chosen_color] + "_die5_img").onmouseleave = function() { dieLeave(5) };
-
-    function dieLeave(num) {
-        if (selected_dice[num - 1] == 0 && hidden_dice[num - 1] == 0 && num <= num_dice_left) {
-            document.getElementById(colors[chosen_color] + "_die" + String(num) + "_img").src = dice_img[chosen_color][dice_numbers[num - 1] - 1];
-        }
+    for (let i = 1; i <= 5; i++) {
+        console.log("building: " + i.toString())
+        var die = document.getElementById(colorString + "_die" + i.toString() + "_img")
+        die.onmouseenter = function() { dieEnter(i) }
+        die.onmouseleave = function() { dieLeave(i) }
     }
 
+}
 
+function dieEnter(num) {
+    if (hidden_dice[num - 1] == 0 && num <= num_dice_left) {
+        document.getElementById(colors[chosen_color] + "_die" + String(num) + "_img").src = dice_img_dark[chosen_color][dice_numbers[num - 1] - 1];
+    }
+}
+
+function dieLeave(num) {
+    if (selected_dice[num - 1] == 0 && hidden_dice[num - 1] == 0 && num <= num_dice_left) {
+        document.getElementById(colors[chosen_color] + "_die" + String(num) + "_img").src = dice_img[chosen_color][dice_numbers[num - 1] - 1];
+    }
 }
 
 //post all of your own dice nums to the server

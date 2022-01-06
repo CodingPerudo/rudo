@@ -33,8 +33,10 @@ function makePlayerDiv(color) {
     cupImage.className = "cup"
     cupImage.id = color + "_cup"
     cupImage.src = "/static/resources/cups/" + color + "_cup.png"
-
+    cupImage.onmouseenter = function() { mouseEnterCup(colors.indexOf(color)); }
+    cupImage.onmouseleave = function() { mouseLeaveCup(colors.indexOf(color)); }
     cupImage.onclick = function() { clicked_cup(colors.indexOf(color)); }
+
     playerDiv.appendChild(cupImage)
 
 
@@ -64,7 +66,7 @@ function makePlayerDiv(color) {
         redDieImage.className = color + "_die_img"
         redDieImage.id = color + "_die" + (i + 1).toString() + "_img"
         redDieImage.src = "/static/resources/peach.png"
-        redDieImage.onmousedown = function() { clicked_die(0, 1); }
+        redDieImage.onmousedown = function() { clicked_die(colors.indexOf(color), i + 1); }
         redDiceDiv.appendChild(redDieImage)
     }
 
