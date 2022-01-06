@@ -494,27 +494,26 @@ body {
 }
 
 #join_game {
-    background-image: url(resources/pink_button.png);
+    background-image: url(resources/blue_button.png);
 }
 
 #join_game:hover {
-    background-image: url(resources/pink_pressed.png);
+    background-image: url(resources/blue_pressed.png);
 }
 
 #session_id {
-    background-color: bisque;
+    background-color: rgb(255, 255, 255);
     margin-left: auto;
     margin-right: auto;
     text-align: center;
     font-size: 20px;
-    font-weight: bold;
+    height: 11px;
+    width: 160px;
     text-transform: uppercase;
 }
 
 ::placeholder {
-    font-size: 14px;
     text-align: center;
-    font-weight: bold;
     font-size: 15px;
 }
 

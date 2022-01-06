@@ -828,7 +828,6 @@ function rollDice() {
     var colorString = colors[chosen_color]
 
     for (let i = 1; i <= 5; i++) {
-        console.log("building: " + i.toString())
         var die = document.getElementById(colorString + "_die" + i.toString() + "_img")
         die.onmouseenter = function() { dieEnter(i) }
         die.onmouseleave = function() { dieLeave(i) }
