@@ -122,21 +122,13 @@ var dice = [];
 var disp = [];
 
 //deadling with the hover effect of the UI pieces
-//entering cup objects
-document.getElementById("red_cup").onmouseenter = function() { mouseEnter(0) };
-document.getElementById("orange_cup").onmouseenter = function() { mouseEnter(1) };
-document.getElementById("yellow_cup").onmouseenter = function() { mouseEnter(2) };
-document.getElementById("green_cup").onmouseenter = function() { mouseEnter(3) };
-document.getElementById("blue_cup").onmouseenter = function() { mouseEnter(4) };
-document.getElementById("black_cup").onmouseenter = function() { mouseEnter(5) };
-//leaving cup objects with mouse
-document.getElementById("red_cup").onmouseleave = function() { mouseLeave(0) };
-document.getElementById("orange_cup").onmouseleave = function() { mouseLeave(1) };
-document.getElementById("yellow_cup").onmouseleave = function() { mouseLeave(2) };
-document.getElementById("green_cup").onmouseleave = function() { mouseLeave(3) };
-document.getElementById("blue_cup").onmouseleave = function() { mouseLeave(4) };
-document.getElementById("black_cup").onmouseleave = function() { mouseLeave(5) };
-
+for (color in colors) {
+    var colorString = colors[color]
+        //entering cup objects
+    document.getElementById(colorString + "_cup").mouseEnter = function() { mouseEnter(color) };
+    //leaving cup objects with mouse
+    document.getElementById(colorString + "_cup").onmouseleave = function() { mouseLeave(color) };
+}
 //entering and leaving cup objects 
 function mouseEnter(num) {
     if (!userPicked) {
