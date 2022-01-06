@@ -953,11 +953,13 @@ function binomial(n, k) {
 
 //when you click on one of your own dice
 function clicked_die(color, num) {
+    console.log("numm: " + num.toString())
     if (color == chosen_color) {
-        if (selected_dice[num - 1] == 0 && hidden_dice[num - 1] == 0 && num < num_dice_left) { //if the die has not been selected
+        console.log(num_dice_left)
+        if (selected_dice[num - 1] == 0 && hidden_dice[num - 1] == 0 && num <= num_dice_left) { //if the die has not been selected
             document.getElementById(dice_objects[chosen_color][num - 1]).src = dice_img_dark[chosen_color][dice_numbers[num - 1] - 1];
             selected_dice[num - 1] = 1;
-        } else if (hidden_dice[num - 1] == 0 && num < num_dice_left) { //if the die is already selected
+        } else if (hidden_dice[num - 1] == 0 && num <= num_dice_left) { //if the die is already selected
             document.getElementById(dice_objects[chosen_color][num - 1]).src = dice_img[chosen_color][dice_numbers[num - 1] - 1];
             selected_dice[num - 1] = 0;
         }
