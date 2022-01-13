@@ -5,9 +5,15 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 
+<img id=loading_die src="/static/resources/loading_dice_large.gif">
+
 <body onload="setup_game()">
 
     <div id="wrapper">
+
+        <div id=user_dice_UI>
+
+        </div>
 
         <!-- <div class="player_div" id="red_player"> <input type="hidden" id="redRank" value="-1"> <input type="hidden" id="redPos" value="0">
             <div class="user_info" id="red_user_info">
@@ -103,13 +109,13 @@
             </div>
 
             <button id="lose_button" onclick="loseDie();" type="button">I lose a die</button>
-
-            <!-- <p id='dudoMessage'></p> -->
         </div>
+        <!-- <p id='dudoMessage'></p> -->
+    </div>
 
-        <script src="/static/perudo_game.js"></script>
-        <script src="/static/home_page.js"></script>
-        <script src="/static/game_initialization.js"></script>
+    <script src="/static/perudo_game.js"></script>
+    <script src="/static/home_page.js"></script>
+    <script src="/static/game_initialization.js"></script>
 
 </body>
 

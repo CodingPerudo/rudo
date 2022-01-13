@@ -1,9 +1,17 @@
 var colors = ["red", "orange", "yellow", "green", "blue", "black"]
 
 function makeAllPlayerUI() {
+    document.querySelector("body").style.visibility = "hidden"
     for (color in colors) {
+        let i = 0;
+        // while (i < 1000000000) {
+        //     i++;
+        // }
         makePlayerDiv(colors[color])
     }
+    document.querySelector("body").style.visibility = "visible"
+    document.getElementById("loading_die").remove()
+
 }
 
 function makePlayerDiv(color) {
@@ -24,7 +32,7 @@ function makePlayerDiv(color) {
     playerPicImage.className = "player_pic"
     playerPicImage.id = color + "_user_pic"
     playerPicImage.src = "/static/resources/user_avatars/" + color + "_user.png"
-
+    playerPicImage.onclick = function() { clicked_cup(colors.indexOf(color)); }
 
     userInfoDiv.appendChild(playerPicImage);
     userInfoDiv.appendChild(usernameP);
@@ -36,7 +44,6 @@ function makePlayerDiv(color) {
     cupImage.onmouseenter = function() { mouseEnterCup(colors.indexOf(color)); }
     cupImage.onmouseleave = function() { mouseLeaveCup(colors.indexOf(color)); }
     cupImage.onclick = function() { clicked_cup(colors.indexOf(color)); }
-
     playerDiv.appendChild(cupImage)
 
 
@@ -70,6 +77,6 @@ function makePlayerDiv(color) {
         redDiceDiv.appendChild(redDieImage)
     }
 
-    document.getElementById("wrapper").appendChild(playerDiv)
+    document.getElementById("user_dice_UI").appendChild(playerDiv)
 
 }

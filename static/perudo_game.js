@@ -475,6 +475,7 @@ function start_session() {
                 //delete colors without username
                 if (usernames[i] == "") {
                     document.getElementById(String(colors[i]) + "_player").style.visibility = 'hidden';
+                    document.getElementById(colors[i] + "_cup").style.visibility = "hidden"
                     for (var j = 0; j < 5; j++) {
                         document.getElementById(String(colors[i]) + "_die" + String(j + 1) + "_img").style.visibility = 'hidden';
                     }
@@ -953,9 +954,7 @@ function binomial(n, k) {
 
 //when you click on one of your own dice
 function clicked_die(color, num) {
-    console.log("numm: " + num.toString())
     if (color == chosen_color) {
-        console.log(num_dice_left)
         if (selected_dice[num - 1] == 0 && hidden_dice[num - 1] == 0 && num <= num_dice_left) { //if the die has not been selected
             document.getElementById(dice_objects[chosen_color][num - 1]).src = dice_img_dark[chosen_color][dice_numbers[num - 1] - 1];
             selected_dice[num - 1] = 1;
@@ -973,14 +972,21 @@ function clicked_cup(num) {
             document.getElementById(cups[chosen_color]).src = cup_colors[chosen_color];
         }
         chosen_color = num;
-        document.getElementById(cups[chosen_color]).src = cup_color_dark[chosen_color];
+        // document.getElementById(colors[chosen_color] + "_user_pic").style.width = "30%"
+        // document.getElementById(colors[chosen_color] + "_user_pic").style.transform = "translate(-20%, -25%)"
+        // document.getElementById(cups[chosen_color]).src = cup_color_dark[chosen_color];
         document.getElementById("enter_round_button").style.visibility = 'visible';
     }
 }
 
 //begins game. Shows all dice as peaches ;)
 function enterRound() {
+    for (color in colors) {
+        document.getElementById(colors[color] + "_cup").style.visibility = "visible"
+    }
     game_started = true;
+    document.getElementById(colors[chosen_color] + "_user_pic").style.width = "50px"
+        // document.getElementsByClassName("player_pic").style.float = "left"
     insertCup(); //this function moves the cup when you click them. Has been disabled until further notice
     serverGameStart();
     for (var j = 0; j < 6; j++) {

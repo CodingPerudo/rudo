@@ -103,8 +103,6 @@ def getInfo():
 @app.route("/getPos", methods=["GET"])
 def getPos():
     game_id = request.args.get('id')
-    print("iddddddddd yeeee", game_id)
-    print("yeeeee", all_games[game_id].playerInfo)
     return json.dumps({"success": True, "data": all_games[game_id].playerInfo}), 200
 
 #GET and return player's dice and displayed dice
@@ -269,7 +267,6 @@ def postDoubt():
     game_id = request.args.get('id')
     game = all_games[game_id]
     game.doubt = True
-    print("doubt: " + str(game.doubt))
     return json.dumps({"success": True}), 201
 
 @app.route("/joinGame", methods=["POST"])
@@ -277,7 +274,6 @@ def join_game():
     session_id = request.args.get('id').upper()
     if session_id in all_session_ids:
          update_session_cookies()
-         print(session_id)
          return session_id, 200
     else:
         return "That game ID does not exist.", 404

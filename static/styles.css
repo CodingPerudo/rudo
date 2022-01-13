@@ -69,8 +69,10 @@
 }
 
 #buttons {
-    position: fixed;
-    margin-left: 500px;
+    /* position: fixed; */
+    overflow: hidden;
+    margin-left: 50px;
+    float: right;
 }
 
 #count_div {
@@ -238,6 +240,11 @@ body {
 
 .player_pic {
     width: 50px;
+}
+
+#user_dice_UI {
+    float: left;
+    overflow: hidden;
 }
 
 .user_info {
